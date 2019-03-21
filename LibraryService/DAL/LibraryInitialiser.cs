@@ -23,8 +23,8 @@ namespace LibraryService.DAL
 
             var Books = new List<Book>
             {
-                new Book {CatalogueId=1 , Title="Harry Potter", Author="Jk Rowling", Publisher="Penguin", LibraryId=2, Status="Reserved", UserId= 3 , AgeRestriction= "7+", Pages= 200, PurchaseValue= 9},
-                 new Book {CatalogueId=2 , Title="The Lion the whitch and the wardrobe", Author="Lewis Caroll", Publisher="Penguin", LibraryId=3, Status="Reserved", UserId= 2 , AgeRestriction= "5+", Pages= 150, PurchaseValue= 11}
+                new Book {id=1 , Title="Harry Potter", Author="Jk Rowling", Publisher="Penguin", LibraryId=2, Status="Reserved", UserId= 3 , AgeRestriction= "7+", Pages= 200, PurchaseValue= 9},
+                 new Book {id=2 , Title="The Lion the whitch and the wardrobe", Author="Lewis Caroll", Publisher="Penguin", LibraryId=3, Status="Reserved", UserId= 2 , AgeRestriction= "5+", Pages= 150, PurchaseValue= 11}
             };
             Books.ForEach(s => context.Books.Add(s));
             context.SaveChanges();

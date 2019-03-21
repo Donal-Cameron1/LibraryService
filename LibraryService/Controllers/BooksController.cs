@@ -11,17 +11,17 @@ using LibraryService.Models;
 
 namespace LibraryService.Controllers
 {
-    public class BookController : Controller
+    public class BooksController : Controller
     {
         private LibraryContext db = new LibraryContext();
 
-        // GET: Book
+        // GET: Books
         public ActionResult Index()
         {
             return View(db.Books.ToList());
         }
 
-        // GET: Book/Details/5
+        // GET: Books/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -36,18 +36,18 @@ namespace LibraryService.Controllers
             return View(book);
         }
 
-        // GET: Book/Create
+        // GET: Books/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Book/Create
+        // POST: Books/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title,CatalogueId,Author,Genre,Publisher,LibraryId,Status,UserId,AgeRestriction,Pages,PurchaseValue,ReturnDate,DateAdded")] Book book)
+        public ActionResult Create([Bind(Include = "Author,id,Publisher,Pages,Title,Genre,LibraryId,Status,UserId,AgeRestriction,PurchaseValue,ReturnDate,DateAdded")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace LibraryService.Controllers
             return View(book);
         }
 
-        // GET: Book/Edit/5
+        // GET: Books/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -74,12 +74,12 @@ namespace LibraryService.Controllers
             return View(book);
         }
 
-        // POST: Book/Edit/5
+        // POST: Books/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Title,CatalogueId,Author,Genre,Publisher,LibraryId,Status,UserId,AgeRestriction,Pages,PurchaseValue,ReturnDate,DateAdded")] Book book)
+        public ActionResult Edit([Bind(Include = "Author,id,Publisher,Pages,Title,Genre,LibraryId,Status,UserId,AgeRestriction,PurchaseValue,ReturnDate,DateAdded")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace LibraryService.Controllers
             return View(book);
         }
 
-        // GET: Book/Delete/5
+        // GET: Books/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -105,7 +105,7 @@ namespace LibraryService.Controllers
             return View(book);
         }
 
-        // POST: Book/Delete/5
+        // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
