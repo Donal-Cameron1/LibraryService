@@ -12,16 +12,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CatalogueId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Author)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Genre)
+            @Html.DisplayNameFor(model => model.id)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Publisher)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pages)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Genre)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LibraryId)
@@ -34,9 +37,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AgeRestriction)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Pages)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PurchaseValue)
@@ -53,16 +53,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CatalogueId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genre)
+            @Html.DisplayFor(modelItem => item.id)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Publisher)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pages)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Genre)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LibraryId)
@@ -77,9 +80,6 @@
             @Html.DisplayFor(modelItem => item.AgeRestriction)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Pages)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.PurchaseValue)
         </td>
         <td>
@@ -89,9 +89,9 @@
             @Html.DisplayFor(modelItem => item.DateAdded)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Title }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Title }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Title })
+            @Html.ActionLink("Edit", "Edit", new { id=item.Author }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Author }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Author })
         </td>
     </tr>
 }

@@ -1,37 +1,22 @@
 ﻿@model LibraryService.Models.Book
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Delete";
 }
 
-<h2>Details</h2>
+<h2>Delete</h2>
 
+<h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>Book</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CatalogueId)
+            @Html.DisplayNameFor(model => model.id)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CatalogueId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Author)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Author)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Genre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Genre)
+            @Html.DisplayFor(model => model.id)
         </dd>
 
         <dt>
@@ -40,6 +25,30 @@
 
         <dd>
             @Html.DisplayFor(model => model.Publisher)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pages)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pages)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Genre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genre)
         </dd>
 
         <dt>
@@ -75,14 +84,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Pages)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Pages)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.PurchaseValue)
         </dt>
 
@@ -107,8 +108,13 @@
         </dd>
 
     </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Title }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
