@@ -19,6 +19,8 @@ namespace LibraryService.Models
         
        
        public int Pages { get; set; }
+
+
         
        
         
