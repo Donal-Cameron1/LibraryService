@@ -16,9 +16,16 @@ namespace LibraryService.Controllers
         private LibraryContext db = new LibraryContext();
 
         // GET: Books
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            return View(db.Books.ToList());
+            var books = from s in db.Books
+                        select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                books = books.Where(s => s.Title.Contains(searchString)
+                                       || s.Author.Contains(searchString));
+            }
+            return View(books.ToList());
         }
 
         // GET: Books/Details/5
