@@ -4,23 +4,23 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace LibraryService.Models
 {
-    public enum BookGenre
+    public enum DVDGenre 
     {
-        Action, Crime, Fantasy, Horror, Poetry, Romance, Thriller
+        Action, Crime, Comedy, Drama, Fantasy, Horror, Romance, Thriller
     }
-    public class Book: LibraryItem
+
+    public class DVD : LibraryItem
     {
         [Key]
         public int id { get; set; }
-        public string Author { get; set; }  
-        public BookGenre BookGenre { get; set; }
-        public int Pages { get; set; }  
-        
+        public string Director { get; set; }
+        public int Duration { get; set; }
+        public DVDGenre DVDGenre { get; set; }
+
         public virtual Library Library { get; set; }
         public virtual User User { get; set; }
-
     }
-
 }
