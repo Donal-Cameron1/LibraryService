@@ -12,44 +12,51 @@
 
 @using (Html.BeginForm())
 {
-    <p>
-        Search books: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
-    </p>
+<p>
+    Search books: @Html.TextBox("SearchString")
+    @Html.DropDownList("Genre",
+                new SelectList(Enum.GetValues(typeof(LibraryService.Models.Genre))),
+                "Select Genre",
+                new { @class = "form-control" })
+    <input type="submit" value="Search" />
+
+</p>
+    
+  
 }
 
-    <table class="table">
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Publisher
+        </th>
+        <th>
+            Type
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
-            <th>
-               Title
-            </th>
-            <th>
-               Publisher
-            </th>
-            <th>
-               Type
-            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details")
+            </td>
         </tr>
+    }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Publisher)
-                </td> 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>  
-                <td>                   
-                    @Html.ActionLink("Details", "Details")
-                </td>
-            </tr>
-        }
-
-    </table>
+</table>
 
 <div class="row">
     <div class="col-md-4">

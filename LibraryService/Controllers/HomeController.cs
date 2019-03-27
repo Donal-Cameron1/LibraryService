@@ -11,32 +11,67 @@ namespace LibraryService.Controllers
     public class HomeController : Controller
     {
         private LibraryContext db = new LibraryContext();
-        public ActionResult Index(string searchString)
+
+        public List<Book> BookTextSearch(string searchString)
         {
-            var bookItems = from s in db.Books select s;
+            var bookItems = from b in db.Books select b;
+            bookItems = bookItems.Where(b => b.Title.Contains(searchString)
+                                        || b.Author.Contains(searchString));
+            return bookItems.ToList();
+        }
+
+        public List<Book> BookFilterSearch(string genre)
+        {
+            var books = from b in db.Books select b;
+            books = books.Where(b => b.BookGenre.ToString().Equals(genre));
+            return books.ToList();
+        } 
+        
+        public List<DVD> DVDTextSearch(string searchString)
+        {
             var dvdItems = from d in db.DVD select d;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                bookItems = bookItems.Where(b => b.Title.Contains(searchString)
-                                       || b.Author.Contains(searchString));
-                dvdItems = dvdItems.Where(d => d.Title.Contains(searchString)
+            dvdItems = dvdItems.Where(d => d.Title.Contains(searchString)
                                        || d.Director.Contains(searchString));
+            return dvdItems.ToList();
+        }
+        
+        public List<DVD> DVDFilterSearch(string genre)
+        {
+            var dvds = from d in db.DVD select d;
+            dvds = dvds.Where(d => d.DVDGenre.ToString().Equals(genre));
+            return dvds.ToList();
+        }
 
-                IList<LibraryItem> items = new List<LibraryItem>();
 
-                foreach (Book b in bookItems)
-                {
-                    items.Add((LibraryItem)b);
-                }
-                foreach (DVD d in dvdItems)
-                {
-                    items.Add((LibraryItem)d);
-                }
-
+        public ActionResult Index(string searchString, string genre)
+        {
+            IList<LibraryItem> items = new List<LibraryItem>();
+           
+            if (String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(genre))
+            {
                 return View(items);
             }
-            return View(new List<LibraryItem>());
+            else if (String.IsNullOrEmpty(searchString) && !String.IsNullOrEmpty(genre))
+            {
+                return View(items
+                    .Concat(BookFilterSearch(genre).Cast<LibraryItem>())
+                    .Concat(DVDFilterSearch(genre).Cast<LibraryItem>())
+                    .ToList());
+            }
+            else if (!String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(genre))
+            {
+                return View(items
+                    .Concat(BookTextSearch(searchString).Cast<LibraryItem>())
+                    .Concat(DVDTextSearch(searchString).Cast<LibraryItem>())
+                    .ToList());
+            }
+            else
+            {
+                return View(items
+                    .Concat((BookTextSearch(searchString).Intersect(BookFilterSearch(genre))).Cast<LibraryItem>())
+                    .Concat((DVDTextSearch(searchString).Intersect(DVDFilterSearch(genre))).Cast<LibraryItem>())
+                    .ToList());
+            }
         }
 
         public ActionResult About()

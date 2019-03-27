@@ -8,7 +8,7 @@ namespace LibraryService.Models
 {
     public enum BookGenre
     {
-        Action, Crime, Fantasy, Horror, Poetry, Romance, Thriller
+        Action,Crime, Fantasy, Horror, Poetry, Romance, Thriller
     }
     public class Book: LibraryItem
     {

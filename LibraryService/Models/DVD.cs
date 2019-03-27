@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LibraryService.Models
 {
-    public enum DVDGenre 
+    public enum DVDGenre
     {
         Action, Crime, Comedy, Drama, Fantasy, Horror, Romance, Thriller
     }
