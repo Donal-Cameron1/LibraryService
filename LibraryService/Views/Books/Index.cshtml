@@ -4,106 +4,165 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Books</h2>
+<script id="test" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <h2>Books</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-@using (Html.BeginForm())
-{
     <p>
-        Search books: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
+        @Html.ActionLink("Create New", "Create")
     </p>
-}
+
+    @using (Html.BeginForm())
+    {
+        <p>
+            Search books: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }
+
+    <table class="table" id="myTable">
+        <tr>
+            <th onclick="sort(0)">
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th onclick="sort(1)">
+                @Html.DisplayNameFor(model => model.Publisher)
+            </th>
+            <th onclick="sort(2)">
+                @Html.DisplayNameFor(model => model.Pages)
+            </th>
+            <th onclick="sort(3)">
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th onclick="sort(4)">
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th onclick="sort(5)">
+                @Html.DisplayNameFor(model => model.LibraryId)
+            </th>
+            <th onclick="sort(6)">
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th onclick="sort(7)">
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th onclick="sort(8)">
+                @Html.DisplayNameFor(model => model.AgeRestriction)
+            </th>
+            <th onclick="sort(9)">
+                @Html.DisplayNameFor(model => model.PurchaseValue)
+            </th>
+            <th onclick="sort(10)">
+                @Html.DisplayNameFor(model => model.ReturnDate)
+            </th>
+            <th onclick="sort(11)">
+                @Html.DisplayNameFor(model => model.DateAdded)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pages)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LibraryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AgeRestriction)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchaseValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReturnDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateAdded)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Author }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Author }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Author })
+                </td>
+            </tr>
+        }
+
+    </table>
 
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Publisher)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Pages)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Genre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LibraryId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AgeRestriction)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PurchaseValue)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReturnDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateAdded)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Publisher)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pages)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LibraryId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AgeRestriction)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PurchaseValue)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReturnDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateAdded)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Author }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Author }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Author })
-        </td>
-    </tr>
-}
-
-</table>
+    <script>
+        function sort(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("myTable");
+            switching = true;
+            // Set the sorting direction to ascending:
+            dir = "asc";
+            /* Make a loop that will continue until
+           no switching has been done: */
+            while (switching) {
+                // Start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                /* Loop through all table rows (except the
+                first, which contains table headers): */
+                for (i = 1; i < (rows.length - 1); i++) {
+                    // Start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /* Get the two elements you want to compare,
+                    one from current row and one from the next: */
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    /* Check if the two rows should switch place,
+                   based on the direction, asc or desc: */
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            // If so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            // If so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    /* If a switch has been marked, make the switch
+                   and mark that a switch has been done: */
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    // Each time a switch is done, increase this count by 1:
+                    switchcount++;
+                } else {
+                    /* If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again. */
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+    </script>
