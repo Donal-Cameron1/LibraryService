@@ -5,12 +5,14 @@ using System.Web;
 using System.Web.Mvc;
 using LibraryService.DAL;
 using LibraryService.Models;
+using Microsoft.AspNet.Identity;
 
 namespace LibraryService.Controllers
 {
     public class HomeController : Controller
     {
         private LibraryContext db = new LibraryContext();
+        
 
         public List<Book> BookTextSearch(string searchString)
         {
@@ -76,6 +78,10 @@ namespace LibraryService.Controllers
 
         public ActionResult About()
         {
+            string currentUserId = User.Identity.GetUserId(); 
+            currentUserId = "a";
+            //ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserId == (int)currentUserId);
+
             ViewBag.Message = "Your application description page.";
 
             return View();

@@ -7,7 +7,7 @@ using LibraryService.Models;
 
 namespace LibraryService.DAL
 {
-    public class LibraryInitialiser : System.Data.Entity.DropCreateDatabaseAlways<LibraryContext>
+    public class LibraryInitialiser : DropCreateDatabaseAlways<LibraryContext>
     {
         protected override void Seed(LibraryContext context)
         {
@@ -39,6 +39,11 @@ namespace LibraryService.DAL
             };
             DVD.ForEach(s => context.DVD.Add(s));
             context.SaveChanges();
+            
+
+            //context.Users.Add(new User { UserId = "sjdfle342", BookmarkedBooks = new List<Book> { new Book() } , ReservedBooks = new List<Book> { new Book() } , LoanedBooks = new List<Book> { new Book() } } );
+            //context.SaveChanges();
+      
         }
 
     }

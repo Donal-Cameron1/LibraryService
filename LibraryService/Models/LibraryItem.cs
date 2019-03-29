@@ -21,8 +21,7 @@ namespace LibraryService.Models
         Book, DVD, CD
     }
 
-  
- 
+
     public class LibraryItem
     {   
         public string Title { get; set; }

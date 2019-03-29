@@ -3,6 +3,9 @@
 @{
     ViewBag.Title = "Home Page";
 }
+@section Styles {
+    <link href="@Url.Content("~/Styles/index_style.css")" rel="stylesheet" type="text/css" />
+}
 
 <div class="jumbotron">
     <h1>ASP.NET</h1>
@@ -12,21 +15,21 @@
 
 @using (Html.BeginForm())
 {
-<p>
-    <div class="form-group">
-        @Html.Label("Search books", new { @class = "col-sm-2 control-label" })
-        @Html.TextBox("SearchString", "", new { @class = "col-md-2 control-label" })
-        <div class="col-sm-md-2">
-            @Html.DropDownList("Genre",
-                        new SelectList(Enum.GetValues(typeof(LibraryService.Models.Genre))),
-                        "Select Genre",
-                        new { @class = "form-control" })
-        </div>
+    <p>
+        <div class="form-group">
+            @Html.Label("Search books", new { @class = "col-sm-2 control-label" })
+            @Html.TextBox("SearchString", "", new { @class = "col-md-2 control-label" })
+            <div class="col-sm-md-2">
+                @Html.DropDownList("Genre",
+                            new SelectList(Enum.GetValues(typeof(LibraryService.Models.Genre))),
+                            "Select Genre",
+                            new { @class = "form-control" })
+            </div>
             <input class="ol-md-2 control-label" type="submit" value="Search" />
-    </div>
-</p>
-    
-  
+        </div>
+    </p>
+
+
 }
 
 <table class="table">

@@ -9,12 +9,16 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LibraryService.Models;
+using LibraryService.DAL;
 
 namespace LibraryService.Controllers
 {
+
     [Authorize]
     public class AccountController : Controller
     {
+        private LibraryContext db = new LibraryContext();
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -156,7 +160,10 @@ namespace LibraryService.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
+                    db.Users.Add(new User{UserId = user.Id});
+                    db.SaveChanges();
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

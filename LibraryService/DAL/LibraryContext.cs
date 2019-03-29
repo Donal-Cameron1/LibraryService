@@ -19,6 +19,29 @@ namespace LibraryService.DAL
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<User>()
+                        .HasMany<Book>(u => u.BookmarkedBooks)
+                        .WithMany(b => b.BookmarkedBy)
+                        .Map(cs =>
+                         {
+                             cs.MapLeftKey("UserId");
+                             cs.MapRightKey("BookId");
+                             cs.ToTable("UserBookmarkedBooks");
+                         });
+          /*  
+            modelBuilder.Entity<User>()
+                       .HasMany(u => u.LoanedBooks)
+                       .WithRequired(b => b.LoanedBy)
+                       .HasForeignKey(u => u.id);
+
+            modelBuilder.Entity<User>()
+                       .HasMany(u => u.ReservedBooks)
+                       .WithRequired(b => b.ReservedBy)
+                       .HasForeignKey(u => u.id);
+
+            */
+           
         }
     }
 }

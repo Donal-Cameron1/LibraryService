@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using LibraryService.DAL;
 using LibraryService.Models;
+using Microsoft.AspNet.Identity;
 
 namespace LibraryService.Controllers
 {
@@ -130,6 +131,42 @@ namespace LibraryService.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult Bookmark(Book item)
+        {
+            string currentUserId = User.Identity.GetUserId();
+            // retrieve user
+            User user = db.Users.Find(currentUserId);
+            //ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserId == (int)currentUserId);
+
+            Book book = db.Books.Find(item.id);
+
+            //append book-item to users Bookmarklist
+            if (user != null && user.BookmarkedBooks == null) user.BookmarkedBooks = new List<Book>();
+            if (book != null && book.BookmarkedBy == null) book.BookmarkedBy = new List<User>();
+            user.BookmarkedBooks.Add(book);
+            book.BookmarkedBy.Add(user);
+
+            //save changes
+            db.SaveChanges();
+            db.Entry(user).State = EntityState.Modified;
+            db.Entry(book).State = EntityState.Modified;
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult ShowBookmarks()
+        {
+            // retrieve user
+            User user = db.Users.Find(User.Identity.GetUserId());
+            if (user == null || user.BookmarkedBooks == null || !user.BookmarkedBooks.Any())
+            {
+                return View(new List<Book>());
+                
+            } else
+            {
+                return View(user.BookmarkedBooks);
+            }
         }
     }
 }
