@@ -55,7 +55,7 @@ namespace LibraryService.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Author,id,Publisher,Pages,Title,Genre,LibraryId,Status,UserId,AgeRestriction,PurchaseValue,ReturnDate,DateAdded")] Book book)
+        public ActionResult Create([Bind(Include = "Author,Publisher,Pages,Title,Genre,LibraryId,Status,UserId,AgeRestriction,PurchaseValue,ReturnDate,DateAdded")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -137,7 +137,7 @@ namespace LibraryService.Controllers
         {
             string currentUserId = User.Identity.GetUserId();
             // retrieve user
-            User user = db.Users.Find(currentUserId);
+            User user = db.Users.Include(u=>u.BookmarkedBooks).SingleOrDefault(x => x.UserId == currentUserId);
             //ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserId == (int)currentUserId);
 
             Book book = db.Books.Find(item.id);

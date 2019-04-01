@@ -1,4 +1,5 @@
-﻿@model IEnumerable<LibraryService.Models.Book>
+﻿
+@model IEnumerable<LibraryService.Models.Book>
 
 @{
     ViewBag.Title = "Index";
@@ -101,8 +102,13 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.Author }) |
             @Html.ActionLink("Details", "Details", new { id = item.Author }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Author }) |
-            @Html.ActionLink("Bookmark", "Bookmark", item)
+            @Html.ActionLink("Delete", "Delete", new { id = item.Author })
+            @if (Request.IsAuthenticated)
+            {
+                <div>|
+                @Html.ActionLink("Bookmark", "Bookmark", item)
+                </div>
+            }
         </td>
     </tr>
 }

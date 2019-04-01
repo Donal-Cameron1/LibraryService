@@ -17,19 +17,17 @@
 {
     <p>
         <div class="form-group">
-            @Html.Label("Search books", new { @class = "col-sm-2 control-label" })
+            @Html.Label("Search:", new { @class = "col-sm-1 control-label" })
             @Html.TextBox("SearchString", "", new { @class = "col-md-2 control-label" })
-            <div class="col-sm-md-2">
+            <input class="ol-md-2 control-label" type="submit" value="Search" />
+            <div>
                 @Html.DropDownList("Genre",
                             new SelectList(Enum.GetValues(typeof(LibraryService.Models.Genre))),
                             "Select Genre",
-                            new { @class = "form-control" })
+                            new { @class = "form-control"})
             </div>
-            <input class="ol-md-2 control-label" type="submit" value="Search" />
         </div>
     </p>
-
-
 }
 
 <table class="table">

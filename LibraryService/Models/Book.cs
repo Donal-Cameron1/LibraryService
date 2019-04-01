@@ -14,14 +14,12 @@ namespace LibraryService.Models
     }
     public class Book: LibraryItem
     {
-        [Key]
-        public int id { get; set; }
         public string Author { get; set; }  
         public BookGenre BookGenre { get; set; }
         public int Pages { get; set; }
         public ICollection<User> BookmarkedBy { get; set; }
-        public User ReservedBy { get; set; }
-        public User LoanedBy { get; set; }
+        //public User ReservedBy { get; set; }
+        //public User LoanedBy { get; set; }
         
         public virtual Library Library { get; set; }
         //public ICollection<string> User { get; set; }

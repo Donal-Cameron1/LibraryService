@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibraryService.Models
 {
@@ -18,7 +19,7 @@ namespace LibraryService.Models
         public Nullable<DateTime> MemberSince { get; set; }
         public Nullable<DateTime> DateOfBirth { get; set; }
         public ICollection<Book> BookmarkedBooks { get; set; } 
-        public ICollection<Book> ReservedBooks { get; set; } 
-        public ICollection<Book> LoanedBooks { get; set; } 
+        //public ICollection<Book> ReservedBooks { get; set; } 
+        //ublic ICollection<Book> LoanedBooks { get; set; } 
     }
 }
