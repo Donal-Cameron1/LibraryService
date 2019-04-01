@@ -1,4 +1,5 @@
-﻿@model IEnumerable<LibraryService.Models.Book>
+﻿
+@model IEnumerable<LibraryService.Models.Book>
 
 @{
     ViewBag.Title = "Index";
@@ -60,52 +61,57 @@
             <th></th>
         </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Publisher)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Pages)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LibraryId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AgeRestriction)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PurchaseValue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReturnDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateAdded)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Author }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Author }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Author })
-                </td>
-            </tr>
-        }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Publisher)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pages)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookGenre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LibraryId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgeRestriction)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PurchaseValue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReturnDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateAdded)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Author }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Author }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Author })
+            @if (Request.IsAuthenticated)
+            {
+                <div>|
+                @Html.ActionLink("Bookmark", "Bookmark", item)
+                </div>
+            }
+        </td>
+    </tr>
+}
 
     </table>
 
