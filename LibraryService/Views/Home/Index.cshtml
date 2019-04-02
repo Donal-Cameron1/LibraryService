@@ -1,5 +1,10 @@
-﻿@{
+﻿@model IEnumerable<LibraryService.Models.LibraryItem>
+
+@{
     ViewBag.Title = "Home Page";
+}
+@section Styles {
+    <link href="@Url.Content("~/Styles/index_style.css")" rel="stylesheet" type="text/css" />
 }
 
 <div class="jumbotron">
@@ -8,6 +13,55 @@
     <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 
+@using (Html.BeginForm())
+{
+    <p>
+        <div class="form-group">
+            @Html.Label("Search:", new { @class = "col-sm-1 control-label" })
+            @Html.TextBox("SearchString", "", new { @class = "col-md-2 control-label" })
+            <input class="ol-md-2 control-label" type="submit" value="Search" />
+            <div>
+                @Html.DropDownList("Genre",
+                            new SelectList(Enum.GetValues(typeof(LibraryService.Models.Genre))),
+                            "Select Genre",
+                            new { @class = "form-control"})
+            </div>
+        </div>
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Publisher
+        </th>
+        <th>
+            Type
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details")
+            </td>
+        </tr>
+    }
+
+</table>
 
 <div class="row">
     <div class="col-md-4">
