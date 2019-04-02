@@ -14,7 +14,10 @@ namespace LibraryService.Models
         public string Address { get; set; }
         public string PostCode { get; set; }
         public string Name { get; set; }
+        public string OpeningHours { get; set; }
+        public string TelephoneNumber { get; set; }
         public int Capacity { get; set; }
+        
 
         public virtual ICollection<Book> Books { get; set; }
 
