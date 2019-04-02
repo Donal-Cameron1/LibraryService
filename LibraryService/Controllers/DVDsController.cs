@@ -18,6 +18,7 @@ namespace LibraryService.Controllers
         // GET: DVDs
         public ActionResult Index()
         {
+            ViewBag.message = "Full List of DVDs";
             return View(db.DVD.ToList());
         }
 
@@ -123,6 +124,14 @@ namespace LibraryService.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public ActionResult NewDVDs()
+
+        {
+            var baselineDate = DateTime.Now.AddDays(-7);
+            ViewBag.Message = "New DVDs added this week!";
+
+            return View("Index", db.DVD.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList());
         }
     }
 }

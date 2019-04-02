@@ -26,6 +26,7 @@ namespace LibraryService.Controllers
                 books = books.Where(s => s.Title.Contains(searchString)
                                        || s.Author.Contains(searchString));
             }
+            ViewBag.message = "Full Book List";
             return View(books.ToList());
         }
 
@@ -168,5 +169,14 @@ namespace LibraryService.Controllers
                 return View(user.BookmarkedBooks);
             }
         }
+        public ActionResult Newbooks()
+        {
+            var baselineDate = DateTime.Now.AddDays(-7);
+
+            return View("Index",db.Books.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList());
+
+
+        }
+
     }
 }
