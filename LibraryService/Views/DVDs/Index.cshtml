@@ -2,13 +2,17 @@
 
 @{
     ViewBag.Title = "Index";
+    var message = ViewBag.message;
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.message</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@Html.ActionLink("See New DVDs", "NewDVDs")
+
 <table class="table">
     <tr>
         <th>

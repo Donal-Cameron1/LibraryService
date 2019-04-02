@@ -6,7 +6,7 @@
 }
 
 <script id="test" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
-    <h2>Books</h2>
+    <h2>@ViewBag.message</h2>
 
     <p>
         @Html.ActionLink("Create New", "Create")
@@ -19,6 +19,8 @@
             <input type="submit" value="Search" />
         </p>
     }
+
+    @Html.ActionLink("See New books","Newbooks")
 
     <table class="table" id="myTable">
         <tr>
