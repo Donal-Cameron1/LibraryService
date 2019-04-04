@@ -29,19 +29,21 @@ namespace LibraryService.DAL
                              cs.MapRightKey("BookId");
                              cs.ToTable("UserBookmarkedBooks");
                          });
-          /*  
-            modelBuilder.Entity<User>()
-                       .HasMany(u => u.LoanedBooks)
-                       .WithRequired(b => b.LoanedBy)
-                       .HasForeignKey(u => u.id);
 
+           /* modelBuilder.Entity<User>()
+                       .HasMany(u => u.LoanedBooks)
+                       .WithOptional(b => b.LoanedBy)
+                       .HasForeignKey(u => u.LoanedById);
+                       
+
+            
             modelBuilder.Entity<User>()
                        .HasMany(u => u.ReservedBooks)
                        .WithRequired(b => b.ReservedBy)
                        .HasForeignKey(u => u.id);
 
             */
-           
+
         }
     }
 }

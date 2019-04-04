@@ -18,8 +18,10 @@ namespace LibraryService.Models
         public string Role { get; set; }
         public Nullable<DateTime> MemberSince { get; set; }
         public Nullable<DateTime> DateOfBirth { get; set; }
-        public ICollection<Book> BookmarkedBooks { get; set; } 
-        //public ICollection<Book> ReservedBooks { get; set; } 
-        //ublic ICollection<Book> LoanedBooks { get; set; } 
+        public ICollection<Book> BookmarkedBooks { get; set; } = new List<Book>();
+        [InverseProperty("ReservedBy")]
+        public ICollection<Book> ReservedBooks { get; set; }
+        [InverseProperty("LoanedBy")]
+        public ICollection<Book> LoanedBooks { get; set; } 
     }
 }

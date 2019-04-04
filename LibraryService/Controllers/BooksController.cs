@@ -143,23 +143,23 @@ namespace LibraryService.Controllers
 
             Book book = db.Books.Find(item.id);
 
-            //append book-item to users Bookmarklist
-            if (user != null && user.BookmarkedBooks == null) user.BookmarkedBooks = new List<Book>();
-            if (book != null && book.BookmarkedBy == null) book.BookmarkedBy = new List<User>();
+            //append book-item to users Bookmarklist         
             user.BookmarkedBooks.Add(book);
-            book.BookmarkedBy.Add(user);
+            //book.BookmarkedBy.Add(user);
 
             //save changes
             db.SaveChanges();
-            db.Entry(user).State = EntityState.Modified;
-            db.Entry(book).State = EntityState.Modified;
+            //db.Entry(user).State = EntityState.Modified;
+            //db.Entry(book).State = EntityState.Modified;
             return RedirectToAction("Index");
         }
 
         public ActionResult ShowBookmarks()
         {
             // retrieve user
-            User user = db.Users.Find(User.Identity.GetUserId());
+            var currentUser = User.Identity.GetUserId();
+            User user = db.Users.Include(u => u.BookmarkedBooks).Where(u => u.UserId == currentUser).FirstOrDefault();
+
             if (user == null || user.BookmarkedBooks == null || !user.BookmarkedBooks.Any())
             {
                 return View(new List<Book>());
