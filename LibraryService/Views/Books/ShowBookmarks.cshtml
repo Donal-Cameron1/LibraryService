@@ -4,6 +4,7 @@
     ViewBag.Title = "ShowBookmarks";
 }
 
+
 <h2>ShowBookmarks</h2>
 
 <table class="table">
@@ -36,13 +37,7 @@
             @Html.DisplayNameFor(model => model.AgeRestriction)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PurchaseValue)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.ReturnDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateAdded)
         </th>
         <th></th>
     </tr>
@@ -76,21 +71,13 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AgeRestriction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PurchaseValue)
-            </td>
+            </td>           
             <td>
                 @Html.DisplayFor(modelItem => item.ReturnDate)
-            </td>
+            </td>            
             <td>
-                @Html.DisplayFor(modelItem => item.DateAdded)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Author }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Author }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Author }) |
-                @Html.ActionLink("Bookmark", "Bookmark", item)
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Remove Bookmark", "DeleteBookmark", new { id = item.id })
             </td>
         </tr>
         }

@@ -137,10 +137,12 @@ namespace LibraryService.Controllers
         public ActionResult Bookmark(Book item)
         {
             string currentUserId = User.Identity.GetUserId();
+
             // retrieve user
-            User user = db.Users.Include(u=>u.BookmarkedBooks).SingleOrDefault(x => x.UserId == currentUserId);
+            User user = db.Users.Include(u => u.BookmarkedBooks).SingleOrDefault(x => x.UserId == currentUserId);
             //ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserId == (int)currentUserId);
 
+            //get book-item
             Book book = db.Books.Find(item.id);
 
             //append book-item to users Bookmarklist         
@@ -148,9 +150,7 @@ namespace LibraryService.Controllers
             //book.BookmarkedBy.Add(user);
 
             //save changes
-            db.SaveChanges();
-            //db.Entry(user).State = EntityState.Modified;
-            //db.Entry(book).State = EntityState.Modified;
+            db.SaveChanges();          
             return RedirectToAction("Index");
         }
 
@@ -160,22 +160,35 @@ namespace LibraryService.Controllers
             var currentUser = User.Identity.GetUserId();
             User user = db.Users.Include(u => u.BookmarkedBooks).Where(u => u.UserId == currentUser).FirstOrDefault();
 
+            //show list of bookmarked books
             if (user == null || user.BookmarkedBooks == null || !user.BookmarkedBooks.Any())
             {
-                return View(new List<Book>());
-                
+                return View(new List<Book>());               
             } else
             {
                 return View(user.BookmarkedBooks);
             }
         }
+
+        public ActionResult DeleteBookmark(int id)
+        {
+            var currentUser = User.Identity.GetUserId();
+            User user = db.Users.Include(u => u.BookmarkedBooks).Where(u => u.UserId == currentUser).FirstOrDefault();
+            Book book = db.Books.Find(id);
+
+            user.BookmarkedBooks.Remove(book);
+            db.SaveChanges();
+
+            return RedirectToAction("ShowBookmarks");
+            //return View(user.BookmarkedBooks);
+        }
+
+
         public ActionResult Newbooks()
         {
             var baselineDate = DateTime.Now.AddDays(-7);
 
             return View("Index",db.Books.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList());
-
-
         }
 
     }
