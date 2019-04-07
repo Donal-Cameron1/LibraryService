@@ -48,7 +48,13 @@ namespace LibraryService.Controllers
         // GET: Books/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new Book()
+            {
+                Status = Status.Available,
+                Type = Models.Type.Book,
+                DateAdded = DateTime.Today
+            };
+            return View(model);
         }
 
         // POST: Books/Create
@@ -56,7 +62,7 @@ namespace LibraryService.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Author,Publisher,Pages,Title,Genre,LibraryId,Status,UserId,AgeRestriction,PurchaseValue,ReturnDate,DateAdded")] Book book)
+        public ActionResult Create([Bind(Include = "id,Author,Publisher,Pages,Title,Genre,LibraryId,Status,UserId,AgeRestriction,PurchaseValue,ReturnDate,DateAdded,Type")] Book book)
         {
             if (ModelState.IsValid)
             {

@@ -14,7 +14,8 @@ namespace LibraryService.Models
     }
     public class Book: LibraryItem
     {
-        public string Author { get; set; }  
+        public string Author { get; set; }
+        [Display(Name = "Genre")]
         public BookGenre BookGenre { get; set; }
         public int Pages { get; set; }
         //public ICollection<User> BookmarkedBy { get; set; } = new List<User>();

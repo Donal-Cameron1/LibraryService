@@ -13,9 +13,9 @@ namespace LibraryService.DAL
         {
             var Libraries = new List<Library>
             {
-                new Library {LibraryId="1" , Address="London Road", PostCode="S2 4NF", Name="Highfield Library", Capacity=12345, TelephoneNumber="0114 1234567", OpeningHours="Monday - Friday 8am-9pm", Coord="53.366833, -1.474933"}, 
-                new Library {LibraryId="2" , Address="160 Hemper Lane", PostCode="S8 7FE", Name="Greenhill Library", Capacity=49568, TelephoneNumber="0114 987654", OpeningHours="Monday - Friday 8am-9pm", Coord="53.326512, -1.488615"},
-                new Library {LibraryId="3" , Address="900 Chesterfield Road", PostCode="S8 0SH", Name="Woodseats Library", Capacity=304985, TelephoneNumber="0114 842394", OpeningHours="Monday - Friday 8am-9pm", Coord="53.340000, -1.480345"}
+                new Library {Address="London Road", PostCode="S2 4NF", Name="Highfield Library", Capacity=12345, TelephoneNumber="0114 1234567", OpeningHours="Monday - Friday 8am-9pm", Coord="53.366833, -1.474933"}, 
+                new Library {Address="160 Hemper Lane", PostCode="S8 7FE", Name="Greenhill Library", Capacity=49568, TelephoneNumber="0114 987654", OpeningHours="Monday - Friday 8am-9pm", Coord="53.326512, -1.488615"},
+                new Library {Address="900 Chesterfield Road", PostCode="S8 0SH", Name="Woodseats Library", Capacity=304985, TelephoneNumber="0114 842394", OpeningHours="Monday - Friday 8am-9pm", Coord="53.340000, -1.480345"}
             };
             
             Libraries.ForEach(s => context.Libraries.Add(s));

@@ -30,18 +30,24 @@ namespace LibraryService.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DVD dVD = db.DVD.Find(id);
-            if (dVD == null)
+            DVD dvd = db.DVD.Find(id);
+            if (dvd == null)
             {
                 return HttpNotFound();
             }
-            return View(dVD);
+            return View(dvd);
         }
 
         // GET: DVDs/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new DVD()
+            {
+                Status = Status.Available,
+                Type = Models.Type.Book,
+                DateAdded = DateTime.Today
+            };
+            return View(model);
         }
 
         // POST: DVDs/Create
