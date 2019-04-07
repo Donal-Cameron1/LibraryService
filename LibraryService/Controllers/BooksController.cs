@@ -31,7 +31,7 @@ namespace LibraryService.Controllers
         }
 
         // GET: Books/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
             if (id == null)
             {
@@ -69,7 +69,7 @@ namespace LibraryService.Controllers
         }
 
         // GET: Books/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {
@@ -100,7 +100,7 @@ namespace LibraryService.Controllers
         }
 
         // GET: Books/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {
@@ -117,7 +117,7 @@ namespace LibraryService.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Book book = db.Books.Find(id);
             db.Books.Remove(book);
@@ -136,39 +136,25 @@ namespace LibraryService.Controllers
 
         public ActionResult Bookmark(Book item)
         {
+           
             string currentUserId = User.Identity.GetUserId();
 
             // retrieve user
             User user = db.Users.Include(u => u.BookmarkedBooks).SingleOrDefault(x => x.UserId == currentUserId);
             //ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserId == (int)currentUserId);
 
-            //get book-item
+          
+            //get item 
             Book book = db.Books.Find(item.id);
-
-            //append book-item to users Bookmarklist         
+            //append item to users bookmark list
             user.BookmarkedBooks.Add(book);
+            
+                     
             //book.BookmarkedBy.Add(user);
-
-            //save changes
             db.SaveChanges();          
             return RedirectToAction("Index");
         }
 
-        public ActionResult ShowBookmarks()
-        {
-            // retrieve user
-            var currentUser = User.Identity.GetUserId();
-            User user = db.Users.Include(u => u.BookmarkedBooks).Where(u => u.UserId == currentUser).FirstOrDefault();
-
-            //show list of bookmarked books
-            if (user == null || user.BookmarkedBooks == null || !user.BookmarkedBooks.Any())
-            {
-                return View(new List<Book>());               
-            } else
-            {
-                return View(user.BookmarkedBooks);
-            }
-        }
 
         public ActionResult DeleteBookmark(int id)
         {
@@ -179,12 +165,12 @@ namespace LibraryService.Controllers
             user.BookmarkedBooks.Remove(book);
             db.SaveChanges();
 
-            return RedirectToAction("ShowBookmarks");
+            return RedirectToAction("ShowBookmarks", "LibraryItems");
             //return View(user.BookmarkedBooks);
         }
 
 
-        public ActionResult Newbooks()
+        public ActionResult NewBooks()
         {
             var baselineDate = DateTime.Now.AddDays(-7);
 

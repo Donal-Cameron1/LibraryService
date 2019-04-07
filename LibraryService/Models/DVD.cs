@@ -18,6 +18,7 @@ namespace LibraryService.Models
         public int Duration { get; set; }
         public DVDGenre DVDGenre { get; set; }
 
+
         public virtual Library Library { get; set; }
         public virtual User User { get; set; }
     }

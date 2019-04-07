@@ -23,19 +23,19 @@ namespace LibraryService.DAL
 
             var Books = new List<Book>
             {
-                new Book {Title="Harry Potter", Author="J.K. Rowling", Publisher="Penguin", BookGenre=BookGenre.Fantasy, Pages=200, AgeRestriction=7, PurchaseValue=9, Type=Models.Type.Book, LibraryId=2, Status=Status.Reserved, UserId=3},
-                new Book {Title="The Lion the whitch and the wardrobe", Author="Lewis Caroll", Publisher="Penguin", BookGenre=BookGenre.Fantasy, Pages=150, AgeRestriction=5, PurchaseValue=11, Type=Models.Type.Book, LibraryId=3, Status=Status.Available},
-                new Book {Title="The Lion the whitch and the wardrobe", Author="Lewis Caroll", Publisher="Penguin", BookGenre=BookGenre.Fantasy, Pages=150, AgeRestriction=5, PurchaseValue=11, Type=Models.Type.Book, LibraryId=2, Status=Status.Available},
-                new Book {Title="The Lion the whitch and the wardrobe", Author="Lewis Caroll", Publisher="Penguin", BookGenre=BookGenre.Fantasy, Pages=150, AgeRestriction=5, PurchaseValue=11, Type=Models.Type.Book, LibraryId=2, Status=Status.Available}
+                new Book {Title="Harry Potter", Author="J.K. Rowling", Publisher="Penguin", BookGenre=BookGenre.Fantasy, Pages=200, AgeRestriction=7, PurchaseValue=9, Type=Models.Type.Book, LibraryId=2, Status=Status.Reserved, UserId=3, DateAdded=new DateTime(2019,4,6)},
+                new Book {Title="The Lion the whitch and the wardrobe", Author="Lewis Caroll", Publisher="Penguin", BookGenre=BookGenre.Fantasy, Pages=150, AgeRestriction=5, PurchaseValue=11, Type=Models.Type.Book, LibraryId=3, Status=Status.Available, DateAdded=new DateTime(2019,3,22)},
+                new Book {Title="The Lion the whitch and the wardrobe", Author="Lewis Caroll", Publisher="Penguin", BookGenre=BookGenre.Fantasy, Pages=150, AgeRestriction=5, PurchaseValue=11, Type=Models.Type.Book, LibraryId=2, Status=Status.Available, DateAdded=new DateTime(2019,2,14)},
+                new Book {Title="The Lion the whitch and the wardrobe", Author="Lewis Caroll", Publisher="Penguin", BookGenre=BookGenre.Fantasy, Pages=150, AgeRestriction=5, PurchaseValue=11, Type=Models.Type.Book, LibraryId=2, Status=Status.Available, DateAdded=new DateTime(2019,2,23)}
             };
             Books.ForEach(s => context.Books.Add(s));
             context.SaveChanges();
 
             var DVD = new List<DVD>
             {
-                new DVD {Title="Harry Potter and the Philosopher's Stone", Director="Chris Columbus", Publisher="Warner Bros. Pictures", DVDGenre=DVDGenre.Fantasy, Duration=152, AgeRestriction=12, PurchaseValue=7.99f, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available},
-                new DVD {Title="Harry Potter and the Chamber of Secrets", Director="Chris Columbus", Publisher="Warner Bros. Pictures", DVDGenre=DVDGenre.Fantasy, Duration=161, AgeRestriction=12, PurchaseValue=7.99f, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available},
-                new DVD {Title="Forrest Gumpp", Director="Robert Zemeckis", Publisher="Paramount Pictures", DVDGenre=DVDGenre.Drama, Duration=142, AgeRestriction=12, PurchaseValue=8.99f, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available}
+                new DVD {Title="Harry Potter and the Philosopher's Stone", Director="Chris Columbus", Publisher="Warner Bros. Pictures", DVDGenre=DVDGenre.Fantasy, Duration=152, AgeRestriction=12, PurchaseValue=7.99f, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded=new DateTime(2019,1,12)},
+                new DVD {Title="Harry Potter and the Chamber of Secrets", Director="Chris Columbus", Publisher="Warner Bros. Pictures", DVDGenre=DVDGenre.Fantasy, Duration=161, AgeRestriction=12, PurchaseValue=7.99f, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded=new DateTime(2019,4,3)},
+                new DVD {Title="Forrest Gumpp", Director="Robert Zemeckis", Publisher="Paramount Pictures", DVDGenre=DVDGenre.Drama, Duration=142, AgeRestriction=12, PurchaseValue=8.99f, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded= new DateTime(2019,3,31)}
             };
             DVD.ForEach(s => context.DVD.Add(s));
             context.SaveChanges();  

@@ -21,7 +21,7 @@ namespace LibraryService.DAL
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Entity<User>()
-                        .HasMany<Book>(u => u.BookmarkedBooks)
+                        .HasMany<LibraryItem>(u => u.BookmarkedBooks)
                         .WithMany(b => b.BookmarkedBy)
                         .Map(cs =>
                          {
@@ -45,5 +45,7 @@ namespace LibraryService.DAL
             */
 
         }
+
+        public System.Data.Entity.DbSet<LibraryService.Models.LibraryItem> LibraryItems { get; set; }
     }
 }
