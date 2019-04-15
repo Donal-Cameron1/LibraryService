@@ -18,13 +18,16 @@ namespace LibraryService.Controllers
         // GET: Library
         public ActionResult Index(string searchString)
         {
-            var libraries = from s in db.Libraries
-                        select s;
+            var libraries = from s 
+                            in db.Libraries
+                            select s;
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 libraries = libraries.Where(s => s.Name.Contains(searchString)
                                        || s.PostCode.Contains(searchString));
             }
+
             return View(libraries.ToList());
         }
 
@@ -41,6 +44,11 @@ namespace LibraryService.Controllers
                 return HttpNotFound();
             }
             return View(library);
+        }
+
+        public ActionResult Detailspartial()
+        {
+            return View();
         }
 
         // GET: Library/Create

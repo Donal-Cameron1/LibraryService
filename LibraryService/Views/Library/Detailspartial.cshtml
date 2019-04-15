@@ -1,0 +1,42 @@
+﻿<h3>Libraries Map</h3>
+
+<div id="googleMap" style="width:100%;height:400px;"></div>
+
+<script>
+    function myMap() {
+        var mapProp = {
+            center: new google.maps.LatLng(53.3815, -1.4717),
+            zoom: 12,
+        };
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+        var location1 = new google.maps.Marker(
+            { position: new google.maps.LatLng(53.366833, -1.474933) });
+        var location1info = new google.maps.InfoWindow({
+            content: "Highfield Library"
+        });
+        location1.setMap(map);
+        google.maps.event.addListener(location1, 'click', function ()
+        { location1info.open(map, location1) });
+
+        var location2 = new google.maps.Marker(
+            { position: new google.maps.LatLng(53.326512, -1.488615) });
+        var location2info = new google.maps.InfoWindow({
+            content: "Greenhill Library"
+        });
+        location2.setMap(map);
+        google.maps.event.addListener(location2, 'click', function ()
+        { location2info.open(map, location2) });
+
+        var location3 = new google.maps.Marker(
+            { position: new google.maps.LatLng(53.340000, -1.480345) });
+        var location3info = new google.maps.InfoWindow({
+            content: "Woodseats Library"
+        });
+        location3.setMap(map);
+        google.maps.event.addListener(location3, 'click', function ()
+        { location3info.open(map, location3) });
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAobn4NuErZmfWtqOllY3qCD_geeo0Rj7Q&callback=myMap"></script>
