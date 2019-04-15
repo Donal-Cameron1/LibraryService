@@ -453,6 +453,7 @@
     <Content Include="Views\DVDs\Details.cshtml" />
     <Content Include="Views\DVDs\Edit.cshtml" />
     <Content Include="Views\DVDs\Index.cshtml" />
+    <Content Include="Views\Library\Detailspartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

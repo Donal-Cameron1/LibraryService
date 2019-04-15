@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    var maplocations = new List<string>();
 }
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,6 +45,7 @@
     </p>
 }
 
+
 <table class="table">
 
 
@@ -64,8 +66,7 @@
 
 </table>
 
-
-
+@Html.Partial("Detailspartial");
 
 <script>
     var coll = document.getElementsByClassName("collapsible");
