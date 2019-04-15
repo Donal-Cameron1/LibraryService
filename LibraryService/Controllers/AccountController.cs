@@ -176,7 +176,8 @@ namespace LibraryService.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);                    
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    UserManager.AddToRole(user.Id, "User");
                     //Roles.AddUserToRole(user.UserName, "User");
 
                     //add user to LibraryContext DB

@@ -32,7 +32,5 @@ namespace LibraryService.Controllers
                 return View(user.BookmarkedBooks);
             }
         }
-
-      
     }
 }

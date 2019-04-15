@@ -34,7 +34,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @Value = "", @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -42,7 +42,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.DVDGenre, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EnumDropDownListFor(model => model.DVDGenre, htmlAttributes: new { @class = "form-control" })
+            @Html.EnumDropDownListFor(model => model.DVDGenre, "Select", htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.DVDGenre, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -58,7 +58,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.AgeRestriction, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.AgeRestriction, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EnumDropDownListFor(model => model.AgeRestriction, "Select", htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.AgeRestriction, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -90,7 +90,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.PurchaseValue, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.PurchaseValue, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.PurchaseValue, new { htmlAttributes = new { @Value = "", @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.PurchaseValue, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -106,18 +106,16 @@
     <div class="form-group">
         @Html.LabelFor(model => model.LibraryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.LibraryId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownList("LibraryId", new SelectList(new LibraryService.DAL.LibraryContext().Libraries.Select(x =>
+                        new SelectListItem
+                        {
+                            Value = x.LibraryId.ToString(),
+                            Text = x.Name
+                        }), "Value", "Text"), "Select", htmlAttributes : new { @class = "form-control" } )
             @Html.ValidationMessageFor(model => model.LibraryId, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
