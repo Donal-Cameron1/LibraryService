@@ -1,0 +1,97 @@
+﻿@model IEnumerable<LibraryService.Models.LibraryItem>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+@section Styles {
+    <link href="@Url.Content("~/Styles/index_style.css")" rel="stylesheet" type="text/css" />
+}
+
+    <h2>Find your item.</h2>
+   
+@using Microsoft.AspNet.Identity
+@using (Html.BeginForm())
+{
+    <p>
+        <div class="form-group">
+            @Html.Label("Search:", new { @class = "col-sm-1 control-label" })
+            @Html.TextBox("SearchString", "", new { @class = "col-md-2 control-label" })
+            <input class="ol-md-2 control-label" type="submit" value="Search" />
+            <div>
+                @Html.DropDownList("Genre",
+                            new SelectList(Enum.GetValues(typeof(LibraryService.Models.Genre))),
+                            "Select Genre",
+                            new { @class = "form-control"})
+            </div>
+            <div>
+                @Html.DropDownList("Status",
+                            new SelectList(Enum.GetValues(typeof(LibraryService.Models.Status))),
+                            "Select Status",
+                            new { @class = "form-control"})
+            </div>
+            <div>
+                @Html.DropDownList("Type",
+                            new SelectList(Enum.GetValues(typeof(LibraryService.Models.Type))),
+                            "Select Type",
+                            new { @class = "form-control"})
+            </div>
+        </div>
+    </p>
+}
+@if (Model.Any())
+{
+
+
+<table class="table" >
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Publisher
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Genre
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            @if (item.Type == LibraryService.Models.Type.Book)
+            {
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
+                    @if (!item.BookmarkedBy.Where(u => u.UserId == HttpContext.Current.User.Identity.GetUserId()).Any()) {
+                        @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id, Controller = "Books" })}
+                </td>
+            }
+            @if (item.Type == LibraryService.Models.Type.DVD)
+            {
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
+                    @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id, Controller = "Books" })
+                </td>
+            }
+        </tr>
+    }
+
+</table>
+}
+
