@@ -452,8 +452,12 @@
     <Content Include="Views\DVDs\Details.cshtml" />
     <Content Include="Views\DVDs\Edit.cshtml" />
     <Content Include="Views\DVDs\Index.cshtml" />
+
+    <Content Include="Views\Library\Detailspartial.cshtml" />
+
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\LibraryItems\ShowBookmarks.cshtml" />
+
 
   </ItemGroup>
   <ItemGroup>
