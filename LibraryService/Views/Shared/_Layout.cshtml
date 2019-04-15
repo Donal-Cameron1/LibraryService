@@ -32,11 +32,18 @@
                     <li>@Html.ActionLink("Libraries", "Index", "Library")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+                    <li>@Html.ActionLink("Libraries", "Index", "Library")</li>
+                    <li>@Html.ActionLink("Books", "Index", "Books")</li>
+                    <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
+
+
                     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Users Admin", "Index","UsersAdmin")</li>
                         <li>@Html.ActionLink("Roles Admin", "Index", "RolesAdmin")</li>                     
                     }
+
 
                 </ul>
                 @Html.Partial("_LoginPartial")
