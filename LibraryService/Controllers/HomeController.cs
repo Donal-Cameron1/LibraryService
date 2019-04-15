@@ -5,77 +5,125 @@ using System.Web;
 using System.Web.Mvc;
 using LibraryService.DAL;
 using LibraryService.Models;
+using Microsoft.AspNet.Identity;
 
 namespace LibraryService.Controllers
 {
     public class HomeController : Controller
     {
         private LibraryContext db = new LibraryContext();
+        
 
-        public List<Book> BookTextSearch(string searchString)
-        {
-            var bookItems = from b in db.Books select b;
-            bookItems = bookItems.Where(b => b.Title.Contains(searchString)
-                                        || b.Author.Contains(searchString));
-            return bookItems.ToList();
+        public IQueryable<Book> BookTextSearch(IQueryable<Book> query, string searchString)
+        {                       
+            return query.Where(b => b.Title.Contains(searchString)
+                                        || b.Author.Contains(searchString));          
         }
 
-        public List<Book> BookFilterSearch(string genre)
+        public IQueryable<Book> BookGenreFilter(IQueryable<Book> query, string genre)
         {
-            var books = from b in db.Books select b;
-            books = books.Where(b => b.BookGenre.ToString().Equals(genre));
-            return books.ToList();
+            return query.Where(b => b.BookGenre.ToString().Equals(genre));
         } 
         
-        public List<DVD> DVDTextSearch(string searchString)
+        public IQueryable<DVD> DVDTextSearch(IQueryable<DVD> query, string searchString)
         {
-            var dvdItems = from d in db.DVD select d;
-            dvdItems = dvdItems.Where(d => d.Title.Contains(searchString)
-                                       || d.Director.Contains(searchString));
-            return dvdItems.ToList();
+            return query.Where(d => d.Title.Contains(searchString)
+                                        || d.Director.Contains(searchString));
         }
         
-        public List<DVD> DVDFilterSearch(string genre)
+        public IQueryable<DVD> DVDGenreFilter(IQueryable<DVD> query, string genre)
         {
-            var dvds = from d in db.DVD select d;
-            dvds = dvds.Where(d => d.DVDGenre.ToString().Equals(genre));
-            return dvds.ToList();
+            return query.Where(d => d.DVDGenre.ToString().Equals(genre));
+        }
+
+        public IQueryable<Book> BookStatusFilter(IQueryable<Book> query, string status)
+        {
+            return query.Where(b => b.Status.ToString().Equals(status));
+        }
+
+        public IQueryable<DVD> DVDStatusFilter(IQueryable<DVD> query, string status)
+        {
+            return query.Where(d => d.Status.ToString().Equals(status));
+        }
+
+        public IQueryable<Book> BookTypeFilter(IQueryable<Book> query, string type)
+        {
+            return query.Where(d => d.Type.ToString().Equals(type));
+        }
+
+        public IQueryable<DVD> DVDTypeFilter(IQueryable<DVD> query, string type)
+        {
+            return query.Where(d => d.Type.ToString().Equals(type));
         }
 
 
-        public ActionResult Index(string searchString, string genre)
+
+        public ActionResult Searchbar(string searchString, string genre, string status, string type)
         {
             IList<LibraryItem> items = new List<LibraryItem>();
-           
-            if (String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(genre))
+            var bookquery = from b in db.Books select b;
+            var dvdquery = from d in db.DVD select d;
+
+            if (String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(genre) && String.IsNullOrEmpty(status) && String.IsNullOrEmpty(type))
             {
                 return View(items);
             }
-            else if (String.IsNullOrEmpty(searchString) && !String.IsNullOrEmpty(genre))
+            if (!String.IsNullOrEmpty(searchString))
             {
-                return View(items
-                    .Concat(BookFilterSearch(genre).Cast<LibraryItem>())
-                    .Concat(DVDFilterSearch(genre).Cast<LibraryItem>())
-                    .ToList());
+                bookquery = BookTextSearch(bookquery, searchString);
+                dvdquery = DVDTextSearch(dvdquery, searchString);
             }
-            else if (!String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(genre))
+            if (!String.IsNullOrEmpty(genre))
             {
-                return View(items
-                    .Concat(BookTextSearch(searchString).Cast<LibraryItem>())
-                    .Concat(DVDTextSearch(searchString).Cast<LibraryItem>())
-                    .ToList());
+                bookquery = BookGenreFilter(bookquery, genre);
+                dvdquery = DVDGenreFilter(dvdquery, genre);               
             }
-            else
+            if (!String.IsNullOrEmpty(status))
             {
-                return View(items
-                    .Concat((BookTextSearch(searchString).Intersect(BookFilterSearch(genre))).Cast<LibraryItem>())
-                    .Concat((DVDTextSearch(searchString).Intersect(DVDFilterSearch(genre))).Cast<LibraryItem>())
-                    .ToList());
+                bookquery = BookStatusFilter(bookquery, status);
+                dvdquery = DVDStatusFilter(dvdquery, status);
             }
+            if (!String.IsNullOrEmpty(type))
+            {
+                bookquery = BookTypeFilter(bookquery, type);
+                dvdquery = DVDTypeFilter(dvdquery, type);
+            }
+
+            foreach (Book book in bookquery.ToList())
+            {
+                var item = (LibraryItem)book;
+                item.Genre = (Genre) Enum.Parse(typeof(Genre),book.BookGenre.ToString());
+                items.Add(item);
+            }
+
+            foreach (DVD dvd in dvdquery.ToList())
+            {
+                var item = (LibraryItem)dvd;
+                item.Genre = (Genre)Enum.Parse(typeof(Genre), dvd.DVDGenre.ToString());
+                items.Add(item);
+            }
+
+            return View(items);
+            
+        }
+
+        public ActionResult Index()
+        {
+            var baselineDate = DateTime.Now.AddDays(-7);
+            IList<LibraryItem> newitems = new List<LibraryItem>();
+
+            IEnumerable<LibraryItem> books = db.Books.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList().Cast<LibraryItem>();
+            IEnumerable<LibraryItem> dvds = db.DVD.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList().Cast<LibraryItem>();
+
+            return View(newitems.Concat(books).Concat(dvds));                 
         }
 
         public ActionResult About()
         {
+            string currentUserId = User.Identity.GetUserId(); 
+            currentUserId = "a";
+            //ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserId == (int)currentUserId);
+            
             ViewBag.Message = "Your application description page.";
 
             return View();

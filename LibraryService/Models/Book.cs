@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibraryService.Models
 {
@@ -12,14 +14,16 @@ namespace LibraryService.Models
     }
     public class Book: LibraryItem
     {
-        [Key]
-        public int id { get; set; }
-        public string Author { get; set; }  
+        public string Author { get; set; }
+        [Display(Name = "Genre")]
         public BookGenre BookGenre { get; set; }
-        public int Pages { get; set; }  
+        public int Pages { get; set; }
+        //public ICollection<User> BookmarkedBy { get; set; } = new List<User>();
+        public User ReservedBy { get; set; }
+        public User LoanedBy { get; set; }       
         
         public virtual Library Library { get; set; }
-        public virtual User User { get; set; }
+        //public ICollection<string> User { get; set; }
 
     }
 

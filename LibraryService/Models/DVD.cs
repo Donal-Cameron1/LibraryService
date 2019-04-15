@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibraryService.Models
 {
@@ -14,11 +14,11 @@ namespace LibraryService.Models
 
     public class DVD : LibraryItem
     {
-        [Key]
-        public int id { get; set; }
         public string Director { get; set; }
         public int Duration { get; set; }
+        [Display(Name = "Genre")]
         public DVDGenre DVDGenre { get; set; }
+
 
         public virtual Library Library { get; set; }
         public virtual User User { get; set; }

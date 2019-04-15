@@ -1,9 +1,12 @@
 ﻿@model LibraryService.Models.RegisterViewModel
 @{
+    /**/
+
     ViewBag.Title = "Register";
 }
 
-<h2>@ViewBag.Title.</h2>
+
+    <h2>@ViewBag.Title.</h2>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -34,7 +37,17 @@
             <input type="submit" class="btn btn-default" value="Register" />
         </div>
     </div>
+
+    <div>
+        @Html.ActionLink("Log in as an existing user", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    </div><br />
+
+    <div>
+        @Html.ActionLink("Sign up later", "Index", "Home", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        <p>You won't be able to make reservations.</p>
+    </div>
 }
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
