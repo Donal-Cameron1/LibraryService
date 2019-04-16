@@ -54,7 +54,7 @@ namespace LibraryService
             IdentityFactoryOptions<ApplicationRoleManager> options,
             IOwinContext context)
         {
-            var manager = new ApplicationRoleManager(
+            ApplicationRoleManager manager = new ApplicationRoleManager(
                 new RoleStore<IdentityRole>(
                     context.Get<ApplicationDbContext>()));
 

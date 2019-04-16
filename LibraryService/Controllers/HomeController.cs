@@ -61,8 +61,8 @@ namespace LibraryService.Controllers
         public ActionResult Searchbar(string searchString, string genre, string status, string type)
         {
             IList<LibraryItem> items = new List<LibraryItem>();
-            var bookquery = from b in db.Books select b;
-            var dvdquery = from d in db.DVD select d;
+            IQueryable<Book> bookquery = from b in db.Books select b;
+            IQueryable<DVD> dvdquery = from d in db.DVD select d;
 
             if (String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(genre) && String.IsNullOrEmpty(status) && String.IsNullOrEmpty(type))
             {
@@ -91,14 +91,14 @@ namespace LibraryService.Controllers
 
             foreach (Book book in bookquery.ToList())
             {
-                var item = (LibraryItem)book;
+                LibraryItem item = (LibraryItem)book;
                 item.Genre = (Genre) Enum.Parse(typeof(Genre),book.BookGenre.ToString());
                 items.Add(item);
             }
 
             foreach (DVD dvd in dvdquery.ToList())
             {
-                var item = (LibraryItem)dvd;
+                LibraryItem item = (LibraryItem)dvd;
                 item.Genre = (Genre)Enum.Parse(typeof(Genre), dvd.DVDGenre.ToString());
                 items.Add(item);
             }
@@ -109,7 +109,7 @@ namespace LibraryService.Controllers
 
         public ActionResult Index()
         {
-            var baselineDate = DateTime.Now.AddDays(-7);
+            DateTime baselineDate = DateTime.Now.AddDays(-7);
             IList<LibraryItem> newitems = new List<LibraryItem>();
 
             IEnumerable<LibraryItem> books = db.Books.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList().Cast<LibraryItem>();

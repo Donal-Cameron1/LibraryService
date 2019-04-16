@@ -20,6 +20,9 @@ namespace LibraryService.Controllers
         public ActionResult Index()
         {
             ViewBag.message = "Full List of DVDs";
+            ViewBag.UserId = User.Identity.GetUserId();
+            ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
+            string uid = User.Identity.GetUserId();
             return View(db.DVD.ToList());
         }
 
@@ -140,6 +143,40 @@ namespace LibraryService.Controllers
 
             return View("Index", db.DVD.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList());
         }
+        public ActionResult Reserve(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DVD dVD = db.DVD.Find(id);
+            if (dVD == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.UserId = User.Identity.GetUserId();
+            ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
+            return View(dVD);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Reserve([Bind(Include = "id,Director,Duration,DVDGenre,Title,Publisher,AgeRestriction,PublishedAt,Status,Type,Genre,PurchaseValue,DateAdded,LibraryId,UserId,ReturnDate")] DVD dVD)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(dVD).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(dVD);
+        }
+        public ActionResult MyDVDs()
+        {
+            string uid = User.Identity.GetUserId();
+            return View("Index", db.DVD.Where(d => d.UserId == uid));
+
+        }
+
 
         public ActionResult Bookmark(DVD item)
         {

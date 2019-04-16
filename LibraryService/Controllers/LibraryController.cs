@@ -18,7 +18,7 @@ namespace LibraryService.Controllers
         // GET: Library
         public ActionResult Index(string searchString)
         {
-            var libraries = from s 
+            IQueryable<Library> libraries = from s 
                             in db.Libraries
                             select s;
 
@@ -62,7 +62,7 @@ namespace LibraryService.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Address,LibraryId,PostCode,Name,Capacity")] Library library)
+        public ActionResult Create([Bind(Include = "Address,LibraryId,PostCode,Name,Capacity,Phone,OpenHours")] Library library)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace LibraryService.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Address,LibraryId,PostCode,Name,Capacity")] Library library)
+        public ActionResult Edit([Bind(Include = "Address,LibraryId,PostCode,Name,Capacity,Phone,OpenHours")] Library library)
         {
             if (ModelState.IsValid)
             {

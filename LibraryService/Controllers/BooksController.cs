@@ -27,6 +27,9 @@ namespace LibraryService.Controllers
                                        || s.Author.Contains(searchString));
             }
             ViewBag.message = "Full Book List";
+            string uid = User.Identity.GetUserId();
+            ViewBag.UserId = User.Identity.GetUserId();
+            ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
             return View(books.ToList());
         }
 
@@ -139,6 +142,41 @@ namespace LibraryService.Controllers
             }
             base.Dispose(disposing);
         }
+        public ActionResult Reserve(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Book book = db.Books.Find(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.UserId = User.Identity.GetUserId();
+            ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
+            return View(book);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Reserve([Bind(Include = "Author,id,Publisher,Pages,Title,Genre,LibraryId,Status,UserId,AgeRestriction,PurchaseValue,ReturnDate,DateAdded")] Book book)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(book).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(book);
+        }
+
+        public ActionResult MyBooks()
+        {
+            string uid = User.Identity.GetUserId();
+            return View("Index", db.Books.Where(d => d.UserId == uid));
+
+        }
+       
 
         public ActionResult Bookmark(Book item)
         {

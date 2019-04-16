@@ -65,7 +65,7 @@ namespace LibraryService
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = await UserManager.FindByIdAsync(id);
+            ApplicationUser user = await UserManager.FindByIdAsync(id);
 
             ViewBag.RoleNames = await UserManager.GetRolesAsync(user.Id);
 
@@ -88,15 +88,15 @@ namespace LibraryService
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = userViewModel.Email, Email = userViewModel.Email };
-                var adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
+                ApplicationUser user = new ApplicationUser { UserName = userViewModel.Email, Email = userViewModel.Email };
+                Microsoft.AspNet.Identity.IdentityResult adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
 
                 //Add User to the selected Roles 
                 if (adminresult.Succeeded)
                 {
                     if (selectedRoles != null)
                     {
-                        var result = await UserManager.AddToRolesAsync(user.Id, selectedRoles);
+                        Microsoft.AspNet.Identity.IdentityResult result = await UserManager.AddToRolesAsync(user.Id, selectedRoles);
                         if (!result.Succeeded)
                         {
                             ModelState.AddModelError("", result.Errors.First());
@@ -126,13 +126,13 @@ namespace LibraryService
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = await UserManager.FindByIdAsync(id);
+            ApplicationUser user = await UserManager.FindByIdAsync(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
 
-            var userRoles = await UserManager.GetRolesAsync(user.Id);
+            System.Collections.Generic.IList<string> userRoles = await UserManager.GetRolesAsync(user.Id);
 
             return View(new EditUserViewModel()
             {
@@ -155,7 +155,7 @@ namespace LibraryService
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByIdAsync(editUser.Id);
+                ApplicationUser user = await UserManager.FindByIdAsync(editUser.Id);
                 if (user == null)
                 {
                     return HttpNotFound();
@@ -164,11 +164,11 @@ namespace LibraryService
                 user.UserName = editUser.Email;
                 user.Email = editUser.Email;
 
-                var userRoles = await UserManager.GetRolesAsync(user.Id);
+                System.Collections.Generic.IList<string> userRoles = await UserManager.GetRolesAsync(user.Id);
 
                 selectedRole = selectedRole ?? new string[] { };
 
-                var result = await UserManager.AddToRolesAsync(user.Id, selectedRole.Except(userRoles).ToArray<string>());
+                Microsoft.AspNet.Identity.IdentityResult result = await UserManager.AddToRolesAsync(user.Id, selectedRole.Except(userRoles).ToArray<string>());
 
                 if (!result.Succeeded)
                 {
@@ -196,7 +196,7 @@ namespace LibraryService
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = await UserManager.FindByIdAsync(id);
+            ApplicationUser user = await UserManager.FindByIdAsync(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -217,12 +217,12 @@ namespace LibraryService
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-                var user = await UserManager.FindByIdAsync(id);
+                ApplicationUser user = await UserManager.FindByIdAsync(id);
                 if (user == null)
                 {
                     return HttpNotFound();
                 }
-                var result = await UserManager.DeleteAsync(user);
+                Microsoft.AspNet.Identity.IdentityResult result = await UserManager.DeleteAsync(user);
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Errors.First());

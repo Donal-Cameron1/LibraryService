@@ -5,7 +5,8 @@
     ViewBag.Title = "Index";
 }
 
-<script id="test" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+<script id ="test" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js">
+    </script>
     <h2>@ViewBag.message</h2>
 
     <p>
@@ -20,7 +21,9 @@
         </p>
     }
 
-    @Html.ActionLink("See New books","Newbooks")
+    @Html.ActionLink("See New books", "Newbooks")
+
+    @Html.ActionLink("See my books", "MyBooks")
 
     <table class="table" id="myTable">
         <tr>
@@ -63,57 +66,60 @@
             <th></th>
         </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Publisher)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pages)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookGenre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LibraryId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AgeRestriction)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PurchaseValue)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PublishedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateAdded)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.id })
-            @if (Request.IsAuthenticated)
-            {
-                <div>|
-                @Html.ActionLink("Bookmark", "Bookmark", item)
-                </div>
-            }
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pages)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookGenre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LibraryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AgeRestriction)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchaseValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublishedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateAdded)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                    @if (Request.IsAuthenticated)
+                    {
+                        <div>
+                            |
+                            @Html.ActionLink("Reserve", "Reserve", new { id = item.id })|
+                            @Html.ActionLink("Bookmark", "Bookmark", item)
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
 
     </table>
 

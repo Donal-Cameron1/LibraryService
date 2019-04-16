@@ -13,13 +13,15 @@
 
 @Html.ActionLink("See New DVDs", "NewDVDs")
 
+@Html.ActionLink("See my DVDs", "MyDVDs")
+
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Director)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Duration) 
+            @Html.DisplayNameFor(model => model.Duration)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DVDGenre)
@@ -44,7 +46,7 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Genre)
-        </th>    
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.DateAdded)
         </th>
@@ -54,58 +56,60 @@
         <th>
             @Html.DisplayNameFor(model => model.UserId)
         </th>
-        
+
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Director)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Duration) min
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DVDGenre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Publisher)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AgeRestriction)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PublishedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateAdded)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LibraryId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-            @Html.ActionLink("Bookmark", "Bookmark", item)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Director)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration) min
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DVDGenre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AgeRestriction)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateAdded)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LibraryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })|
+                @Html.ActionLink("Reserve", "Reserve", new { id = item.id })|
+                @Html.ActionLink("Bookmark", "Bookmark", item)
+            </td>
+        </tr>
+    }
 
 </table>
