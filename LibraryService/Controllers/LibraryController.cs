@@ -18,7 +18,7 @@ namespace LibraryService.Controllers
         // GET: Library
         public ActionResult Index(string searchString)
         {
-            var libraries = from s 
+            IQueryable<Library> libraries = from s 
                             in db.Libraries
                             select s;
 

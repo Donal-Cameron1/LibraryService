@@ -83,10 +83,10 @@ namespace LibraryService.Models
         [Display(Name = "Library")]
         public int LibraryId { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [Display(Name = "Return Date")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<DateTime> ReturnDate { get; set; }
 
         public ICollection<User> BookmarkedBy { get; set; } = new List<User>();
