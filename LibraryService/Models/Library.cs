@@ -23,7 +23,6 @@ namespace LibraryService.Models
 
         [Required]
         [DataType(DataType.PostalCode)]
-        [RegularExpression("([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\\s?[0-9][A-Za-z]{2})", ErrorMessage = "Not a valid postal code")]
         public string PostCode { get; set; }
 
         [Required]
@@ -36,8 +35,6 @@ namespace LibraryService.Models
 
         [Required]
         [Display(Name = "Phone Number")]
-        [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{6})$", ErrorMessage = "Not a valid phone number")]
         public string TelephoneNumber { get; set; }
 
         [Required]
@@ -46,8 +43,7 @@ namespace LibraryService.Models
         [Required]
         [Range(100,5000000)]
         public int Capacity { get; set; }
-        public string Phone { get; set; }
-        public string OpenHours { get; set; }
+
         public virtual ICollection<Book> Books { get; set; }
 
     }
