@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using LibraryService.DAL;
 using LibraryService.Models;
+using Microsoft.AspNet.Identity;
 
 namespace LibraryService.Controllers
 {
@@ -16,13 +17,21 @@ namespace LibraryService.Controllers
         private LibraryContext db = new LibraryContext();
 
         // GET: Books
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            return View(db.Books.ToList());
+            var books = from s in db.Books
+                        select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                books = books.Where(s => s.Title.Contains(searchString)
+                                       || s.Author.Contains(searchString));
+            }
+            ViewBag.message = "Full Book List";
+            return View(books.ToList());
         }
 
         // GET: Books/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
             if (id == null)
             {
@@ -39,7 +48,13 @@ namespace LibraryService.Controllers
         // GET: Books/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new Book()
+            {
+                Status = Status.Available,
+                Type = Models.Type.Book,
+                DateAdded = DateTime.Today
+            };
+            return View(model);
         }
 
         // POST: Books/Create
@@ -47,7 +62,7 @@ namespace LibraryService.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Author,id,Publisher,Pages,Title,Genre,LibraryId,Status,UserId,AgeRestriction,PurchaseValue,ReturnDate,DateAdded")] Book book)
+        public ActionResult Create([Bind(Include = "id,Author,Publisher,Pages,Title,BookGenre,LibraryId,Status,UserId,AgeRestriction,PurchaseValue,ReturnDate,DateAdded,Type,PublishedAt")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -60,7 +75,7 @@ namespace LibraryService.Controllers
         }
 
         // GET: Books/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {
@@ -91,7 +106,7 @@ namespace LibraryService.Controllers
         }
 
         // GET: Books/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {
@@ -108,7 +123,7 @@ namespace LibraryService.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Book book = db.Books.Find(id);
             db.Books.Remove(book);
@@ -124,5 +139,49 @@ namespace LibraryService.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult Bookmark(Book item)
+        {
+           
+            string currentUserId = User.Identity.GetUserId();
+
+            // retrieve user
+            User user = db.Users.Include(u => u.BookmarkedBooks).SingleOrDefault(x => x.UserId == currentUserId);
+            //ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserId == (int)currentUserId);
+
+          
+            //get item 
+            Book book = db.Books.Find(item.id);
+            //append item to users bookmark list
+            user.BookmarkedBooks.Add(book);
+            
+                     
+            //book.BookmarkedBy.Add(user);
+            db.SaveChanges();          
+            return RedirectToAction("Index");
+        }
+
+
+        public ActionResult DeleteBookmark(int id)
+        {
+            var currentUser = User.Identity.GetUserId();
+            User user = db.Users.Include(u => u.BookmarkedBooks).Where(u => u.UserId == currentUser).FirstOrDefault();
+            Book book = db.Books.Find(id);
+
+            user.BookmarkedBooks.Remove(book);
+            db.SaveChanges();
+
+            return RedirectToAction("ShowBookmarks", "LibraryItems");
+            //return View(user.BookmarkedBooks);
+        }
+
+
+        public ActionResult NewBooks()
+        {
+            var baselineDate = DateTime.Now.AddDays(-7);
+
+            return View("Index",db.Books.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList());
+        }
+
     }
 }

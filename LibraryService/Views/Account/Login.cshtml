@@ -58,6 +58,11 @@
     </div>
 </div>
 
+<div>
+    @Html.ActionLink("Log in later", "Index", "Home", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    <p>You won't be able to make reservations.</p>
+</div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    var maplocations = new List<string>();
 }
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,47 +34,65 @@
 
 <h2>Index</h2>
 
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<h2>Libraries</h2>
 
-<table>
-@foreach (var item in Model)
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm())
 {
-    <tr style="width:400px">
-        <td>
-            <button class="collapsible">@item.Name</button>
-            <div class="content">
-                <p>
-                    @item.Address<br/>
-                    @item.PostCode<br/>
-                   Telephone Number @item.Phone <br/>
-                    @item.OpenHours
-                </p>
-            </div>
-        </td>
-    </tr>
-   
+    <p>
+        Search Libraries: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
 }
+
+
+<table class="table">
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <button class="collapsible">@item.Name</button>
+                <div class="content">
+                    <p>@item.Address </p> 
+                    <p>@item.PostCode </p>
+                    <p>@item.TelephoneNumber</p>
+                    <p>@item.OpeningHours</p>
+                </div>
+            </td>
+        </tr>
+    }
 
 </table>
 
-   
+@Html.Partial("Detailspartial");
 
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
 
-    <script>
-        var coll = document.getElementsByClassName("collapsible");
-        var i;
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>
 
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
-            });
-        }
-    </script>
-
-</body>
-</html>

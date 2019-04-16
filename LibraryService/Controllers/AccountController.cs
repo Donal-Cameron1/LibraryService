@@ -9,12 +9,17 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LibraryService.Models;
+using LibraryService.DAL;
+using System.Web.Security;
 
 namespace LibraryService.Controllers
 {
+
     [Authorize]
     public class AccountController : Controller
     {
+        private LibraryContext db = new LibraryContext();
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -68,10 +73,19 @@ namespace LibraryService.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid && Roles.IsUserInRole("User"))
             {
                 return View(model);
+            } else 
+            if (!ModelState.IsValid && Roles.IsUserInRole("Staff"))
+            {
+                return View();
+            } else 
+            if(!ModelState.IsValid && Roles.IsUserInRole("Admin"))
+            {
+                return View();
             }
+            
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -139,7 +153,14 @@ namespace LibraryService.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         //
@@ -156,7 +177,15 @@ namespace LibraryService.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    UserManager.AddToRole(user.Id, "User");
+                    //Roles.AddUserToRole(user.UserName, "User");
+
+                    //add user to LibraryContext DB
+                    db.Users.Add(new User{UserId = user.Id, Role = user.Roles.ToString()});
                     
+                    
+                    db.SaveChanges();
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -392,7 +421,7 @@ namespace LibraryService.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
