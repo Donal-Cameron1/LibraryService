@@ -85,7 +85,8 @@ namespace LibraryService.Controllers
             {
                 return View();
             }
-           
+            
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -152,7 +153,14 @@ namespace LibraryService.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         //
@@ -168,9 +176,13 @@ namespace LibraryService.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);                    
+                    //Roles.AddUserToRole(user.UserName, "User");
 
-                    db.Users.Add(new User{UserId = user.Id});
+                    //add user to LibraryContext DB
+                    db.Users.Add(new User{UserId = user.Id, Role = user.Roles.ToString()});
+                    
+                    
                     db.SaveChanges();
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -408,7 +420,7 @@ namespace LibraryService.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
