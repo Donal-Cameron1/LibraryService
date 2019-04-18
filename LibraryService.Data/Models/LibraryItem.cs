@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Newtonsoft.Json;
 using LibraryService.utils;
 
 namespace LibraryService.Models
@@ -83,11 +82,6 @@ namespace LibraryService.Models
         [Display(Name = "Return Date")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<DateTime> ReturnDate { get; set; }
-
-        public Nullable<DateTime> ReserveDate { get; set; }
-
-        public Nullable<DateTime> ReserveUntilDate { get; set; }
-
 
         public ICollection<User> BookmarkedBy { get; set; } = new List<User>();
 

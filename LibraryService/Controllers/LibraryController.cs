@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using LibraryService.DAL;
 using LibraryService.Models;
+using LibraryService.Services.IService;
+using LibraryService.Services.Service;
 
 namespace LibraryService.Controllers
 {
@@ -15,15 +17,23 @@ namespace LibraryService.Controllers
     {
         private LibraryContext db = new LibraryContext();
 
+        private ILibraryService _libraryService;
+        public LibraryController()
+        {
+            _libraryService = new Services.Service.LibraryService();
+        }
+
         // GET: Library
         public ActionResult Index(string searchString)
         {
-            IQueryable<Library> libraries = from s 
-                            in db.Libraries
-                            select s;
+            //IQueryable<Library> libraries = from s
+              //                              in db.Libraries
+               //                             select s;
+            IQueryable<Library> libraries = _libraryService.GetLibraries();
 
             if (!String.IsNullOrEmpty(searchString))
             {
+                //_libraryService.SearchLibraries(libraries, searchString);
                 libraries = libraries.Where(s => s.Name.Contains(searchString)
                                        || s.PostCode.Contains(searchString));
             }
@@ -38,7 +48,7 @@ namespace LibraryService.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Library library = db.Libraries.Find(id);
+            Library library = _libraryService.GetLibrary(id); 
             if (library == null)
             {
                 return HttpNotFound();
@@ -54,7 +64,7 @@ namespace LibraryService.Controllers
         // GET: Library/Create
         public ActionResult Create()
         {
-            return View();
+            return View(_libraryService.CreateDefaultLibrary());
         }
 
         // POST: Library/Create
@@ -66,8 +76,7 @@ namespace LibraryService.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Libraries.Add(library);
-                db.SaveChanges();
+                _libraryService.CreateLibrary(library);
                 return RedirectToAction("Index");
             }
 
@@ -81,7 +90,7 @@ namespace LibraryService.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Library library = db.Libraries.Find(id);
+            Library library = _libraryService.GetLibrary(id);
             if (library == null)
             {
                 return HttpNotFound();
@@ -98,8 +107,7 @@ namespace LibraryService.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(library).State = EntityState.Modified;
-                db.SaveChanges();
+                _libraryService.EditLibrary(library);
                 return RedirectToAction("Index");
             }
             return View(library);
@@ -112,7 +120,7 @@ namespace LibraryService.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Library library = db.Libraries.Find(id);
+            Library library = _libraryService.GetLibrary(id); 
             if (library == null)
             {
                 return HttpNotFound();
@@ -125,9 +133,8 @@ namespace LibraryService.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Library library = db.Libraries.Find(id);
-            db.Libraries.Remove(library);
-            db.SaveChanges();
+            Library library = _libraryService.GetLibrary(id);
+            _libraryService.DeleteLibrary(library);
             return RedirectToAction("Index");
         }
 

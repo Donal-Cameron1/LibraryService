@@ -21,7 +21,7 @@ namespace LibraryService.DAL
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Entity<User>()
-                        .HasMany<LibraryItem>(u => u.BookmarkedBooks)
+                        .HasMany(u => u.BookmarkedBooks)
                         .WithMany(b => b.BookmarkedBy)
                         .Map(cs =>
                          {
@@ -30,9 +30,7 @@ namespace LibraryService.DAL
                              cs.ToTable("UserBookmarkedBooks");
                          });
 
-
-
-            /*modelBuilder.Entity<User>()
+           /* modelBuilder.Entity<User>()
                        .HasMany(u => u.LoanedBooks)
                        .WithOptional(b => b.LoanedBy)
                        .HasForeignKey(u => u.LoanedById);
@@ -41,13 +39,13 @@ namespace LibraryService.DAL
             
             modelBuilder.Entity<User>()
                        .HasMany(u => u.ReservedBooks)
-                       .WithOptional(b => b.ReservedBy)
+                       .WithRequired(b => b.ReservedBy)
                        .HasForeignKey(u => u.id);
 
             */
 
         }
 
-        public System.Data.Entity.DbSet<LibraryService.Models.LibraryItem> LibraryItems { get; set; }
+        public DbSet<LibraryItem> LibraryItems { get; set; }
     }
 }

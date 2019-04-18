@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using LibraryService.DAL;
 using LibraryService.Models;
+using LibraryService.Services.IService;
+using LibraryService.Services.Service;
 using Microsoft.AspNet.Identity;
 
 namespace LibraryService.Controllers
@@ -15,6 +17,12 @@ namespace LibraryService.Controllers
     public class DVDsController : Controller
     {
         private LibraryContext db = new LibraryContext();
+
+        private IDVDService _dvdService;
+        public DVDsController()
+        {
+            _dvdService = new DVDService();
+        }
 
         // GET: DVDs
         public ActionResult Index()
@@ -29,11 +37,7 @@ namespace LibraryService.Controllers
         // GET: DVDs/Details/5
         public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DVD dvd = db.DVD.Find(id);
+            DVD dvd = _dvdService.GetDVD(id);
             if (dvd == null)
             {
                 return HttpNotFound();
@@ -44,13 +48,7 @@ namespace LibraryService.Controllers
         // GET: DVDs/Create
         public ActionResult Create()
         {
-            var model = new DVD()
-            {
-                Status = Status.Available,
-                Type = Models.Type.Book,
-                DateAdded = DateTime.Today
-            };
-            return View(model);
+            return View(_dvdService.CreateDefaultDVD());
         }
 
         // POST: DVDs/Create
@@ -58,31 +56,25 @@ namespace LibraryService.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,Director,Duration,DVDGenre,Title,Publisher,AgeRestriction,PublishedAt,Status,Type,Genre,PurchaseValue,DateAdded,LibraryId,UserId,ReturnDate")] DVD dVD)
+        public ActionResult Create([Bind(Include = "id,Director,Duration,DVDGenre,Title,Publisher,AgeRestriction,PublishedAt,Status,Type,Genre,PurchaseValue,DateAdded,LibraryId,UserId,ReturnDate")] DVD dvd)
         {
             if (ModelState.IsValid)
             {
-                db.DVD.Add(dVD);
-                db.SaveChanges();
+                _dvdService.CreateDVD(dvd);
                 return RedirectToAction("Index");
             }
-
-            return View(dVD);
+            return View(dvd);
         }
 
         // GET: DVDs/Edit/5
         public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DVD dVD = db.DVD.Find(id);
-            if (dVD == null)
+            DVD dvd = _dvdService.GetDVD(id);
+            if (dvd == null)
             {
                 return HttpNotFound();
             }
-            return View(dVD);
+            return View(dvd);
         }
 
         // POST: DVDs/Edit/5
@@ -90,30 +82,25 @@ namespace LibraryService.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,Director,Duration,DVDGenre,Title,Publisher,AgeRestriction,PublishedAt,Status,Type,Genre,PurchaseValue,DateAdded,LibraryId,UserId,ReturnDate")] DVD dVD)
+        public ActionResult Edit([Bind(Include = "id,Director,Duration,DVDGenre,Title,Publisher,AgeRestriction,PublishedAt,Status,Type,Genre,PurchaseValue,DateAdded,LibraryId,UserId,ReturnDate")] DVD dvd)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(dVD).State = EntityState.Modified;
-                db.SaveChanges();
+                _dvdService.EditDVD(dvd);
                 return RedirectToAction("Index");
             }
-            return View(dVD);
+            return View(dvd);
         }
 
         // GET: DVDs/Delete/5
         public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DVD dVD = db.DVD.Find(id);
-            if (dVD == null)
+            DVD dvd = _dvdService.GetDVD(id);
+            if (dvd == null)
             {
                 return HttpNotFound();
             }
-            return View(dVD);
+            return View(dvd);
         }
 
         // POST: DVDs/Delete/5
@@ -121,9 +108,8 @@ namespace LibraryService.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            DVD dVD = db.DVD.Find(id);
-            db.DVD.Remove(dVD);
-            db.SaveChanges();
+            DVD dvd = _dvdService.GetDVD(id);
+            _dvdService.DeleteDVD(dvd);
             return RedirectToAction("Index");
         }
 
@@ -135,20 +121,16 @@ namespace LibraryService.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult NewDVDs()
 
+        public ActionResult GetNewDVDs()
         {
-            var baselineDate = DateTime.Now.AddDays(-7);
+            IList<DVD> newDVDs = _dvdService.GetNewDVDs();
             ViewBag.Message = "New DVDs added this week!";
-
-            return View("Index", db.DVD.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList());
+            return View("Index", newDVDs);
         }
+
         public ActionResult Reserve(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             DVD dVD = db.DVD.Find(id);
             if (dVD == null)
             {
@@ -158,6 +140,7 @@ namespace LibraryService.Controllers
             ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
             return View(dVD);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Reserve([Bind(Include = "id,Director,Duration,DVDGenre,Title,Publisher,AgeRestriction,PublishedAt,Status,Type,Genre,PurchaseValue,DateAdded,LibraryId,UserId,ReturnDate")] DVD dVD)
@@ -170,6 +153,7 @@ namespace LibraryService.Controllers
             }
             return View(dVD);
         }
+
         public ActionResult MyDVDs()
         {
             string uid = User.Identity.GetUserId();
@@ -177,36 +161,16 @@ namespace LibraryService.Controllers
 
         }
 
-
         public ActionResult Bookmark(DVD item)
         {
-
-            string currentUserId = User.Identity.GetUserId();
-
-            // retrieve user
-            User user = db.Users.Include(u => u.BookmarkedBooks).SingleOrDefault(x => x.UserId == currentUserId);
-            //ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserId == (int)currentUserId);
-
-
-            DVD dvd = db.DVD.Find(item.id);
-            //append item to users bookmark list
-            user.BookmarkedBooks.Add(dvd);
-
-            db.SaveChanges();
+            _dvdService.BookmarkDVD(item, User.Identity.GetUserId());
             return RedirectToAction("Index");
         }
 
         public ActionResult DeleteBookmark(int id)
         {
-            var currentUser = User.Identity.GetUserId();
-            User user = db.Users.Include(u => u.BookmarkedBooks).Where(u => u.UserId == currentUser).FirstOrDefault();
-            DVD dvd = db.DVD.Find(id);
-
-            user.BookmarkedBooks.Remove(dvd);
-            db.SaveChanges();
-
+            _dvdService.DeleteBookmark(id, User.Identity.GetUserId());
             return RedirectToAction("ShowBookmarks", "LibraryItems");
-            //return View(user.BookmarkedBooks);
         }
     }
 }
