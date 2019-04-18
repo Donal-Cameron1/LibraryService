@@ -13,5 +13,11 @@ namespace LibraryService.Data.IDAO
         void CreateBook(Book book);
         void EditBook(Book book);
         void DeleteBook(Book book);
+        IList<Book> BookTextSearch(IList<Book> query, string searchString);
+        IList<Book> BookGenreFilter(IList<Book> query, string genre);
+        IList<Book> BookStatusFilter(IList<Book> query, string status);
+        IList<Book> BookTypeFilter(IList<Book> query, string type);
+        IList<Book> GetBooks();
+        IList<Book> GetNewBooks();
     }
 }

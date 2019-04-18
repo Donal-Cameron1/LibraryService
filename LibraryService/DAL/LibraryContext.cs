@@ -30,7 +30,9 @@ namespace LibraryService.DAL
                              cs.ToTable("UserBookmarkedBooks");
                          });
 
-           /* modelBuilder.Entity<User>()
+
+
+            /*modelBuilder.Entity<User>()
                        .HasMany(u => u.LoanedBooks)
                        .WithOptional(b => b.LoanedBy)
                        .HasForeignKey(u => u.LoanedById);
@@ -39,7 +41,7 @@ namespace LibraryService.DAL
             
             modelBuilder.Entity<User>()
                        .HasMany(u => u.ReservedBooks)
-                       .WithRequired(b => b.ReservedBy)
+                       .WithOptional(b => b.ReservedBy)
                        .HasForeignKey(u => u.id);
 
             */

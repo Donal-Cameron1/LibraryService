@@ -13,25 +13,27 @@ using LibraryService.Services.Service;
 
 namespace LibraryService.Controllers
 {
-    public class LibrariesController : Controller
+    public class LibraryController : Controller
     {
         private LibraryContext db = new LibraryContext();
 
         private ILibraryService _libraryService;
-        public LibrariesController()
+        public LibraryController()
         {
-            _libraryService = new CLibraryService();
+            _libraryService = new Services.Service.LibraryService();
         }
 
         // GET: Library
         public ActionResult Index(string searchString)
         {
-            IQueryable<Library> libraries = from s 
-                            in db.Libraries
-                            select s;
+            //IQueryable<Library> libraries = from s
+              //                              in db.Libraries
+               //                             select s;
+            IQueryable<Library> libraries = _libraryService.GetLibraries();
 
             if (!String.IsNullOrEmpty(searchString))
             {
+                //_libraryService.SearchLibraries(libraries, searchString);
                 libraries = libraries.Where(s => s.Name.Contains(searchString)
                                        || s.PostCode.Contains(searchString));
             }
@@ -105,8 +107,7 @@ namespace LibraryService.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(library).State = EntityState.Modified;
-                db.SaveChanges();
+                _libraryService.EditLibrary(library);
                 return RedirectToAction("Index");
             }
             return View(library);

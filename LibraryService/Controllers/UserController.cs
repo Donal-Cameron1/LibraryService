@@ -8,17 +8,27 @@ using System.Web;
 using System.Web.Mvc;
 using LibraryService.DAL;
 using LibraryService.Models;
+using LibraryService.Services.IService;
+using LibraryService.Services.Service;
 
 namespace LibraryService.Controllers
 {
     public class UserController : Controller
     {
+        
         private LibraryContext db = new LibraryContext();
+        private IUserService _userService;
+
+        public UserController()
+        {
+            _userService = new UserService();
+        }  
 
         // GET: User
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            return View(_userService.GetUsers());
+            //return View(db.Users.ToList());
         }
 
         // GET: User/Details/5
@@ -28,7 +38,7 @@ namespace LibraryService.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            User user = _userService.GetUser(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -39,7 +49,7 @@ namespace LibraryService.Controllers
         // GET: User/Create
         public ActionResult Create()
         {
-            return View();
+            return View(_userService.CreateDefaultUser());
         }
 
         // POST: User/Create
@@ -51,8 +61,7 @@ namespace LibraryService.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
-                db.SaveChanges();
+                _userService.CreateUser(user);
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +75,7 @@ namespace LibraryService.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            User user = _userService.GetUser(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -83,8 +92,7 @@ namespace LibraryService.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                _userService.EditUser(user);
                 return RedirectToAction("Index");
             }
             return View(user);
@@ -97,7 +105,7 @@ namespace LibraryService.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            User user = _userService.GetUser(id); 
             if (user == null)
             {
                 return HttpNotFound();
@@ -110,9 +118,8 @@ namespace LibraryService.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
+            User user = _userService.GetUser(id);
+            _userService.DeleteUser(user);
             return RedirectToAction("Index");
         }
 

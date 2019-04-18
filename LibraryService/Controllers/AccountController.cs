@@ -11,6 +11,8 @@ using Microsoft.Owin.Security;
 using LibraryService.Models;
 using LibraryService.DAL;
 using System.Web.Security;
+using LibraryService.Services.IService;
+using LibraryService.Services.Service;
 
 namespace LibraryService.Controllers
 {
@@ -22,9 +24,12 @@ namespace LibraryService.Controllers
 
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IUserService _userService;
 
         public AccountController()
         {
+            _userService = new UserService();
+
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -181,10 +186,8 @@ namespace LibraryService.Controllers
                     //Roles.AddUserToRole(user.UserName, "User");
 
                     //add user to LibraryContext DB
-                    db.Users.Add(new User{UserId = user.Id, Role = user.Roles.ToString()});
-                    
-                    
-                    db.SaveChanges();
+                    _userService.CreateUser(new User { UserId = user.Id, Role = user.Roles.ToString()});
+                  
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link

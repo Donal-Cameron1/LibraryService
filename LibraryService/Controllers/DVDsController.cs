@@ -87,8 +87,6 @@ namespace LibraryService.Controllers
             if (ModelState.IsValid)
             {
                 _dvdService.EditDVD(dvd);
-                //db.Entry(dvd).State = EntityState.Modified;
-                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(dvd);
@@ -124,12 +122,11 @@ namespace LibraryService.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult NewDVDs()
+        public ActionResult GetNewDVDs()
         {
-            var baselineDate = DateTime.Now.AddDays(-7);
+            IList<DVD> newDVDs = _dvdService.GetNewDVDs();
             ViewBag.Message = "New DVDs added this week!";
-
-            return View("Index", db.DVD.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList());
+            return View("Index", newDVDs);
         }
 
         public ActionResult Reserve(int id)

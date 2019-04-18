@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace LibraryService.Services.Service
 {
-    public class CLibraryService : ILibraryService
+    public class LibraryService : ILibraryService
     {
         private ILibraryDAO _libraryDAO;
         private IUserDAO _userDAO;
         private DbUtils _dbUtils;
 
-        public CLibraryService()
+        public LibraryService()
         {
             _libraryDAO = new LibraryDAO();
             _userDAO = new UserDAO();
@@ -39,9 +39,24 @@ namespace LibraryService.Services.Service
             _libraryDAO.DeleteLibrary(library);
         }
 
+        public void EditLibrary(Library library)
+        {
+            _libraryDAO.EditLibrary(library);
+        }
+
+        public IQueryable<Library> GetLibraries()
+        {
+            return _libraryDAO.GetLibraries();
+        }
+
         public Library GetLibrary(string id)
         {
             return _libraryDAO.GetLibrary(id);
         }
+
+        /*public IQueryable<Library> SearchLibraries(IQueryable<Library> libraries, string searchString)
+        {
+            return _libraryDAO.SearchLibraries(libraries, searchString);
+        }*/
     }
 }

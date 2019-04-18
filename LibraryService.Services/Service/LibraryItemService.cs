@@ -26,7 +26,7 @@ namespace LibraryService.Services.Service
 
         public User GetUser(string currentUserId)
         {
-            User user = _userDAO.GetUser(currentUserId);
+            User user = _userDAO.GetCurrentUser(currentUserId);
             return user;
         }
     }

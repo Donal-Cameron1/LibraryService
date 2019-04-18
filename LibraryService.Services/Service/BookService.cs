@@ -24,10 +24,16 @@ namespace LibraryService.Services.Service
             _dbUtils = new DbUtils();
         }
 
+
+        public IList<Book> BookGenreFilter(IList<Book> query, string genre)
+        {
+            return _bookDAO.BookGenreFilter(query, genre);
+        }
+
         public void BookmarkBook(Book item, string currentUserId)
         {
             // retrieve user
-            User user = _userDAO.GetUser(currentUserId);
+            User user = _userDAO.GetCurrentUser(currentUserId);
 
             //get item 
             Book book = _bookDAO.GetBook(item.id);
@@ -37,6 +43,21 @@ namespace LibraryService.Services.Service
 
             //book.BookmarkedBy.Add(user);
             _userDAO.EditUser(user);
+        }
+
+        public IList<Book> BookStatusFilter(IList<Book> query, string status)
+        {
+            return _bookDAO.BookStatusFilter(query, status);
+        }
+
+        public IList<Book> BookTextSearch(IList<Book> query, string searchString)
+        {
+            return _bookDAO.BookTextSearch(query, searchString);
+        }
+
+        public IList<Book> BookTypeFilter(IList<Book> query, string type)
+        {
+            return _bookDAO.BookTypeFilter(query, type);
         }
 
         public void CreateBook(Book book)
@@ -61,7 +82,7 @@ namespace LibraryService.Services.Service
 
         public void DeleteBookmark(int id, string currentUserId)
         {
-            User user = _userDAO.GetUser(currentUserId);
+            User user = _userDAO.GetCurrentUser(currentUserId);
             Book book = _bookDAO.GetBook(id);
 
             user.BookmarkedBooks.Remove(book);
@@ -76,6 +97,16 @@ namespace LibraryService.Services.Service
         public Book GetBook(int id)
         {
             return _bookDAO.GetBook(id);
+        }
+
+        public IList<Book> GetBooks()
+        {
+            return _bookDAO.GetBooks();
+        }
+
+        public IList<Book> GetNewBooks()
+        {
+            return _bookDAO.GetNewBooks();
         }
     }
 }

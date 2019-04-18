@@ -177,10 +177,11 @@ namespace LibraryService.Controllers
         }
 
 
-        public ActionResult NewBooks()
+        public ActionResult GetNewBooks()
         {
-            var baselineDate = DateTime.Now.AddDays(-7);
-            return View("Index",db.Books.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList());
+            IList<Book> newBooks = _bookService.GetNewBooks();
+            ViewBag.Message = "New Books added this week!";
+            return View("Index", newBooks);
         }
 
     }

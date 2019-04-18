@@ -84,6 +84,11 @@ namespace LibraryService.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<DateTime> ReturnDate { get; set; }
 
+        public Nullable<DateTime> ReserveDate { get; set; }
+
+        public Nullable<DateTime> ReserveUntilDate { get; set; }
+
+
         public ICollection<User> BookmarkedBy { get; set; } = new List<User>();
 
     }

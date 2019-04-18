@@ -15,6 +15,27 @@ namespace LibraryService.Data.DAO
     {
         private LibraryContext db = DbUtils.db;
 
+        public IList<Book> BookGenreFilter(IList<Book> query, string genre)
+        {
+            return query.Where(b => b.BookGenre.ToString().Equals(genre)).ToList<Book>();
+        }
+
+        public IList<Book> BookStatusFilter(IList<Book> query, string status)
+        {
+            return query.Where(b => b.Status.ToString().Equals(status)).ToList<Book>();
+        }
+
+        public IList<Book> BookTextSearch(IList<Book> query, string searchString)
+        {
+            return query.Where(b => b.Title.Contains(searchString)
+                                 || b.Author.Contains(searchString)).ToList<Book>();
+        }
+
+        public IList<Book> BookTypeFilter(IList<Book> query, string type)
+        {
+            return query.Where(b => b.Type.ToString().Equals(type)).ToList<Book>();
+        }
+
         public void CreateBook(Book book)
         {
             db.Books.Add(book);
@@ -36,6 +57,22 @@ namespace LibraryService.Data.DAO
         public Book GetBook(int id)
         {
             return db.Books.AsNoTracking().Where(b => b.id == id).FirstOrDefault();
+        }
+
+        public IList<Book> GetBooks()
+        {
+            IQueryable<Book> bookquery;
+            bookquery = from b
+                        in db.Books
+                        select b;
+            return bookquery.ToList<Book>();
+        }
+
+        public IList<Book> GetNewBooks()
+        {
+            var baselineDate = DateTime.Now.AddDays(-7);
+            IList<Book> newBooks = db.Books.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList();
+            return newBooks;
         }
     }
 }

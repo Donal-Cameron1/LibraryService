@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryService", "LibraryService\LibraryService.csproj", "{9DEA2978-5995-475B-B6D7-519763DFE7B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrarySystem", "LibraryService\LibrarySystem.csproj", "{9DEA2978-5995-475B-B6D7-519763DFE7B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryService.Data", "LibraryService.Data\LibraryService.Data.csproj", "{78665550-6FFC-4948-A929-959F39A22073}"
 EndProject

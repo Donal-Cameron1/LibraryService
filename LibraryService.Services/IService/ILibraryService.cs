@@ -13,5 +13,8 @@ namespace LibraryService.Services.IService
         Library CreateDefaultLibrary();
         void CreateLibrary(Library library);
         void DeleteLibrary(Library library);
+        void EditLibrary(Library library);
+        IQueryable<Library> GetLibraries();
+        //IQueryable<Library> SearchLibraries(IQueryable<Library> libraries, string searchString);
     }
 }

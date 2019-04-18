@@ -16,5 +16,11 @@ namespace LibraryService.Services.IService
         void BookmarkBook(Book item, string UserId);
         void DeleteBook(Book book);
         void DeleteBookmark(int id, string UserId);
+        IList<Book> BookTextSearch(IList<Book> query, string searchString);
+        IList<Book> BookGenreFilter(IList<Book> query, string genre);
+        IList<Book> BookStatusFilter(IList<Book> query, string status);
+        IList<Book> BookTypeFilter(IList<Book> query, string type);
+        IList<Book> GetBooks();
+        IList<Book> GetNewBooks();
     }
 }
