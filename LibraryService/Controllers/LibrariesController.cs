@@ -8,12 +8,20 @@ using System.Web;
 using System.Web.Mvc;
 using LibraryService.DAL;
 using LibraryService.Models;
+using LibraryService.Services.IService;
+using LibraryService.Services.Service;
 
 namespace LibraryService.Controllers
 {
-    public class LibraryController : Controller
+    public class LibrariesController : Controller
     {
         private LibraryContext db = new LibraryContext();
+
+        private ILibraryService _libraryService;
+        public LibrariesController()
+        {
+            _libraryService = new CLibraryService();
+        }
 
         // GET: Library
         public ActionResult Index(string searchString)
@@ -38,7 +46,7 @@ namespace LibraryService.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Library library = db.Libraries.Find(id);
+            Library library = _libraryService.GetLibrary(id); 
             if (library == null)
             {
                 return HttpNotFound();
@@ -54,7 +62,7 @@ namespace LibraryService.Controllers
         // GET: Library/Create
         public ActionResult Create()
         {
-            return View();
+            return View(_libraryService.CreateDefaultLibrary());
         }
 
         // POST: Library/Create
@@ -66,8 +74,7 @@ namespace LibraryService.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Libraries.Add(library);
-                db.SaveChanges();
+                _libraryService.CreateLibrary(library);
                 return RedirectToAction("Index");
             }
 
@@ -81,7 +88,7 @@ namespace LibraryService.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Library library = db.Libraries.Find(id);
+            Library library = _libraryService.GetLibrary(id);
             if (library == null)
             {
                 return HttpNotFound();
@@ -112,7 +119,7 @@ namespace LibraryService.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Library library = db.Libraries.Find(id);
+            Library library = _libraryService.GetLibrary(id); 
             if (library == null)
             {
                 return HttpNotFound();
@@ -125,9 +132,8 @@ namespace LibraryService.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Library library = db.Libraries.Find(id);
-            db.Libraries.Remove(library);
-            db.SaveChanges();
+            Library library = _libraryService.GetLibrary(id);
+            _libraryService.DeleteLibrary(library);
             return RedirectToAction("Index");
         }
 
