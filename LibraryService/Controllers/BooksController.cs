@@ -213,6 +213,12 @@ namespace LibraryService.Controllers
             //return View(user.BookmarkedBooks);
         }
 
+        public ActionResult ItemsToBeReturned()
+        {
+            var time = DateTime.Today.AddDays(+3);
+            return View("Index", db.Books.Where(d => d.ReturnDate <= time));
+        }
+
 
         public ActionResult NewBooks()
         {
