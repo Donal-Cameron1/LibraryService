@@ -10,6 +10,7 @@ namespace LibraryService.Services.IService
     public interface IDVDService
     {
         DVD GetDVD(int id);
+        DVD GetDVDWithoutTracking(int id);
         DVD CreateDefaultDVD();
         void CreateDVD(DVD dvd);
         void EditDVD(DVD dvd);

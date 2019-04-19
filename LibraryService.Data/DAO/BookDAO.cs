@@ -56,7 +56,7 @@ namespace LibraryService.Data.DAO
 
         public Book GetBook(int id)
         {
-            return db.Books.AsNoTracking().Where(b => b.id == id).FirstOrDefault();
+            return db.Books.Find(id);
         }
 
         public IList<Book> GetBooks()
@@ -66,6 +66,11 @@ namespace LibraryService.Data.DAO
                         in db.Books
                         select b;
             return bookquery.ToList<Book>();
+        }
+
+        public Book GetBookWithoutTracking(int id)
+        {
+            return db.Books.AsNoTracking().Where(b => b.id == id).FirstOrDefault();
         }
 
         public IList<Book> GetNewBooks()

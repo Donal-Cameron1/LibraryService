@@ -99,7 +99,11 @@ namespace LibraryService.Services.Service
         public DVD GetDVD(int id)
         {
             return _dvdDAO.GetDVD(id);
+        }
 
+        public DVD GetDVDWithoutTracking(int id)
+        {
+            return _dvdDAO.GetDVDWithoutTracking(id);
         }
 
         public IList<DVD> GetDVDs()
@@ -111,5 +115,7 @@ namespace LibraryService.Services.Service
         {
             return _dvdDAO.GetNewDVDs();
         }
+
+       
     }
 }

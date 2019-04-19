@@ -11,6 +11,7 @@ namespace LibraryService.Data.IDAO
     public interface IDVDDAO
     {
         DVD GetDVD(int id);
+        DVD GetDVDWithoutTracking(int id);
         void CreateDVD(DVD dvd);
         void EditDVD(DVD dvd);
         void DeleteDVD(DVD dvd);
@@ -20,5 +21,6 @@ namespace LibraryService.Data.IDAO
         IList<DVD> DVDTextSearch(IList<DVD> query, string searchString);
         IList<DVD> DVDTypeFilter(IList<DVD> query, string type);
         IList<DVD> GetDVDs();
+
     }
 }

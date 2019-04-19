@@ -9,7 +9,8 @@ namespace LibraryService.Services.IService
 {
     public interface IBookService
     {
-        Book GetBook(int id);
+        Book GetBook(int it);
+        Book GetBookWihtoutTracking(int id);
         Book CreateDefaultBook();
         void CreateBook(Book book);
         void EditBook(Book book);

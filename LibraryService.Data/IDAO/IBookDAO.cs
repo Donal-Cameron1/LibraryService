@@ -10,6 +10,7 @@ namespace LibraryService.Data.IDAO
     public interface IBookDAO
     {
         Book GetBook(int id);
+        Book GetBookWithoutTracking(int id);
         void CreateBook(Book book);
         void EditBook(Book book);
         void DeleteBook(Book book);

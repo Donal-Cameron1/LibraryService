@@ -104,6 +104,11 @@ namespace LibraryService.Services.Service
             return _bookDAO.GetBooks();
         }
 
+        public Book GetBookWihtoutTracking(int id)
+        {
+            return _bookDAO.GetBookWithoutTracking(id);
+        }
+
         public IList<Book> GetNewBooks()
         {
             return _bookDAO.GetNewBooks();

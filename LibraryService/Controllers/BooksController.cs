@@ -78,7 +78,7 @@ namespace LibraryService.Controllers
         // GET: Books/Edit/5
         public ActionResult Edit(int id)
         {
-            Book book = _bookService.GetBook(id);
+            Book book = _bookService.GetBookWihtoutTracking(id);
             if (book == null)
             {
                 return HttpNotFound();

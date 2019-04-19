@@ -56,6 +56,11 @@ namespace LibraryService.Data.DAO
 
         public DVD GetDVD(int id)
         {
+            return db.DVD.Find(id);
+        }
+
+        public DVD GetDVDWithoutTracking(int id)
+        {
             return db.DVD.AsNoTracking().Where(b => b.id == id).FirstOrDefault();
         }
 
