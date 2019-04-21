@@ -104,7 +104,7 @@ namespace LibraryService.Controllers
         // GET: DVDs/Edit/5
         public ActionResult Edit(int id)
         {
-            DVD dvd = _dvdService.GetDVDWithoutTracking(id);
+            DVD dvd = _dvdService.GetDVD(id);
             if (dvd == null)
             {
                 return HttpNotFound();

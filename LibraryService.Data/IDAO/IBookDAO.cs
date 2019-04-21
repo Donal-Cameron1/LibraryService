@@ -1,4 +1,5 @@
-﻿using LibraryService.Models;
+﻿using LibraryService.DAL;
+using LibraryService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,11 @@ namespace LibraryService.Data.IDAO
     public interface IBookDAO
     {
         Book GetBook(int id);
-        Book GetBookWithoutTracking(int id);
         void CreateBook(Book book);
         void EditBook(Book book);
         void DeleteBook(Book book);
+        void BookmarkBook(int id, string UserId);
+        void ReserveBook(int id, string UserId);
         IList<Book> BookTextSearch(IList<Book> query, string searchString);
         IList<Book> BookGenreFilter(IList<Book> query, string genre);
         IList<Book> BookStatusFilter(IList<Book> query, string status);

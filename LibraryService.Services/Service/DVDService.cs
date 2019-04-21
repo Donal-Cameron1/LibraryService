@@ -101,11 +101,6 @@ namespace LibraryService.Services.Service
             return _dvdDAO.GetDVD(id);
         }
 
-        public DVD GetDVDWithoutTracking(int id)
-        {
-            return _dvdDAO.GetDVDWithoutTracking(id);
-        }
-
         public IList<DVD> GetDVDs()
         {
             return _dvdDAO.GetDVDs();

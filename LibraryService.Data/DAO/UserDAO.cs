@@ -16,6 +16,7 @@ namespace LibraryService.Data.DAO
         public User GetCurrentUser(string currentUserId)
         {
              return db.Users
+                .AsNoTracking()
                 .Include(u => u.BookmarkedLibraryItems)
                 .Include(u => u.ReservedLibraryItems)
                 .Include(u => u.LoanedLibraryItems)
@@ -27,18 +28,28 @@ namespace LibraryService.Data.DAO
 
         public void EditUser(User user)
         {
+            db.Users.Attach(user);
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }
 
         public IList<User> GetUsers()
         {
-            return db.Users.ToList();
+            return db.Users.AsNoTracking().ToList();
         }
 
         public User GetUser(string id)
         {
-            return db.Users.Find(id);
+            return db.Users.AsNoTracking().Where(u => u.UserId == id).FirstOrDefault(); 
+        }
+
+        public static User GetUserWithTracking(LibraryContext context, string id)
+        {
+            return context.Users
+                .Include(u => u.BookmarkedLibraryItems)
+                .Include(u => u.ReservedLibraryItems)
+                .Include(u => u.LoanedLibraryItems)
+                .Where(u => u.UserId == id).FirstOrDefault();
         }
 
         public void CreateUser(User user)
@@ -53,5 +64,6 @@ namespace LibraryService.Data.DAO
             db.SaveChanges();
         }
 
+      
     }
 }

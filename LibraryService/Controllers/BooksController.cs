@@ -114,7 +114,7 @@ namespace LibraryService.Controllers
         // GET: Books/Edit/5
         public ActionResult Edit(int id)
         {
-            Book book = _bookService.GetBookWithoutTracking(id);
+            Book book = _bookService.GetBook(id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -183,8 +183,7 @@ namespace LibraryService.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ReserveConfirmed(int id)
         {
-            Book book = _bookService.GetBook(id);
-            _bookService.Reserve(book, User.Identity.GetUserId());
+            _bookService.Reserve(id, User.Identity.GetUserId());
             return RedirectToAction("Index");
         }
         /*public ActionResult Reserve(int id)
@@ -196,8 +195,7 @@ namespace LibraryService.Controllers
       
         public ActionResult Bookmark(int id)
         {
-            Book item = _bookService.GetBook(id);
-            _bookService.BookmarkBook(item, User.Identity.GetUserId()); 
+            _bookService.BookmarkBook(id, User.Identity.GetUserId()); 
             return RedirectToAction("Index");
         }
 

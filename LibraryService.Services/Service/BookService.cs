@@ -30,19 +30,9 @@ namespace LibraryService.Services.Service
             return _bookDAO.BookGenreFilter(query, genre);
         }
 
-        public void BookmarkBook(Book item, string currentUserId)
+        public void BookmarkBook(int id, string currentUserId)
         {
-            // retrieve user
-            User user = _userDAO.GetCurrentUser(currentUserId);
-
-            //get item 
-            Book book = _bookDAO.GetBook(item.id);
-
-            //append item to users bookmark list
-            user.BookmarkedLibraryItems.Add(book);
-
-            //book.BookmarkedBy.Add(user);
-            _userDAO.EditUser(user);
+            _bookDAO.BookmarkBook(id, currentUserId);
         }
 
         public IList<Book> BookStatusFilter(IList<Book> query, string status)
@@ -104,30 +94,23 @@ namespace LibraryService.Services.Service
             return _bookDAO.GetBooks();
         }
 
-        public Book GetBookWithoutTracking(int id)
-        {
-            return _bookDAO.GetBookWithoutTracking(id);
-        }
-
         public IList<Book> GetNewBooks()
         {
             return _bookDAO.GetNewBooks();
         }
 
-        public void Reserve(Book book, string currentUserId)
+        public void Reserve(int id, string currentUserId)
         {
-            // retrieve user
-            User user = _userDAO.GetCurrentUser(currentUserId);
+
+            Book book = _bookDAO.GetBook(id);
 
             //todo: consider status.reserved and status.loaned
             if (book.Status == Status.Available)
             { 
                 book.Status = Status.Reserved;
-                book.ReservedBy = user;
                 book.ReservedUntil = DateTime.Today.AddDays(5);
-                user.ReservedLibraryItems.Add(book);
-                _userDAO.EditUser(user);
-
+                _bookDAO.EditBook(book);
+                _bookDAO.ReserveBook(id, currentUserId);
             }
             
         }

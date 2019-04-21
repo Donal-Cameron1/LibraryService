@@ -13,7 +13,7 @@ namespace LibraryService.Data.DAO
 {
     public class DVDDAO : IDVDDAO
     {
-        private LibraryContext db = DbUtils.db;
+        private LibraryContext db = new LibraryContext();
 
         public void CreateDVD(DVD dvd)
         {
@@ -23,6 +23,7 @@ namespace LibraryService.Data.DAO
 
         public void DeleteDVD(DVD dvd)
         {
+            db.DVD.Attach(dvd);
             db.DVD.Remove(dvd);
             db.SaveChanges();
         }
@@ -50,38 +51,33 @@ namespace LibraryService.Data.DAO
 
         public void EditDVD(DVD dvd)
         {
+            db.DVD.Attach(dvd);
             db.Entry(dvd).State = EntityState.Modified;
             db.SaveChanges();
         }
 
         public DVD GetDVD(int id)
         {
-            return db.DVD.Find(id);
+            return db.DVD.AsNoTracking().Where(b => b.id == id).FirstOrDefault();
         }
 
-        public DVD GetDVDWithoutTracking(int id)
+        public static DVD GetDVDWithTracking(LibraryContext context, int id)
         {
-            return db.DVD.AsNoTracking().Where(b => b.id == id).FirstOrDefault();
+            return context.DVD.Where(b => b.id == id).FirstOrDefault();
         }
 
         public IList<DVD> GetDVDs()
         {
             IQueryable<DVD> dvdquery;
             dvdquery = from d in db.DVD select d;
-            return dvdquery.ToList<DVD>();
+            return dvdquery.AsNoTracking().ToList<DVD>();
         }
 
         public IList<DVD> GetNewDVDs()
         {
-           
-
             var baselineDate = DateTime.Now.AddDays(-7);
-            IList<DVD> newDVDs = db.DVD.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList();
+            IList<DVD> newDVDs = db.DVD.AsNoTracking().Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList();
             return newDVDs;
-
-
-
-
         }
 
 
