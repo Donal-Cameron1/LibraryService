@@ -97,5 +97,15 @@ namespace LibraryService.Data.DAO
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }
+
+        public void RemoveReservation(int id, string currentUserId)
+        {
+            DVD dvd = GetDVDWithTracking(db, id);
+            User user = UserDAO.GetUserWithTracking(db, currentUserId);
+
+            user.ReservedLibraryItems.Remove(dvd);
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
     }
 }

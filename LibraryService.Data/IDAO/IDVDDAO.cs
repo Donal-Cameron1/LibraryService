@@ -23,6 +23,8 @@ namespace LibraryService.Data.IDAO
         IList<DVD> DVDTextSearch(IList<DVD> query, string searchString);
         IList<DVD> DVDTypeFilter(IList<DVD> query, string type);
         IList<DVD> GetDVDs();
+        void RemoveReservation(int id, string userId);
+
 
     }
 }

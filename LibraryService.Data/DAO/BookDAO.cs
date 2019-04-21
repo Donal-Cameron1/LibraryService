@@ -108,5 +108,14 @@ namespace LibraryService.Data.DAO
             db.SaveChanges();
         }
 
+        public void RemoveReservation(int id, string currentUserId)
+        {
+            Book book = GetBookWithTracking(db, id);
+            User user = UserDAO.GetUserWithTracking(db, currentUserId);
+
+            user.ReservedLibraryItems.Remove(book);
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
     }
 }

@@ -35,7 +35,11 @@ namespace LibraryService.Data.DAO
 
         public IList<User> GetUsers()
         {
-            return db.Users.AsNoTracking().ToList();
+            return db.Users.AsNoTracking()
+                .Include(u => u.BookmarkedLibraryItems)
+                .Include(u => u.ReservedLibraryItems)
+                .Include(u => u.LoanedLibraryItems)
+                .ToList();
         }
 
         public User GetUser(string id)

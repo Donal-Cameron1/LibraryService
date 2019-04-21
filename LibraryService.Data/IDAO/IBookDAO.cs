@@ -22,5 +22,6 @@ namespace LibraryService.Data.IDAO
         IList<Book> BookTypeFilter(IList<Book> query, string type);
         IList<Book> GetBooks();
         IList<Book> GetNewBooks();
+        void RemoveReservation(int id, string userId);
     }
 }
