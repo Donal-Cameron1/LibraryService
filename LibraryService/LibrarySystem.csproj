@@ -452,11 +452,11 @@
     <Content Include="Views\Library\Detailspartial.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\LibraryItems\ShowBookmarks.cshtml" />
-    <Content Include="Views\DVDs\Reserve.cshtml" />
     <Content Include="Views\Books\GetNewBooks.cshtml" />
     <Content Include="Views\DVDs\GetNewDVDs.cshtml" />
     <Content Include="Views\LibraryItems\ShowItemsOfUser.cshtml" />
     <Content Include="Views\Books\Reserve.cshtml" />
+    <Content Include="Views\DVDs\Reserve.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -163,17 +163,29 @@ namespace LibraryService.Controllers
             return View(newDVDs);
         }
 
+        // GET: Books/Reserve/5
         public ActionResult Reserve(int id)
         {
             DVD dvd = _dvdService.GetDVD(id);
-            _dvdService.Reserve(dvd, User.Identity.GetUserId());
+            if (dvd == null)
+            {
+                return HttpNotFound();
+            }
+            return View(dvd);
+        }
+
+        // POST: DVDs/Reserve/5
+        [HttpPost, ActionName("Reserve")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReserveConfirmed(int id)
+        {
+            _dvdService.Reserve(id, User.Identity.GetUserId());
             return RedirectToAction("Index");
         }
 
         public ActionResult Bookmark(int id)
         {
-            DVD item = _dvdService.GetDVD(id); 
-            _dvdService.BookmarkDVD(item, User.Identity.GetUserId());
+            _dvdService.BookmarkDVD(id, User.Identity.GetUserId());
             return RedirectToAction("Index");
         }
 

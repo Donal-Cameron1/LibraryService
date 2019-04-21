@@ -14,7 +14,7 @@ namespace LibraryService.Services.IService
         void CreateDVD(DVD dvd);
         void EditDVD(DVD dvd);
         void DeleteDVD(DVD dvd);
-        void BookmarkDVD(DVD item, string UserId);
+        void BookmarkDVD(int id, string UserId);
         void DeleteBookmark(int id, string UserId);
         IList<DVD> GetNewDVDs();
         IList<DVD> DVDTextSearch(IList<DVD> query, string searchString);
@@ -22,6 +22,6 @@ namespace LibraryService.Services.IService
         IList<DVD> DVDStatusFilter(IList<DVD> query, string status);
         IList<DVD> DVDTypeFilter(IList<DVD> query, string type);
         IList<DVD> GetDVDs();
-        void Reserve(DVD dvd, string currentUserId);
+        void Reserve(int id, string currentUserId);
     }
 }

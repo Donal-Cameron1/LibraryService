@@ -12,10 +12,11 @@ namespace LibraryService.Data.IDAO
     public interface IDVDDAO
     {
         DVD GetDVD(int id);
-        //DVD GetDVDWithTracking(LibraryContext context, int id);
         void CreateDVD(DVD dvd);
         void EditDVD(DVD dvd);
         void DeleteDVD(DVD dvd);
+        void BookmarkDVD(int id, string UserId);
+        void ReserveDVD(int id, string UserId);
         IList<DVD> GetNewDVDs();
         IList<DVD> DVDGenreFilter(IList<DVD> query, string genre);
         IList<DVD> DVDStatusFilter(IList<DVD> query, string status);

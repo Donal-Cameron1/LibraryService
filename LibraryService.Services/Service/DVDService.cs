@@ -24,21 +24,9 @@ namespace LibraryService.Services.Service
             _dbUtils = new DbUtils();
         }
 
-        public void BookmarkDVD(DVD item, string currentUserId)
+        public void BookmarkDVD(int id, string currentUserId)
         {
-            // retrieve user
-            User user = _userDAO.GetCurrentUser(currentUserId);
-            //ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserId == (int)currentUserId);
-
-
-            //get item 
-            DVD dvd = _dvdDAO.GetDVD(item.id);
-            //append item to users bookmark list
-            user.BookmarkedLibraryItems.Add(dvd);
-
-
-            //book.BookmarkedBy.Add(user);
-            _userDAO.EditUser(user);
+            _dvdDAO.BookmarkDVD(id, currentUserId);
         }
 
         public DVD CreateDefaultDVD()
@@ -63,7 +51,6 @@ namespace LibraryService.Services.Service
 
             user.BookmarkedLibraryItems.Remove(dvd);
             _userDAO.EditUser(user);
-
         }
 
         public void DeleteDVD(DVD dvd)
@@ -111,20 +98,17 @@ namespace LibraryService.Services.Service
             return _dvdDAO.GetNewDVDs();
         }
 
-        public void Reserve(DVD dvd, string currentUserId)
+        public void Reserve(int id, string currentUserId)
         {
-            // retrieve user
-            User user = _userDAO.GetCurrentUser(currentUserId);
+            DVD dvd = _dvdDAO.GetDVD(id);
 
             //todo: consider status.reserved and status.loaned
             if (dvd.Status == Status.Available)
             {
                 dvd.Status = Status.Reserved;
-                dvd.ReservedBy = user;
                 dvd.ReservedUntil = DateTime.Today.AddDays(5);
-                user.ReservedLibraryItems.Add(dvd);
-                _userDAO.EditUser(user);
-
+                _dvdDAO.EditDVD(dvd);
+                _dvdDAO.ReserveDVD(id, currentUserId);
             }
         }
     }

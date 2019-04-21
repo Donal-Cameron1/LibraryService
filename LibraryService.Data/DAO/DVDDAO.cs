@@ -80,9 +80,22 @@ namespace LibraryService.Data.DAO
             return newDVDs;
         }
 
+        public void BookmarkDVD(int id, string currentUserId)
+        {
+            DVD dvd = GetDVDWithTracking(db, id);
+            User user = UserDAO.GetUserWithTracking(db, currentUserId);
+            user.BookmarkedLibraryItems.Add(dvd);
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
 
-         
-
-    
-}
+        public void ReserveDVD(int id, string currentUserId)
+        {
+            DVD dvd = GetDVDWithTracking(db, id);
+            User user = UserDAO.GetUserWithTracking(db, currentUserId);
+            user.ReservedLibraryItems.Add(dvd);
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+    }
 }
