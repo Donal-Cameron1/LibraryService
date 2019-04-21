@@ -21,11 +21,9 @@ namespace LibraryService.Models
         public int Pages { get; set; }
 
         //public ICollection<User> BookmarkedBy { get; set; } = new List<User>();
-        public User ReservedBy { get; set; }
 
-        public User LoanedBy { get; set; }       
-        
         public virtual Library Library { get; set; }
+        public virtual User User { get; set; }
         //public ICollection<string> User { get; set; }
 
     }

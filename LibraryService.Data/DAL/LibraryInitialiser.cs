@@ -33,7 +33,7 @@ namespace LibraryService.DAL
 
             var DVD = new List<DVD>
             {
-                new DVD {Title="Harry Potter and the Philosopher's Stone", Director="Chris Columbus", Publisher="Warner Bros. Pictures", DVDGenre=DVDGenre.Fantasy, Duration=152, AgeRestriction=AgeRestriction._18, PurchaseValue=7.99M, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded=new DateTime(2019,1,12),PublishedAt=new DateTime(2007,4,5)},
+                new DVD {Title="Harry Potter and the Philosopher's Stone", Director="Chris Columbus", Publisher="Warner Bros. Pictures", DVDGenre=DVDGenre.Fantasy, Duration=152, AgeRestriction=AgeRestriction._18, PurchaseValue=7.99M, Type=Models.Type.DVD, LibraryId=1, Status=Status.Reserved, DateAdded=new DateTime(2019,1,12),PublishedAt=new DateTime(2007,4,5)},
                 new DVD {Title="Harry Potter and the Chamber of Secrets", Director="Chris Columbus", Publisher="Warner Bros. Pictures", DVDGenre=DVDGenre.Fantasy, Duration=161, AgeRestriction=AgeRestriction._12, PurchaseValue=7.99M, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded=new DateTime(2019,4,3), PublishedAt=new DateTime(2007,4,5)},
                 new DVD {Title="Forrest Gumpp", Director="Robert Zemeckis", Publisher="Paramount Pictures", DVDGenre=DVDGenre.Drama, Duration=142, AgeRestriction=AgeRestriction._12, PurchaseValue=8.99M, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded= new DateTime(2019,3,31), PublishedAt=new DateTime(2007,4,5)}
             };

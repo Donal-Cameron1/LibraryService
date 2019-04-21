@@ -10,7 +10,6 @@ namespace LibraryService.Models
 {
     public class User
     {
-        public static object Identity { get; set; }
         [Key]
         public string UserId { get; set; }
         public string UserName { get; set; }
@@ -20,10 +19,10 @@ namespace LibraryService.Models
         public Nullable<DateTime> MemberSince { get; set; }
         public Nullable<DateTime> DateOfBirth { get; set; }
         public virtual DateTime? LastLogin { get; set; }
-        public ICollection<LibraryItem> BookmarkedBooks { get; set; } = new List<LibraryItem>();
+        public ICollection<LibraryItem> BookmarkedLibraryItems { get; set; } = new List<LibraryItem>();
         [InverseProperty("ReservedBy")]
-        public ICollection<Book> ReservedBooks { get; set; }
+        public ICollection<LibraryItem> ReservedLibraryItems { get; set; }
         [InverseProperty("LoanedBy")]
-        public ICollection<Book> LoanedBooks { get; set; } 
+        public ICollection<LibraryItem> LoanedLibraryItems { get; set; } 
     }
 }

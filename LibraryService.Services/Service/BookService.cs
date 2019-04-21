@@ -39,7 +39,7 @@ namespace LibraryService.Services.Service
             Book book = _bookDAO.GetBook(item.id);
 
             //append item to users bookmark list
-            user.BookmarkedBooks.Add(book);
+            user.BookmarkedLibraryItems.Add(book);
 
             //book.BookmarkedBy.Add(user);
             _userDAO.EditUser(user);
@@ -85,7 +85,7 @@ namespace LibraryService.Services.Service
             User user = _userDAO.GetCurrentUser(currentUserId);
             Book book = _bookDAO.GetBook(id);
 
-            user.BookmarkedBooks.Remove(book);
+            user.BookmarkedLibraryItems.Remove(book);
             _userDAO.EditUser(user);
         }
 
@@ -104,7 +104,7 @@ namespace LibraryService.Services.Service
             return _bookDAO.GetBooks();
         }
 
-        public Book GetBookWihtoutTracking(int id)
+        public Book GetBookWithoutTracking(int id)
         {
             return _bookDAO.GetBookWithoutTracking(id);
         }
@@ -112,6 +112,24 @@ namespace LibraryService.Services.Service
         public IList<Book> GetNewBooks()
         {
             return _bookDAO.GetNewBooks();
+        }
+
+        public void Reserve(Book book, string currentUserId)
+        {
+            // retrieve user
+            User user = _userDAO.GetCurrentUser(currentUserId);
+
+            //todo: consider status.reserved and status.loaned
+            if (book.Status == Status.Available)
+            { 
+                book.Status = Status.Reserved;
+                book.ReservedBy = user;
+                book.ReservedUntil = DateTime.Today.AddDays(5);
+                user.ReservedLibraryItems.Add(book);
+                _userDAO.EditUser(user);
+
+            }
+            
         }
     }
 }

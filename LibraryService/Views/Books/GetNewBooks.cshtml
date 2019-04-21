@@ -1,0 +1,114 @@
+﻿@model IEnumerable<LibraryService.Models.Book>
+
+@{
+    ViewBag.Title = "GetNewBooks";
+}
+
+@if (Model.Any())
+{
+    <h2>New books added last week!</h2>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Publisher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AgeRestriction)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PublishedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchaseValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LibraryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookGenre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pages)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AgeRestriction)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublishedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchaseValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LibraryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookGenre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pages)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @if (Request.IsAuthenticated)
+                    {
+                        <div>
+                            |
+                            @Html.ActionLink("Reserve", "Reserve", new { id = item.id })|
+                            @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
+                        </div>
+                    }
+                </td>
+
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <h2>Sorry</h2>
+    <p>There were no books added last week.</p>
+    @Html.ActionLink("Back to List", "Index")
+}

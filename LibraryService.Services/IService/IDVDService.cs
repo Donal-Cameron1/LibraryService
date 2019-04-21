@@ -23,5 +23,6 @@ namespace LibraryService.Services.IService
         IList<DVD> DVDStatusFilter(IList<DVD> query, string status);
         IList<DVD> DVDTypeFilter(IList<DVD> query, string type);
         IList<DVD> GetDVDs();
+        void Reserve(DVD dvd, string currentUserId);
     }
 }

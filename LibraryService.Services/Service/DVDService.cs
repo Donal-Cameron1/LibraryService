@@ -34,7 +34,7 @@ namespace LibraryService.Services.Service
             //get item 
             DVD dvd = _dvdDAO.GetDVD(item.id);
             //append item to users bookmark list
-            user.BookmarkedBooks.Add(dvd);
+            user.BookmarkedLibraryItems.Add(dvd);
 
 
             //book.BookmarkedBy.Add(user);
@@ -61,7 +61,7 @@ namespace LibraryService.Services.Service
             User user = _userDAO.GetCurrentUser(currentUserId);
             DVD dvd = _dvdDAO.GetDVD(id);
 
-            user.BookmarkedBooks.Remove(dvd);
+            user.BookmarkedLibraryItems.Remove(dvd);
             _userDAO.EditUser(user);
 
         }
@@ -116,6 +116,21 @@ namespace LibraryService.Services.Service
             return _dvdDAO.GetNewDVDs();
         }
 
-       
+        public void Reserve(DVD dvd, string currentUserId)
+        {
+            // retrieve user
+            User user = _userDAO.GetCurrentUser(currentUserId);
+
+            //todo: consider status.reserved and status.loaned
+            if (dvd.Status == Status.Available)
+            {
+                dvd.Status = Status.Reserved;
+                dvd.ReservedBy = user;
+                dvd.ReservedUntil = DateTime.Today.AddDays(5);
+                user.ReservedLibraryItems.Add(dvd);
+                _userDAO.EditUser(user);
+
+            }
+        }
     }
 }

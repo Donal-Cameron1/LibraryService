@@ -2,114 +2,139 @@
 
 @{
     ViewBag.Title = "Index";
-    var message = ViewBag.message;
 }
 
-<h2>@ViewBag.message</h2>
+@using PagedList.Mvc;
+@using PagedList;
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-@Html.ActionLink("See New DVDs", "GetNewDVDs")
-
-@Html.ActionLink("See my DVDs", "MyDVDs")
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Director)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Duration)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DVDGenre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Publisher)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AgeRestriction)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PublishedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Genre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateAdded)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LibraryId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    PagedList<LibraryService.Models.DVD> dvds = ViewBag.onePageOfDVDs;
+    if (dvds.Count > 0)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Director)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration) min
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DVDGenre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Publisher)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AgeRestriction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublishedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateAdded)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LibraryId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })|
-                @Html.ActionLink("Reserve", "Reserve", new { id = item.id })|
-                @Html.ActionLink("Bookmark", "Bookmark", item)
-            </td>
-        </tr>
-    }
+        <h2>List of DVDs</h2>
 
-</table>
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+
+        using (Html.BeginForm())
+        {
+            <p>
+                Search books: @Html.TextBox("SearchString")
+                <input type="submit" value="Search" />
+                <div>
+                    @Html.DropDownList("Genre",
+                          new SelectList(Enum.GetValues(typeof(LibraryService.Models.Genre))),
+                          "Select Genre",
+                          new { @class = "form-control" })
+                </div>
+                <div>
+                    @Html.DropDownList("Status",
+                          new SelectList(Enum.GetValues(typeof(LibraryService.Models.Status))),
+                          "Select Status",
+                          new { @class = "form-control" })
+                </div>
+            </p>
+        }
+
+
+        @Html.ActionLink("See New DVDs", "GetNewDVDs")
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Genre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Publisher)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Director)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Duration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AgeRestriction)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PublishedAt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateAdded)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LibraryId)
+                </th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in ViewBag.onePageOfDVDs)
+            {
+                <tr>
+                    <td>
+                        @item.Title
+                    </td>
+                    <td>
+                        @item.Genre
+                    </td>
+                    <td>
+                        @item.Publisher
+                    </td>
+                    <td>
+                        @item.Director
+                    </td>
+                    <td>
+                        @item.Duration min
+                    </td>
+                    <td>
+                        @item.AgeRestriction.ToString().Replace("_", " ")
+                    </td>
+                    <td>
+                        @item.PublishedAt
+                    </td>
+                    <td>
+                        @item.Status
+                    </td>
+                    <td>
+                        @item.Type
+                    </td>
+                    <td>
+                        @item.DateAdded
+                    </td>
+                    <td>
+                        @item.LibraryId
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id })|
+                        @Html.ActionLink("Reserve", "Reserve", new { id = item.id })|
+                        @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
+                    </td>
+                </tr>
+            }
+
+            @Html.PagedListPager((IPagedList)ViewBag.onePageOfDVDs, page => Url.Action("Index", new { page }))
+
+        </table>
+    }
+    else
+    {
+        <h2>Sorry.</h2>
+        <p>We can't find any DVDs you are looking for</p>
+        @Html.ActionLink("Back to List", "Index")
+    }
+}
+

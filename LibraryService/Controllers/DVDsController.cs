@@ -11,6 +11,7 @@ using LibraryService.Models;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
 using Microsoft.AspNet.Identity;
+using PagedList;
 
 namespace LibraryService.Controllers
 {
@@ -24,14 +25,48 @@ namespace LibraryService.Controllers
             _dvdService = new DVDService();
         }
 
-        // GET: DVDs
-        public ActionResult Index()
+        public IList<DVD> DVDTextSearch(IList<DVD> query, string searchString)
         {
-            ViewBag.message = "Full List of DVDs";
-            ViewBag.UserId = User.Identity.GetUserId();
-            ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
-            string uid = User.Identity.GetUserId();
-            return View(db.DVD.ToList());
+            return _dvdService.DVDTextSearch(query, searchString);
+        }
+
+        public IList<DVD> DVDGenreFilter(IList<DVD> query, string genre)
+        {
+            return _dvdService.DVDGenreFilter(query, genre);
+        }
+
+        public IList<DVD> DVDStatusFilter(IList<DVD> query, string status)
+        {
+            return _dvdService.DVDStatusFilter(query, status);
+        }
+
+        // GET: DVDs
+        public ActionResult Index(string searchString, string genre, string status, int? page)
+        {
+            //IQueryable<DVD> dvds = _dvdService.GetDVDs().AsQueryable<DVD>();
+            IList<DVD> dvdquery = _dvdService.GetDVDs();
+            var pageNumber = page ?? 1;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                dvdquery = DVDTextSearch(dvdquery, searchString);
+            }
+            if (!String.IsNullOrEmpty(genre))
+            {
+                dvdquery = DVDGenreFilter(dvdquery, genre);
+            }
+            if (!String.IsNullOrEmpty(status))
+            {
+                dvdquery = DVDStatusFilter(dvdquery, status);
+            }
+
+            //ViewBag.UserId = User.Identity.GetUserId();
+            //ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
+            //string uid = User.Identity.GetUserId();
+
+            var onePageOfDVDs = dvdquery.ToPagedList(pageNumber, 2);
+            ViewBag.onePageOfDVDs = onePageOfDVDs;
+            return View();
         }
 
         // GET: DVDs/Details/5
@@ -125,44 +160,19 @@ namespace LibraryService.Controllers
         public ActionResult GetNewDVDs()
         {
             IList<DVD> newDVDs = _dvdService.GetNewDVDs();
-            ViewBag.Message = "New DVDs added this week!";
-            return View("Index", newDVDs);
+            return View(newDVDs);
         }
 
         public ActionResult Reserve(int id)
         {
-            DVD dVD = db.DVD.Find(id);
-            if (dVD == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.UserId = User.Identity.GetUserId();
-            ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
-            return View(dVD);
+            DVD dvd = _dvdService.GetDVD(id);
+            _dvdService.Reserve(dvd, User.Identity.GetUserId());
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Reserve([Bind(Include = "id,Director,Duration,DVDGenre,Title,Publisher,AgeRestriction,PublishedAt,Status,Type,Genre,PurchaseValue,DateAdded,LibraryId,UserId,ReturnDate")] DVD dVD)
+        public ActionResult Bookmark(int id)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(dVD).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(dVD);
-        }
-
-        public ActionResult MyDVDs()
-        {
-            string uid = User.Identity.GetUserId();
-            return View("Index", db.DVD.Where(d => d.UserId == uid));
-
-        }
-
-        public ActionResult Bookmark(DVD item)
-        {
+            DVD item = _dvdService.GetDVD(id); 
             _dvdService.BookmarkDVD(item, User.Identity.GetUserId());
             return RedirectToAction("Index");
         }

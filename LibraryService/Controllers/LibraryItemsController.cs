@@ -30,13 +30,28 @@ namespace LibraryService.Controllers
             User user = _libraryItemService.GetUser(User.Identity.GetUserId());
 
             //show list of bookmarked books
-            if (user == null || user.BookmarkedBooks == null || !user.BookmarkedBooks.Any())
+            if (user == null || user.BookmarkedLibraryItems == null || !user.BookmarkedLibraryItems.Any())
             {
                 return View(new List<LibraryItem>());
             }
             else
             {
-                return View(user.BookmarkedBooks);
+                return View(user.BookmarkedLibraryItems);
+            }
+        }
+
+        public ActionResult ShowItemsOfUser(string currentUser)
+        {
+            // retrieve user
+            User user = _libraryItemService.GetUser(User.Identity.GetUserId());
+
+            if(user == null || user.ReservedLibraryItems == null || !user.ReservedLibraryItems.Any())
+            {
+                return View(new List<LibraryItem>());
+            }
+            else
+            {
+                return View(user.ReservedLibraryItems);
             }
         }
     }

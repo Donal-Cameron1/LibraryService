@@ -11,13 +11,14 @@ using LibraryService.Models;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
 using Microsoft.AspNet.Identity;
+using PagedList;
 
 namespace LibraryService.Controllers
 {
     public class BooksController : Controller
     {
 
-        private LibraryContext db = new LibraryContext();
+        //private LibraryContext db = new LibraryContext();
 
         private IBookService _bookService;
         public BooksController()
@@ -25,21 +26,56 @@ namespace LibraryService.Controllers
             _bookService = new BookService();
         }
 
-        // GET: Books
-        public ActionResult Index(string searchString)
+        public IList<Book> BookTextSearch(IList<Book> query, string searchString)
         {
-            var books = from s in db.Books
-                        select s;
+            return _bookService.BookTextSearch(query, searchString);
+        }
+
+        public IList<Book> BookGenreFilter(IList<Book> query, string genre)
+        {
+            return _bookService.BookGenreFilter(query, genre);
+        }
+
+        public IList<Book> BookStatusFilter(IList<Book> query, string status)
+        {
+            return _bookService.BookStatusFilter(query, status);
+        }
+
+
+
+        // GET: Books
+        public ActionResult Index(string searchString, string genre, string status, int? page)
+        {
+            //IQueryable<Book> books = _bookService.GetBooks().AsQueryable<Book>();
+            IList<Book> bookquery = _bookService.GetBooks();
+            var pageNumber = page ?? 1;
+
+            
             if (!String.IsNullOrEmpty(searchString))
             {
-                books = books.Where(s => s.Title.Contains(searchString)
-                                       || s.Author.Contains(searchString));
+                bookquery = BookTextSearch(bookquery, searchString);
             }
-            ViewBag.message = "Full Book List";
-            string uid = User.Identity.GetUserId();
-            ViewBag.UserId = User.Identity.GetUserId();
-            ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
-            return View(books.ToList());
+            if (!String.IsNullOrEmpty(genre))
+            {
+                bookquery = BookGenreFilter(bookquery, genre);
+            }
+            if (!String.IsNullOrEmpty(status))
+            {
+                bookquery = BookStatusFilter(bookquery, status);
+            }
+            if (!bookquery.Any())
+            {
+                ViewBag.message = "Sorry, we can't find any books";
+            }
+
+            //string uid = User.Identity.GetUserId();
+            //ViewBag.UserId = User.Identity.GetUserId();
+            //ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
+
+            var onePageOfProducts = bookquery.ToPagedList(pageNumber, 2);
+            ViewBag.OnePageOfProducts = onePageOfProducts;
+
+            return View();
         }
 
         // GET: Books/Details/5
@@ -78,7 +114,7 @@ namespace LibraryService.Controllers
         // GET: Books/Edit/5
         public ActionResult Edit(int id)
         {
-            Book book = _bookService.GetBookWihtoutTracking(id);
+            Book book = _bookService.GetBookWithoutTracking(id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -122,49 +158,45 @@ namespace LibraryService.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+        /*protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
+        }*/
 
+        // GET: Books/Reserve/5
         public ActionResult Reserve(int id)
         {
-            Book book = db.Books.Find(id);
+            Book book = _bookService.GetBook(id);
             if (book == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = User.Identity.GetUserId();
-            ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
             return View(book);
         }
 
-        [HttpPost]
+        // POST: DVDs/Reserve/5
+        [HttpPost, ActionName("Reserve")]
         [ValidateAntiForgeryToken]
-        public ActionResult Reserve([Bind(Include = "Author,id,Publisher,Pages,Title,Genre,LibraryId,Status,UserId,AgeRestriction,PurchaseValue,ReturnDate,DateAdded")] Book book)
+        public ActionResult ReserveConfirmed(int id)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(book).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(book);
+            Book book = _bookService.GetBook(id);
+            _bookService.Reserve(book, User.Identity.GetUserId());
+            return RedirectToAction("Index");
         }
-
-        public ActionResult MyBooks()
+        /*public ActionResult Reserve(int id)
         {
-            string uid = User.Identity.GetUserId();
-            return View("Index", db.Books.Where(d => d.UserId == uid));
-
-        }
+            Book book = _bookService.GetBook(id);
+            _bookService.Reserve(book, User.Identity.GetUserId());
+            return RedirectToAction("Index");
+        }*/
       
-        public ActionResult Bookmark(Book item)
+        public ActionResult Bookmark(int id)
         {
+            Book item = _bookService.GetBook(id);
             _bookService.BookmarkBook(item, User.Identity.GetUserId()); 
             return RedirectToAction("Index");
         }
@@ -180,8 +212,7 @@ namespace LibraryService.Controllers
         public ActionResult GetNewBooks()
         {
             IList<Book> newBooks = _bookService.GetNewBooks();
-            ViewBag.Message = "New Books added this week!";
-            return View("Index", newBooks);
+            return View(newBooks);
         }
 
     }

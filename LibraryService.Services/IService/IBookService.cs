@@ -10,7 +10,9 @@ namespace LibraryService.Services.IService
     public interface IBookService
     {
         Book GetBook(int it);
-        Book GetBookWihtoutTracking(int id);
+        Book GetBookWithoutTracking(int id);
+        IList<Book> GetBooks();
+        IList<Book> GetNewBooks();
         Book CreateDefaultBook();
         void CreateBook(Book book);
         void EditBook(Book book);
@@ -21,7 +23,6 @@ namespace LibraryService.Services.IService
         IList<Book> BookGenreFilter(IList<Book> query, string genre);
         IList<Book> BookStatusFilter(IList<Book> query, string status);
         IList<Book> BookTypeFilter(IList<Book> query, string type);
-        IList<Book> GetBooks();
-        IList<Book> GetNewBooks();
+        void Reserve(Book book, string currentUserId);
     }
 }

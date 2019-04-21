@@ -11,11 +11,16 @@ namespace LibraryService.Data.DAO
 {
     public class UserDAO : IUserDAO
     {
-        private LibraryContext db = DbUtils.db;
+        private LibraryContext db = new LibraryContext();
 
         public User GetCurrentUser(string currentUserId)
         {
-             return db.Users.Include(u => u.BookmarkedBooks).SingleOrDefault(x => x.UserId == currentUserId);
+             return db.Users
+                .Include(u => u.BookmarkedLibraryItems)
+                .Include(u => u.ReservedLibraryItems)
+                .Include(u => u.LoanedLibraryItems)
+                .SingleOrDefault(x => x.UserId == currentUserId);
+                
             //User user =  db.Users.SingleOrDefault(x => x.UserId == currentUserId);
             //return user;
         }

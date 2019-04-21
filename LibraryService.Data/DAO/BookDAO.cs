@@ -13,7 +13,7 @@ namespace LibraryService.Data.DAO
 {
     public class BookDAO : IBookDAO
     {
-        private LibraryContext db = DbUtils.db;
+        private LibraryContext db = new LibraryContext();
 
         public IList<Book> BookGenreFilter(IList<Book> query, string genre)
         {
@@ -50,8 +50,16 @@ namespace LibraryService.Data.DAO
 
         public void EditBook(Book book)
         {
+            db.Books.Attach(book);
             db.Entry(book).State = EntityState.Modified;
             db.SaveChanges();
+            /*var entry = db.Entry(book);
+            var state = entry.State;
+            db.Books.Attach(book);
+            var state1 = entry.State;
+            entry.State = EntityState.Modified;
+            db.Books.Attach(book);*/
+            //db.SaveChanges();
         }
 
         public Book GetBook(int id)

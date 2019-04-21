@@ -15,19 +15,22 @@ namespace LibraryService.DAL
         public DbSet<Book> Books { get; set; }
         public DbSet<DVD> DVD { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<LibraryItem> LibraryItems { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            Database.SetInitializer<LibraryContext>( new LibraryInitialiser());
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Entity<User>()
-                        .HasMany(u => u.BookmarkedBooks)
+                        .HasMany(u => u.BookmarkedLibraryItems)
                         .WithMany(b => b.BookmarkedBy)
                         .Map(cs =>
                          {
                              cs.MapLeftKey("UserId");
                              cs.MapRightKey("BookId");
-                             cs.ToTable("UserBookmarkedBooks");
+                             cs.ToTable("UserBookmarkedLibraryItems");
                          });
 
            /* modelBuilder.Entity<User>()
@@ -45,7 +48,5 @@ namespace LibraryService.DAL
             */
 
         }
-
-        public DbSet<LibraryItem> LibraryItems { get; set; }
     }
 }

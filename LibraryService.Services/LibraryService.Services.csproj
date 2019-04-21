@@ -53,12 +53,17 @@
     <Compile Include="Service\LibraryItemService.cs" />
     <Compile Include="Service\UserService.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Content\PagedList.css" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LibraryService.Data\LibraryService.Data.csproj">
       <Project>{78665550-6ffc-4948-a929-959f39a22073}</Project>
       <Name>LibraryService.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

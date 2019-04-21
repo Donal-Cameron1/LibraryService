@@ -23,10 +23,10 @@ namespace LibraryService.Models
 
     public enum AgeRestriction
     {
-        U=1,
-        PG =2,
+        U = 1,
+        PG = 2,
         [Display(Name ="12")]
-        _12 =12,
+        _12 = 12,
         [Display(Name = "15")]
         _15 = 15,
         [Display(Name = "18")]
@@ -83,10 +83,18 @@ namespace LibraryService.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<DateTime> ReturnDate { get; set; }
 
+        
+        public Nullable<DateTime> ReservedUntil { get; set; }
+
         public ICollection<User> BookmarkedBy { get; set; } = new List<User>();
+        public User ReservedBy { get; set; } 
+        public User LoanedBy { get; set; } 
+
+
+
 
     }
 
-    
+
 }
 

@@ -69,14 +69,24 @@ namespace LibraryService.Data.DAO
             IQueryable<DVD> dvdquery;
             dvdquery = from d in db.DVD select d;
             return dvdquery.ToList<DVD>();
-
         }
 
         public IList<DVD> GetNewDVDs()
         {
+           
+
             var baselineDate = DateTime.Now.AddDays(-7);
             IList<DVD> newDVDs = db.DVD.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList();
             return newDVDs;
+
+
+
+
         }
-    }
+
+
+         
+
+    
+}
 }
