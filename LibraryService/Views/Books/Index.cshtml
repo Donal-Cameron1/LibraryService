@@ -23,45 +23,47 @@
     @Html.ActionLink("See New books","Newbooks")
 
     <table class="table" id="myTable">
+        <thead class="bg-info">
         <tr>
-            <th onclick="sort(0)">
+            <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
                 @Html.DisplayNameFor(model => model.id)
             </th>
-            <th onclick="sort(1)">
+            <th onclick="sort(1)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'" >
                 @Html.DisplayNameFor(model => model.Publisher)
             </th>
-            <th onclick="sort(2)">
+            <th onclick="sort(2)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'" >
                 @Html.DisplayNameFor(model => model.Pages)
             </th>
-            <th onclick="sort(3)">
+            <th onclick="sort(3)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'" >
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th onclick="sort(4)">
+            <th onclick="sort(4)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'" >
                 @Html.DisplayNameFor(model => model.Genre)
             </th>
-            <th onclick="sort(5)">
+            <th onclick="sort(5)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
                 @Html.DisplayNameFor(model => model.LibraryId)
             </th>
-            <th onclick="sort(6)">
+            <th onclick="sort(6)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'" >
                 @Html.DisplayNameFor(model => model.Status)
             </th>
-            <th onclick="sort(7)">
+            <th onclick="sort(7)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'" >
                 @Html.DisplayNameFor(model => model.UserId)
             </th>
-            <th onclick="sort(8)">
+            <th onclick="sort(8)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'" >
                 @Html.DisplayNameFor(model => model.AgeRestriction)
             </th>
-            <th onclick="sort(9)">
+            <th onclick="sort(9)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'" >
                 @Html.DisplayNameFor(model => model.PurchaseValue)
             </th>
-            <th onclick="sort(10)">
+            <th onclick="sort(10)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'" >
                 @Html.DisplayNameFor(model => model.ReturnDate)
             </th>
-            <th onclick="sort(11)">
+            <th onclick="sort(11)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'" >
                 @Html.DisplayNameFor(model => model.DateAdded)
             </th>
             <th></th>
         </tr>
+            </thead>
 
 @foreach (var item in Model) {
     <tr>

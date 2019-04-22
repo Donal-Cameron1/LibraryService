@@ -15,7 +15,15 @@ namespace LibraryService.DAL
             {
                 new Library {Address="London Road", PostCode="S2 4NF", Name="Highfield Library", Capacity=12345, TelephoneNumber="0114 1234567", OpeningHours="Monday - Friday 8am-9pm", Coord="53.366833, -1.474933"}, 
                 new Library {Address="160 Hemper Lane", PostCode="S8 7FE", Name="Greenhill Library", Capacity=49568, TelephoneNumber="0114 987654", OpeningHours="Monday - Friday 8am-9pm", Coord="53.326512, -1.488615"},
-                new Library {Address="900 Chesterfield Road", PostCode="S8 0SH", Name="Woodseats Library", Capacity=304985, TelephoneNumber="0114 842394", OpeningHours="Monday - Friday 8am-9pm", Coord="53.340000, -1.480345"}
+                new Library {Address="900 Chesterfield Road", PostCode="S8 0SH", Name="Woodseats Library", Capacity=304985, TelephoneNumber="0114 842394", OpeningHours="Monday - Friday 8am-9pm", Coord="53.340000, -1.480345"},
+                new Library {Address="Surry Street", PostCode="S1 1XZ", Name="Cental Library", Capacity=304985, TelephoneNumber="0114 2734712", OpeningHours="Monday - Friday 8am-9pm", Coord="53.380141, -1.467090"},
+                new Library {Address="Western Bank", PostCode="S10 2TN", Name="Western Bank Library", Capacity=304985, TelephoneNumber="0114 2227296", OpeningHours="Monday - Friday 8am-9pm", Coord="53.382610, -1.487842"},
+                new Library {Address="10 Taptonville Road", PostCode="S10 5BR", Name="Broomhill Library", Capacity=304985, TelephoneNumber="0114 2732746", OpeningHours="Monday - Friday 8am-9pm", Coord="53.377891, -1.502914"},
+                new Library {Address="11 High Street", PostCode="S35 9AU", Name="Ecclesfield Library", Capacity=304985, TelephoneNumber="0114 2463615", OpeningHours="Monday - Friday 8am-9pm", Coord="53.439606, -1.464522"},
+                new Library {Address="Ridgeway Road", PostCode="S12 2SS", Name="Manor Library", Capacity=304985, TelephoneNumber="0114 2037805", OpeningHours="Monday - Friday 8am-9pm", Coord="53.359500, -1.429486"},
+                new Library {Address="577 Gleadless Road", PostCode="S2 2BT", Name="Newfield Green Library", Capacity=304985, TelephoneNumber="0114 2398946", OpeningHours="Monday - Friday 8am-9pm", Coord="53.355331, -1.448356"},
+                new Library {Address="243 Duke Street", PostCode="S2 5QP", Name="Park Library", Capacity=304985, TelephoneNumber="0114 2757497", OpeningHours="Monday - Friday 8am-9pm", Coord="53.378122, -1.454059"},
+                new Library {Address="205 Baslow Road", PostCode="S17 4DT", Name="Totley Library", Capacity=304985, TelephoneNumber="0114 2363971", OpeningHours="Monday - Friday 8am-9pm", Coord="53.314916, -1.533712"}
             };
             
             Libraries.ForEach(s => context.Libraries.Add(s));
