@@ -16,7 +16,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Publisher)
             </th>
-
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
@@ -43,51 +42,52 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Publisher)
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LibraryId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AgeRestriction)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReturnDate)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LibraryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AgeRestriction)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
 
-                @if (item.Type == LibraryService.Models.Type.Book)
-                {
-                    <td>
-                        @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
-                        @Html.ActionLink("Remove Bookmark", "DeleteBookmark", new { id = item.id, Controller = "Books" })
-                    </td>
-                }
-                @if (item.Type == LibraryService.Models.Type.DVD)
-                {
-                    <td>
-                        @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
-                        @Html.ActionLink("Remove Bookmark", "DeleteBookmark", new { id = item.id, Controller = "DVDs" })
-                    </td>
-                }
-            </tr>
+            @if (item.Type == LibraryService.Models.Type.Book)
+            {
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
+                    @Html.ActionLink("Remove Bookmark", "DeleteBookmark", new { id = item.id, Controller = "Books" }) 
+                </td>
+            }
+            @if (item.Type == LibraryService.Models.Type.DVD)
+            {
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
+                    @Html.ActionLink("Remove Bookmark", "DeleteBookmark", new { id = item.id, Controller = "DVDs" })
+                </td>
+            }
+            
+        </tr>
         }
     </table>
 

@@ -64,7 +64,7 @@ namespace LibraryService.Controllers
             //ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
             //string uid = User.Identity.GetUserId();
 
-            var onePageOfDVDs = dvdquery.ToPagedList(pageNumber, 2);
+            var onePageOfDVDs = dvdquery.ToPagedList(pageNumber, 10);
             ViewBag.onePageOfDVDs = onePageOfDVDs;
             return View();
         }

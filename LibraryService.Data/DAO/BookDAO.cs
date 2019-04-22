@@ -28,8 +28,8 @@ namespace LibraryService.Data.DAO
 
         public IList<Book> BookTextSearch(IList<Book> query, string searchString)
         {
-            return query.Where(b => b.Title.Contains(searchString)
-                                 || b.Author.Contains(searchString)).ToList<Book>();
+            return query.Where(b => b.Title.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0
+                                 || b.Author.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList<Book>();
         }
 
         public IList<Book> BookTypeFilter(IList<Book> query, string type)
