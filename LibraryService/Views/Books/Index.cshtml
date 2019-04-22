@@ -78,52 +78,52 @@
 
             @foreach (var item in ViewBag.OnePageOfProducts)
             {
-                <tr>
-                    <td>
-                        @item.Title
-                    </td>
-                    <td>
-                        @item.Publisher
-                    </td>
-                    <td>
-                        @item.Pages
-                    </td>
-                    <td>
-                        @item.BookGenre
-                    </td>
-                    <td>
-                        @item.LibraryId
-                    </td>
-                    <td>
-                        @item.Status
-                    </td>
-                    <td>
-                        @item.AgeRestriction.ToString().Replace("_", " ")
-                    </td>
-                    <td>
-                        @item.PurchaseValue
-                    </td>
-                    <td>
-                        @item.PublishedAt
-                    </td>
-                    <td>
-                        @item.DateAdded
-                    </td>
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.Publisher
+                </td>
+                <td>
+                    @item.Pages
+                </td>
+                <td>
+                    @item.BookGenre
+                </td>
+                <td>
+                    @item.LibraryId
+                </td>
+                <td>
+                    @item.Status
+                </td>
+                <td>
+                    @item.AgeRestriction.ToString().Replace("_", " ")
+                </td>
+                <td>
+                    @item.PurchaseValue
+                </td>
+                <td>
+                    @item.PublishedAt.Year
+                </td>
+                <td>
+                    @item.DateAdded.Date.ToString("MM/dd/yyyy")
+                </td>
 
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.id })
-                        @if (Request.IsAuthenticated)
-                        {
-                            <div>
-                                |
-                                @Html.ActionLink("Reserve", "Reserve", new { id = item.id })|
-                                @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
-                            </div>
-                        }
-                    </td>
-                </tr>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                    @if (Request.IsAuthenticated)
+                    {
+                        <div>
+                            |
+                            @Html.ActionLink("Reserve", "Reserve", new { id = item.id })|
+                            @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
+                        </div>
+                    }
+                </td>
+            </tr>
             }
 
             @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Index", new { page }))

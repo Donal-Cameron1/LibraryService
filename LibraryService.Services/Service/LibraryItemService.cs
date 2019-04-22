@@ -36,11 +36,11 @@ namespace LibraryService.Services.Service
 
         public void UpdateStatus()
         {
-            IList<User> users = _userDAO.GetUsers();
-            foreach(User user in users)
+            //IList<User> users = _userDAO.GetUsers();
+            foreach(User user in _userDAO.GetUsers())
             {
-                ICollection<LibraryItem> items = user.ReservedLibraryItems;
-                foreach(LibraryItem item in items)
+                //ICollection<LibraryItem> items = user.ReservedLibraryItems;
+                foreach(LibraryItem item in user.ReservedLibraryItems.ToList())
                 {
                     if(item.ReservedUntil != null && (item.ReservedUntil.Value.AddDays(1).CompareTo(DateTime.Today) <= 0))
                     {

@@ -102,7 +102,7 @@
                         @item.AgeRestriction.ToString().Replace("_", " ")
                     </td>
                     <td>
-                        @item.PublishedAt
+                        @item.PublishedAt.Year
                     </td>
                     <td>
                         @item.Status
@@ -111,7 +111,7 @@
                         @item.Type
                     </td>
                     <td>
-                        @item.DateAdded
+                        @item.DateAdded.ToString("MM/dd/yyyy")
                     </td>
                     <td>
                         @item.LibraryId

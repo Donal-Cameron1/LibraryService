@@ -12,11 +12,11 @@ namespace LibraryService
         {
             ConfigureAuth(app);
 
-            //GlobalConfiguration.Configuration.UseSqlServerStorage("Data Source = (LocalDb)\\MSSQLLocalDB; Initial Catalog = LibraryService1; Integrated Security = SSPI; Integrated Security = True; Initial Catalog = aspnetdb");
-            //app.UseHangfireDashboard();
-            //app.UseHangfireServer();
+            GlobalConfiguration.Configuration.UseSqlServerStorage("Data Source = (LocalDb)\\MSSQLLocalDB; Initial Catalog = LibraryService1; Integrated Security = SSPI; Integrated Security = True; Initial Catalog = aspnetdb");
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
 
-            //RecurringJob.AddOrUpdate(() => new Services.Service.LibraryItemService().UpdateStatus(), Cron.Daily);
+            RecurringJob.AddOrUpdate(() => new Services.Service.LibraryItemService().UpdateStatus(), Cron.Daily);
         }
     }
 }
