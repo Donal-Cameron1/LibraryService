@@ -206,7 +206,6 @@ namespace LibraryService.Controllers
             return RedirectToAction("ShowBookmarks", "LibraryItems");
         }
 
-
         public ActionResult GetNewBooks()
         {
             IList<Book> newBooks = _bookService.GetNewBooks();

@@ -40,8 +40,8 @@ namespace LibraryService.Data.DAO
 
         public IList<DVD> DVDTextSearch(IList<DVD> query, string searchString)
         {
-            return query.Where(d => d.Title.Contains(searchString)
-                                 || d.Director.Contains(searchString)).ToList<DVD>();
+            return query.Where(d => d.Title.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0
+                                 || d.Director.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList<DVD>();
         }
 
         public IList<DVD> DVDTypeFilter(IList<DVD> query, string type)
