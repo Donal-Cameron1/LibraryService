@@ -52,9 +52,7 @@ namespace LibraryService.Models
 
         [Required]
         [Display(Name = "Published at")]
-        [ValidationDateAttribute(ErrorMessage ="Date can't be in the future")]
-        [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:yyyy}")]
-        public Nullable<DateTime> PublishedAt { get; set; }   
+        public int PublishedAt { get; set; }   
         
         public Status Status { get; set; }
 
