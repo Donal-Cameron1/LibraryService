@@ -20,8 +20,7 @@ namespace LibraryService.Models
         [Display(Name = "Phone Number")]
         public string TelephoneNumber { get; set; }
         public string Coord { get; set; }
-        public int Capacity { get; set; }
-         
+        public int Capacity { get; set; }         
 
         public virtual ICollection<Book> Books { get; set; }
 

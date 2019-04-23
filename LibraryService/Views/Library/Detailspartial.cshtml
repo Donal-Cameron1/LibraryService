@@ -53,6 +53,45 @@
         location3.setMap(map);
         google.maps.event.addListener(location3, 'click', function (){ location3info.open(map, location3) });
 
+        var location4 = new google.maps.Marker({ position: new google.maps.LatLng(53.380141, -1.467090) });
+        var location4info = new google.maps.InfoWindow({ content: "Central Library" });
+        location4.setMap(map);
+        google.maps.event.addListener(location4, 'click', function () { location4info.open(map, location4) });
+
+        var location5 = new google.maps.Marker({ position: new google.maps.LatLng(53.382610, -1.487842) });
+        var location5info = new google.maps.InfoWindow({ content: "Western Bank Library" });
+        location5.setMap(map);
+        google.maps.event.addListener(location5, 'click', function () { location5info.open(map, location5) });
+
+        var location6 = new google.maps.Marker({ position: new google.maps.LatLng(53.377891, -1.502914) });
+        var location6info = new google.maps.InfoWindow({ content: "Broomhill Library" });
+        location6.setMap(map);
+        google.maps.event.addListener(location6, 'click', function () { location6info.open(map, location6) });
+
+        var location7 = new google.maps.Marker({ position: new google.maps.LatLng(53.439606, -1.464522) });
+        var location7info = new google.maps.InfoWindow({ content: "Ecclesfield Library" });
+        location7.setMap(map);
+        google.maps.event.addListener(location7, 'click', function () { location7info.open(map, location7) });
+
+        var location8 = new google.maps.Marker({ position: new google.maps.LatLng(53.359500, -1.429486) });
+        var location8info = new google.maps.InfoWindow({ content: "Ecclesfield Library" });
+        location8.setMap(map);
+        google.maps.event.addListener(location8, 'click', function () { location8info.open(map, location8) });
+
+        var location9 = new google.maps.Marker({ position: new google.maps.LatLng(53.355331, -1.448356) });
+        var location9info = new google.maps.InfoWindow({ content: "Newfield Green Library" });
+        location9.setMap(map);
+        google.maps.event.addListener(location9, 'click', function () { location9info.open(map, location9) });
+
+        var location10 = new google.maps.Marker({ position: new google.maps.LatLng(53.378122, -1.454059) });
+        var location10info = new google.maps.InfoWindow({ content: "Park Library" });
+        location10.setMap(map);
+        google.maps.event.addListener(location10, 'click', function () { location10info.open(map, location10) });
+
+        var location11 = new google.maps.Marker({ position: new google.maps.LatLng(53.314916, -1.533712) });
+        var location11info = new google.maps.InfoWindow({ content: "Totley Library" });
+        location11.setMap(map);
+        google.maps.event.addListener(location11, 'click', function () { location11info.open(map, location11) });
     }
 
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
