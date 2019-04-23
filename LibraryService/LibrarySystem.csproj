@@ -463,6 +463,10 @@
     <Content Include="Views\LibraryItems\ShowItemsOfUser.cshtml" />
     <Content Include="Views\Books\Reserve.cshtml" />
     <Content Include="Views\DVDs\Reserve.cshtml" />
+    <Content Include="Views\Books\CheckoutBook.cshtml" />
+    <Content Include="Views\Books\ShowBasket.cshtml" />
+    <Content Include="Views\Books\Checkout.cshtml" />
+    <Content Include="Views\DVDs\Loan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,6 +11,7 @@
 </p>
 <table class="table">
     <tr>
+        <th> </th>
         <th>
             @Html.DisplayNameFor(model => model.UserId)
         </th>
@@ -34,6 +35,8 @@
 
 @foreach (var item in Model) {
     <tr>
+        <td>  @Html.ActionLink("Borrow", "StartCheckout", new { id = item.UserId }) |</td>
+
         <td>
             @Html.DisplayFor(modelItem => item.UserId)
         </td>

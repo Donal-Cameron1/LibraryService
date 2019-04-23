@@ -25,8 +25,14 @@ namespace LibraryService.DAL
             {
                 new Book {Title="Harry Potter", Author="J.K. Rowling", Publisher="Penguin", BookGenre=BookGenre.Fantasy, Pages=200, AgeRestriction=AgeRestriction._18, PurchaseValue=9.99M, Type=Models.Type.Book, LibraryId=2, Status=Status.Reserved, UserId="3", DateAdded=new DateTime(2019,4,6), PublishedAt=2006},
                 new Book {Title="The Lion the whitch and the wardrobe", Author="Lewis Caroll", Publisher="Penguin", BookGenre=BookGenre.Fantasy, Pages=150, AgeRestriction=AgeRestriction.PG, PurchaseValue=11.99M, Type=Models.Type.Book, LibraryId=3, Status=Status.Available, DateAdded=new DateTime(2019,3,22), PublishedAt=2007},
-                new Book {Title="The Lion the whitch and the wardrobe", Author="Lewis Caroll", Publisher="Penguin", BookGenre=BookGenre.Fantasy, Pages=150, AgeRestriction=AgeRestriction._12, PurchaseValue=11.99M, Type=Models.Type.Book, LibraryId=2, Status=Status.Available, DateAdded=new DateTime(2019,2,14), PublishedAt=2014},
+                new Book {Title="A Brief History of Time", Author="Stephen Hawking", Publisher="Penguin", BookGenre=BookGenre.Action, Pages=400, AgeRestriction=AgeRestriction._12, PurchaseValue=5.99M, Type=Models.Type.Book, LibraryId=1, Status=Status.Available, DateAdded=new DateTime(2015,3,12), PublishedAt=1999},
+                new Book {Title="An Action Book", Author="Brian SMith", Publisher="Random House", BookGenre=BookGenre.Action, Pages=550, AgeRestriction=AgeRestriction._18, PurchaseValue=2.99M, Type=Models.Type.Book, LibraryId=3, Status=Status.Available, DateAdded=new DateTime(2012,1,10), PublishedAt=1997},
+                new Book {Title="Gardeing is Cool", Author="Janet McSmedley", Publisher="Smedley Books", BookGenre=BookGenre.Action, Pages=50, AgeRestriction=AgeRestriction.U, PurchaseValue=23.99M, Type=Models.Type.Book, LibraryId=2, Status=Status.Available, DateAdded=new DateTime(2004,2,14), PublishedAt=1979},
+                new Book {Title="Gritty Crime", Author="Robert McDude", Publisher="Dude Publishing", BookGenre=BookGenre.Thriller, Pages=350, AgeRestriction=AgeRestriction.PG, PurchaseValue=1.99M, Type=Models.Type.Book, LibraryId=3, Status=Status.Available, DateAdded=new DateTime(2012,1,12), PublishedAt=2002},
+                new Book {Title="A book of thinghs", Author="Robert McDude", Publisher="Dude Publishing", BookGenre=BookGenre.Poetry, Pages=450, AgeRestriction=AgeRestriction.U, PurchaseValue=2.99M, Type=Models.Type.Book, LibraryId=1, Status=Status.Available, DateAdded=new DateTime(2014,2,23), PublishedAt=2003},
                 new Book {Title="The Lion the whitch and the wardrobe", Author="Lewis Caroll", Publisher="Penguin", BookGenre=BookGenre.Fantasy, Pages=150, AgeRestriction=AgeRestriction._15, PurchaseValue=11.99M, Type=Models.Type.Book, LibraryId=2, Status=Status.Available, DateAdded=new DateTime(2019,2,23), PublishedAt=2008}
+
+
             };
             Books.ForEach(s => context.Books.Add(s));
             context.SaveChanges();
