@@ -32,8 +32,6 @@ namespace LibraryService.DAL
                 new Book {Title="Gritty Crime", Author="Robert McDude", Publisher="Dude Publishing", BookGenre=BookGenre.Thriller, Pages=350, AgeRestriction=AgeRestriction.PG, PurchaseValue=1.99M, Type=Models.Type.Book, LibraryId=3, Status=Status.Available, DateAdded=new DateTime(2012,1,12), PublishedAt=2002},
                 new Book {Title="A book of thinghs", Author="Robert McDude", Publisher="Dude Publishing", BookGenre=BookGenre.Poetry, Pages=450, AgeRestriction=AgeRestriction.U, PurchaseValue=2.99M, Type=Models.Type.Book, LibraryId=1, Status=Status.Available, DateAdded=new DateTime(2014,2,23), PublishedAt=2003},
                 new Book {Title="The Lion the whitch and the wardrobe", Author="Lewis Caroll", Publisher="Penguin", BookGenre=BookGenre.Fantasy, Pages=150, AgeRestriction=AgeRestriction._15, PurchaseValue=11.99M, Type=Models.Type.Book, LibraryId=2, Status=Status.Available, DateAdded=new DateTime(2019,2,23), PublishedAt=2008}
-
-
             };
             Books.ForEach(s => context.Books.Add(s));
             context.SaveChanges();
