@@ -19,7 +19,7 @@ namespace LibraryService.Data.DAO
                 .AsNoTracking()
                 .Include(u => u.BookmarkedLibraryItems)
                 .Include(u => u.ReservedLibraryItems)
-                .Include(u => u.LoanedLibraryItems)
+               .Include(u => u.LoanedLibraryItems)
                 .SingleOrDefault(x => x.UserId == currentUserId);
                 
             //User user =  db.Users.SingleOrDefault(x => x.UserId == currentUserId);
@@ -36,9 +36,9 @@ namespace LibraryService.Data.DAO
         public IList<User> GetUsers()
         {
             return db.Users.AsNoTracking()
-                .Include(u => u.BookmarkedLibraryItems)
-                .Include(u => u.ReservedLibraryItems)
-                .Include(u => u.LoanedLibraryItems)
+                //.Include(u => u.BookmarkedLibraryItems)
+                //.Include(u => u.ReservedLibraryItems)
+                //.Include(u => u.LoanedLibraryItems)
                 .ToList();
         }
 

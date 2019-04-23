@@ -131,5 +131,18 @@ namespace LibraryService.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult StartCheckout(string id)
+
+        {
+            Session["UserId"] = id;
+
+            ViewBag.Customer = id;
+
+            return RedirectToAction("CheckoutBook", "Books");
+
+
+
+        }
     }
 }
