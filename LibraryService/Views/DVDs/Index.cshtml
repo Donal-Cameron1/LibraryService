@@ -86,53 +86,44 @@
                 </tr>
             </thead>
 
-            @foreach (var item in Model)
+            @foreach (var item in ViewBag.onePageOfDVDs)
                 {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Director)
+                        @item.Director
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Duration)
+                        @item.Duration min
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DVDGenre)
+                        @item.DVDGenre
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Title)
+                        @item.Title
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Publisher)
+                        @item.Publisher
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.AgeRestriction)
+                        @item.AgeRestriction.ToString().Replace("_", " ")
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PublishedAt)
+                        @item.PublishedAt
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Status)
+                        @item.Status
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Type)
+                        @item.Type
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Genre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateAdded)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LibraryId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserId)
+                        @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
                         @Html.ActionLink("Details", "Details", new { id = item.id }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.id })
-                        @Html.ActionLink("Bookmark", "Bookmark", item)
+                        @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
                     </td>
                 </tr>
             }
