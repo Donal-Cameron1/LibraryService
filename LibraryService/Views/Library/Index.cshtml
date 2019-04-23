@@ -45,29 +45,34 @@
     </p>
 }
 
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <table class="table">
 
-<table class="table">
 
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <button class="collapsible">@item.Name</button>
+                            <div class="content">
+                                <p>@item.Address </p>
+                                <p>@item.PostCode </p>
+                                <p>@item.TelephoneNumber</p>
+                                <p>@item.OpeningHours</p>
+                            </div>
+                        </td>
+                    </tr>
+                }
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                <button class="collapsible">@item.Name</button>
-                <div class="content">
-                    <p>@item.Address </p> 
-                    <p>@item.PostCode </p>
-                    <p>@item.TelephoneNumber</p>
-                    <p>@item.OpeningHours</p>
-                </div>
-            </td>
-        </tr>
-    }
-
-</table>
-
-@Html.Partial("Detailspartial");
-
+            </table>
+        </div>
+        <div class="col-sm-8">
+            @Html.Partial("Detailspartial");
+        </div>
+    </div>
+</div>
 <script>
     var coll = document.getElementsByClassName("collapsible");
     var i;
@@ -84,4 +89,3 @@
         });
     }
 </script>
- 
