@@ -76,14 +76,13 @@
             {
                 <td>
                     @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
-                    @Html.ActionLink("Remove Bookmark", "DeleteBookmark", new { id = item.id, Controller = "Books" }) 
+                    @Html.ActionLink("Cancel Reservation", "DeleteReservation", new { id = item.id, Controller = "Books" })
                 </td>
             }
             @if (item.Type == LibraryService.Models.Type.DVD)
             {
                 <td>
                     @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
-                    @Html.ActionLink("Remove Bookmark", "DeleteBookmark", new { id = item.id, Controller = "DVDs" })
                 </td>
             }
             

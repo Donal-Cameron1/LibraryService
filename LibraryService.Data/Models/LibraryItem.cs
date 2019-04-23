@@ -68,7 +68,7 @@ namespace LibraryService.Models
         public decimal PurchaseValue { get; set; }
 
         [Display(Name = "Date added")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<DateTime> DateAdded { get; set; }
 
         [Required]
@@ -87,12 +87,6 @@ namespace LibraryService.Models
         public ICollection<User> BookmarkedBy { get; set; } = new List<User>();
         public User ReservedBy { get; set; } 
         public User LoanedBy { get; set; } 
-
-
-
-
     }
-
-
 }
 

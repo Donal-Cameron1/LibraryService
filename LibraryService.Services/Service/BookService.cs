@@ -79,6 +79,17 @@ namespace LibraryService.Services.Service
             _userDAO.EditUser(user);
         }
 
+        public void DeleteReservation(int id, string currentUserId)
+        {
+            User user = _userDAO.GetCurrentUser(currentUserId);
+            Book book = _bookDAO.GetBook(id);
+
+            book.Status = Status.Available;
+            user.ReservedLibraryItems.Remove(book);
+            _bookDAO.EditBook(book);
+            _userDAO.EditUser(user);
+        }
+
         public void EditBook(Book book)
         {
             _bookDAO.EditBook(book);
@@ -104,7 +115,7 @@ namespace LibraryService.Services.Service
 
             Book book = _bookDAO.GetBook(id);
 
-            //todo: consider status.reserved and status.loaned
+            //todo: consider status.loaned
             if (book.Status == Status.Available)
             { 
                 book.Status = Status.Reserved;
@@ -112,6 +123,14 @@ namespace LibraryService.Services.Service
                 _bookDAO.EditBook(book);
                 _bookDAO.ReserveBook(id, currentUserId);
             }
+            //todo: Schedule service needed to change status after returndate? 
+            /*
+            if(book.Status == Status.Loaned)
+            {
+                book.ReservedUntil = book.ReturnDate.Value.AddDays(5);
+                _bookDAO.EditBook(book);
+                _bookDAO.ReserveBook(id, currentUserId);
+            }*/
             
         }
     }

@@ -186,12 +186,12 @@ namespace LibraryService.Controllers
             _bookService.Reserve(id, User.Identity.GetUserId());
             return RedirectToAction("Index");
         }
-        /*public ActionResult Reserve(int id)
+
+        public ActionResult DeleteReservation(int id)
         {
-            Book book = _bookService.GetBook(id);
-            _bookService.Reserve(book, User.Identity.GetUserId());
-            return RedirectToAction("Index");
-        }*/
+            _bookService.DeleteReservation(id, User.Identity.GetUserId());
+            return RedirectToAction("ShowItemsOfUser");
+        }
       
         public ActionResult Bookmark(int id)
         {
@@ -199,6 +199,11 @@ namespace LibraryService.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult BookmarkNewBook(int id)
+        {
+            _bookService.BookmarkBook(id, User.Identity.GetUserId());
+            return RedirectToAction("Index", "Home");
+        }
 
         public ActionResult DeleteBookmark(int id)
         {
