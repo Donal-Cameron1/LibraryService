@@ -15,7 +15,7 @@ namespace LibraryService.Models
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
-            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            ClaimsIdentity userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
         }
@@ -42,27 +42,27 @@ namespace LibraryService.Models
         {
             if (!context.Roles.Any(r => r.Name == "Admin"))
             {
-                var store = new RoleStore<IdentityRole>(context);
-                var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole { Name = "Admin" };
+                RoleStore<IdentityRole> store = new RoleStore<IdentityRole>(context);
+                RoleManager<IdentityRole> manager = new RoleManager<IdentityRole>(store);
+                IdentityRole role = new IdentityRole { Name = "Admin" };
 
                 manager.Create(role);
             }
 
             if (!context.Roles.Any(r => r.Name == "Staff"))
             {
-                var store = new RoleStore<IdentityRole>(context);
-                var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole { Name = "Staff" };
+                RoleStore<IdentityRole> store = new RoleStore<IdentityRole>(context);
+                RoleManager<IdentityRole> manager = new RoleManager<IdentityRole>(store);
+                IdentityRole role = new IdentityRole { Name = "Staff" };
 
                 manager.Create(role);
             }
 
             if (!context.Roles.Any(r => r.Name == "User"))
             {
-                var store = new RoleStore<IdentityRole>(context);
-                var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole { Name = "User" };
+                RoleStore<IdentityRole> store = new RoleStore<IdentityRole>(context);
+                RoleManager<IdentityRole> manager = new RoleManager<IdentityRole>(store);
+                IdentityRole role = new IdentityRole { Name = "User" };
 
                 manager.Create(role);
             }
@@ -70,9 +70,9 @@ namespace LibraryService.Models
             
             if (!context.Users.Any(u => u.UserName == "admin"))
             {
-                var store = new UserStore<ApplicationUser>(context);
-                var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser
+                UserStore<ApplicationUser> store = new UserStore<ApplicationUser>(context);
+                UserManager<ApplicationUser> manager = new UserManager<ApplicationUser>(store);
+                ApplicationUser user = new ApplicationUser
                 {
                     UserName = "admin@test.com",
                     Email = "admin@test.com",
@@ -87,9 +87,9 @@ namespace LibraryService.Models
 
             if (!context.Users.Any(u => u.UserName == "Staff"))
             {
-                var store = new UserStore<ApplicationUser>(context);
-                var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser
+                UserStore<ApplicationUser> store = new UserStore<ApplicationUser>(context);
+                UserManager<ApplicationUser> manager = new UserManager<ApplicationUser>(store);
+                ApplicationUser user = new ApplicationUser
                 {
                     UserName = "staff@test.com",
                     Email = "staff@test.com",
@@ -103,9 +103,9 @@ namespace LibraryService.Models
 
             if (!context.Users.Any(u => u.UserName == "User"))
             {
-                var store = new UserStore<ApplicationUser>(context);
-                var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser
+                UserStore<ApplicationUser> store = new UserStore<ApplicationUser>(context);
+                UserManager<ApplicationUser> manager = new UserManager<ApplicationUser>(store);
+                ApplicationUser user = new ApplicationUser
                 {
                     UserName = "user@test.com",
                     Email = "user@test.com",

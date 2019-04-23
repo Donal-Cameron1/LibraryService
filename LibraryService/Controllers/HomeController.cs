@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using LibraryService.DAL;
 using LibraryService.Models;
+using LibraryService.Services.IService;
+using LibraryService.Services.Service;
 using Microsoft.AspNet.Identity;
 
 namespace LibraryService.Controllers
@@ -12,48 +14,56 @@ namespace LibraryService.Controllers
     public class HomeController : Controller
     {
         private LibraryContext db = new LibraryContext();
-        
+    
+        private ILibraryItemService _libraryItemService;
+        private IBookService _bookService;
+        private IDVDService _dvdService;
 
-        public IQueryable<Book> BookTextSearch(IQueryable<Book> query, string searchString)
-        {                       
-            return query.Where(b => b.Title.Contains(searchString)
-                                        || b.Author.Contains(searchString));          
+        public HomeController()
+        {
+            _bookService = new BookService();
+            _dvdService = new DVDService();
+            _libraryItemService = new LibraryItemService();
         }
 
-        public IQueryable<Book> BookGenreFilter(IQueryable<Book> query, string genre)
+        public IList<Book> BookTextSearch(IList<Book> query, string searchString)
         {
-            return query.Where(b => b.BookGenre.ToString().Equals(genre));
+             return _bookService.BookTextSearch(query, searchString);         
+        }
+
+        public IList<Book> BookGenreFilter(IList<Book> query, string genre)
+        {
+            return _bookService.BookGenreFilter(query, genre);
         } 
         
-        public IQueryable<DVD> DVDTextSearch(IQueryable<DVD> query, string searchString)
+        public IList<DVD> DVDTextSearch(IList<DVD> query, string searchString)
         {
-            return query.Where(d => d.Title.Contains(searchString)
-                                        || d.Director.Contains(searchString));
+            return _dvdService.DVDTextSearch(query, searchString);
         }
         
-        public IQueryable<DVD> DVDGenreFilter(IQueryable<DVD> query, string genre)
+        public IList<DVD> DVDGenreFilter(IList<DVD> query, string genre)
         {
-            return query.Where(d => d.DVDGenre.ToString().Equals(genre));
+            return _dvdService.DVDGenreFilter(query, genre);
         }
 
-        public IQueryable<Book> BookStatusFilter(IQueryable<Book> query, string status)
+        public IList<Book> BookStatusFilter(IList<Book> query, string status)
         {
-            return query.Where(b => b.Status.ToString().Equals(status));
+            return _bookService.BookStatusFilter(query, status);
         }
 
-        public IQueryable<DVD> DVDStatusFilter(IQueryable<DVD> query, string status)
+        public IList<DVD> DVDStatusFilter(IList<DVD> query, string status)
         {
-            return query.Where(d => d.Status.ToString().Equals(status));
+            return _dvdService.DVDStatusFilter(query, status);
         }
 
-        public IQueryable<Book> BookTypeFilter(IQueryable<Book> query, string type)
+        public IList<Book> BookTypeFilter(IList<Book> query, string type)
         {
-            return query.Where(d => d.Type.ToString().Equals(type));
+            return _bookService.BookTypeFilter(query, type);
         }
 
-        public IQueryable<DVD> DVDTypeFilter(IQueryable<DVD> query, string type)
+        public IList<DVD> DVDTypeFilter(IList<DVD> query, string type)
         {
-            return query.Where(d => d.Type.ToString().Equals(type));
+            return _dvdService.DVDTypeFilter(query, type);
         }
 
 
@@ -61,8 +71,9 @@ namespace LibraryService.Controllers
         public ActionResult Searchbar(string searchString, string genre, string status, string type)
         {
             IList<LibraryItem> items = new List<LibraryItem>();
-            var bookquery = from b in db.Books select b;
-            var dvdquery = from d in db.DVD select d;
+            IList<Book> bookquery = _bookService.GetBooks();
+            IList<DVD> dvdquery = _dvdService.GetDVDs();
+
 
             if (String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(genre) && String.IsNullOrEmpty(status) && String.IsNullOrEmpty(type))
             {
@@ -91,14 +102,14 @@ namespace LibraryService.Controllers
 
             foreach (Book book in bookquery.ToList())
             {
-                var item = (LibraryItem)book;
+                LibraryItem item = (LibraryItem)book;
                 item.Genre = (Genre) Enum.Parse(typeof(Genre),book.BookGenre.ToString());
                 items.Add(item);
             }
 
             foreach (DVD dvd in dvdquery.ToList())
             {
-                var item = (LibraryItem)dvd;
+                LibraryItem item = (LibraryItem)dvd;
                 item.Genre = (Genre)Enum.Parse(typeof(Genre), dvd.DVDGenre.ToString());
                 items.Add(item);
             }
@@ -109,11 +120,10 @@ namespace LibraryService.Controllers
 
         public ActionResult Index()
         {
-            var baselineDate = DateTime.Now.AddDays(-7);
-            IList<LibraryItem> newitems = new List<LibraryItem>();
 
-            IEnumerable<LibraryItem> books = db.Books.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList().Cast<LibraryItem>();
-            IEnumerable<LibraryItem> dvds = db.DVD.Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList().Cast<LibraryItem>();
+            IEnumerable<LibraryItem> dvds = _dvdService.GetNewDVDs().Cast<LibraryItem>();
+            IEnumerable<LibraryItem> books = _bookService.GetNewBooks().Cast<LibraryItem>();
+            IList<LibraryItem> newitems = new List<LibraryItem>();
 
             return View(newitems.Concat(books).Concat(dvds));                 
         }
@@ -122,7 +132,6 @@ namespace LibraryService.Controllers
         {
             string currentUserId = User.Identity.GetUserId(); 
             currentUserId = "a";
-            //ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserId == (int)currentUserId);
             
             ViewBag.Message = "Your application description page.";
 

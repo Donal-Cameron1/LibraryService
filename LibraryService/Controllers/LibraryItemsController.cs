@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using LibraryService.DAL;
 using LibraryService.Models;
+using LibraryService.Services.IService;
+using LibraryService.Services.Service;
 using Microsoft.AspNet.Identity;
 
 namespace LibraryService.Controllers
@@ -16,23 +18,41 @@ namespace LibraryService.Controllers
     {
         private LibraryContext db = new LibraryContext();
 
-        public ActionResult ShowBookmarks()
+        private ILibraryItemService _libraryItemService;
+        public LibraryItemsController()
+        {
+            _libraryItemService = new LibraryItemService();
+        }
+
+        public ActionResult ShowBookmarks(string currentUser)
         {
             // retrieve user
-            var currentUser = User.Identity.GetUserId();
-            User user = db.Users.Include(u => u.BookmarkedBooks).Where(u => u.UserId == currentUser).FirstOrDefault();
+            User user = _libraryItemService.GetUser(User.Identity.GetUserId());
 
             //show list of bookmarked books
-            if (user == null || user.BookmarkedBooks == null || !user.BookmarkedBooks.Any())
+            if (user == null || user.BookmarkedLibraryItems == null || !user.BookmarkedLibraryItems.Any())
             {
                 return View(new List<LibraryItem>());
             }
             else
             {
-                return View(user.BookmarkedBooks);
+                return View(user.BookmarkedLibraryItems);
             }
         }
 
-      
+        public ActionResult ShowItemsOfUser(string currentUser)
+        {
+            // retrieve user
+            User user = _libraryItemService.GetUser(User.Identity.GetUserId());
+
+            if(user == null || user.ReservedLibraryItems == null || !user.ReservedLibraryItems.Any())
+            {
+                return View(new List<LibraryItem>());
+            }
+            else
+            {
+                return View(user.ReservedLibraryItems);
+            }
+        }
     }
 }

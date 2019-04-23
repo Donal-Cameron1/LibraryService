@@ -46,36 +46,36 @@ namespace LibraryService
             {
                 dbInit.InitializeDatabase(db);
 
-                var userManager = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                ApplicationUserManager userManager = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
-                var roleStore = new RoleStore<IdentityRole>(db);
-                var roleManager = new RoleManager<IdentityRole>(roleStore);
+                RoleStore<IdentityRole> roleStore = new RoleStore<IdentityRole>(db);
+                RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(roleStore);
 
                 string name = adminUserEmail;
                 string password = adminPassword;
                 string roleName = "Admin";
 
                 //Create Role Admin if it does not exist
-                var role = roleManager.FindByName(roleName);
+                IdentityRole role = roleManager.FindByName(roleName);
                 if (role == null)
                 {
                     role = new IdentityRole(roleName);
-                    var roleresult = roleManager.Create(role);
+                    IdentityResult roleresult = roleManager.Create(role);
                 }
 
-                var user = userManager.FindByName(name);
+                ApplicationUser user = userManager.FindByName(name);
                 if (user == null)
                 {
                     user = new ApplicationUser { UserName = name, Email = name };
-                    var result = userManager.Create(user, password);
+                    IdentityResult result = userManager.Create(user, password);
                     result = userManager.SetLockoutEnabled(user.Id, false);
                 }
 
                 // Add user admin to Role Admin if not already added
-                var rolesForUser = userManager.GetRoles(user.Id);
+                System.Collections.Generic.IList<string> rolesForUser = userManager.GetRoles(user.Id);
                 if (!rolesForUser.Contains(role.Name))
                 {
-                    var result = userManager.AddToRole(user.Id, role.Name);
+                    IdentityResult result = userManager.AddToRole(user.Id, role.Name);
                 }
                 return true;
             }
