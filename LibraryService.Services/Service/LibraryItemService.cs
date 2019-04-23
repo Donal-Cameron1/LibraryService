@@ -50,12 +50,12 @@ namespace LibraryService.Services.Service
                         if(item.Type == Models.Type.Book)
                         {
                             _bookDAO.EditBook((Book)item);
-                            _bookDAO.RemoveReservation(item.id, user.UserId);
+                            _bookDAO.DeleteReservation(item.id, user.UserId);
                         }
                         if(item.Type == Models.Type.DVD)
                         {
                             _dvdDAO.EditDVD((DVD)item);
-                            _dvdDAO.RemoveReservation(item.id, user.UserId);
+                            _dvdDAO.DeleteReservation(item.id, user.UserId);
                         }
                     }
                 }

@@ -83,6 +83,7 @@
             {
                 <td>
                     @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
+                    @Html.ActionLink("Cancel Reservation", "DeleteReservation", new { id = item.id, Controller = "DVDs" })
                 </td>
             }
             

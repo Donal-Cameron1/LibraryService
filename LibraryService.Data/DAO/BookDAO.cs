@@ -99,6 +99,15 @@ namespace LibraryService.Data.DAO
             db.SaveChanges();
         }
 
+        public void DeleteBookmark(int id, string currentUserId)
+        {
+            Book book = GetBookWithTracking(db, id);
+            User user = UserDAO.GetUserWithTracking(db, currentUserId);
+            user.BookmarkedLibraryItems.Remove(book);
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
         public void ReserveBook(int id, string currentUserId)
         {
             Book book = GetBookWithTracking(db, id);
@@ -108,11 +117,10 @@ namespace LibraryService.Data.DAO
             db.SaveChanges();
         }
 
-        public void RemoveReservation(int id, string currentUserId)
+        public void DeleteReservation(int id, string currentUserId)
         {
             Book book = GetBookWithTracking(db, id);
             User user = UserDAO.GetUserWithTracking(db, currentUserId);
-
             user.ReservedLibraryItems.Remove(book);
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();

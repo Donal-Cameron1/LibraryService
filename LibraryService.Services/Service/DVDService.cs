@@ -46,11 +46,7 @@ namespace LibraryService.Services.Service
 
         public void DeleteBookmark(int id, string currentUserId)
         {
-            User user = _userDAO.GetCurrentUser(currentUserId);
-            DVD dvd = _dvdDAO.GetDVD(id);
-
-            user.BookmarkedLibraryItems.Remove(dvd);
-            _userDAO.EditUser(user);
+            _dvdDAO.DeleteBookmark(id, currentUserId);
         }
 
         public void DeleteDVD(DVD dvd)
@@ -110,6 +106,11 @@ namespace LibraryService.Services.Service
                 _dvdDAO.EditDVD(dvd);
                 _dvdDAO.ReserveDVD(id, currentUserId);
             }
+        }
+
+        public void DeleteReservation(int id, string currentUserId)
+        {
+            _dvdDAO.DeleteReservation(id, currentUserId);
         }
     }
 }

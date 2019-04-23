@@ -20,10 +20,7 @@ namespace LibraryService.Data.DAO
                 .Include(u => u.BookmarkedLibraryItems)
                 .Include(u => u.ReservedLibraryItems)
                 //.Include(u => u.LoanedLibraryItems)
-                .SingleOrDefault(x => x.UserId == currentUserId);
-                
-            //User user =  db.Users.SingleOrDefault(x => x.UserId == currentUserId);
-            //return user;
+                .SingleOrDefault(x => x.UserId == currentUserId);       
         }
 
         public void EditUser(User user)

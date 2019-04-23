@@ -193,7 +193,7 @@ namespace LibraryService.Controllers
         public ActionResult DeleteReservation(int id)
         {
             _bookService.DeleteReservation(id, User.Identity.GetUserId());
-            return RedirectToAction("ShowItemsOfUser");
+            return RedirectToAction("ShowItemsOfUser", "LibraryItems");
         }
       
         public ActionResult Bookmark(int id)

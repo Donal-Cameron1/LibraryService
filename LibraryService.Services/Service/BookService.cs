@@ -72,22 +72,12 @@ namespace LibraryService.Services.Service
 
         public void DeleteBookmark(int id, string currentUserId)
         {
-            User user = _userDAO.GetCurrentUser(currentUserId);
-            Book book = _bookDAO.GetBook(id);
-
-            user.BookmarkedLibraryItems.Remove(book);
-            _userDAO.EditUser(user);
+            _bookDAO.DeleteBookmark(id, currentUserId);
         }
 
         public void DeleteReservation(int id, string currentUserId)
         {
-            User user = _userDAO.GetCurrentUser(currentUserId);
-            Book book = _bookDAO.GetBook(id);
-
-            book.Status = Status.Available;
-            user.ReservedLibraryItems.Remove(book);
-            _bookDAO.EditBook(book);
-            _userDAO.EditUser(user);
+            _bookDAO.DeleteReservation(id, currentUserId);
         }
 
         public void EditBook(Book book)
