@@ -107,5 +107,18 @@ namespace LibraryService.Data.DAO
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }
+        
+
+         public void LoanDVD (int id, string currentUserId)
+
+        {
+            DVD dvd = GetDVDWithTracking(db, id);
+            User user = UserDAO.GetUserWithTracking(db, currentUserId);
+            user.LoanedLibraryDVD.Add(dvd);
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+
     }
 }
