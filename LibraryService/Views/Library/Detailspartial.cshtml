@@ -3,40 +3,105 @@
 <div id="googleMap" style="width:100%;height:400px;"></div>
 
 <script>
+    var map, infoWindow;
+
     function myMap() {
         var mapProp = {
             center: new google.maps.LatLng(53.3815, -1.4717),
-            zoom: 12,
+            zoom: 11,
         };
         var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-        var location1 = new google.maps.Marker(
-            { position: new google.maps.LatLng(53.366833, -1.474933) });
-        var location1info = new google.maps.InfoWindow({
-            content: "Highfield Library"
-        });
+        infoWindow = new google.maps.InfoWindow;
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos =
+                    {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+
+                infoWindow.setPosition(pos);
+                infoWindow.setContent('Location found.');
+                infoWindow.open(map);
+                map.setCenter(pos);
+            },
+
+                function () {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+        }
+        else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+
+        var location1 = new google.maps.Marker({ position: new google.maps.LatLng(53.366833, -1.474933) });
+        var location1info = new google.maps.InfoWindow({content: "Highfield Library"});
         location1.setMap(map);
-        google.maps.event.addListener(location1, 'click', function ()
-        { location1info.open(map, location1) });
+        google.maps.event.addListener(location1, 'click', function (){ location1info.open(map, location1) });
 
-        var location2 = new google.maps.Marker(
-            { position: new google.maps.LatLng(53.326512, -1.488615) });
-        var location2info = new google.maps.InfoWindow({
-            content: "Greenhill Library"
-        });
+        var location2 = new google.maps.Marker({ position: new google.maps.LatLng(53.326512, -1.488615) });
+        var location2info = new google.maps.InfoWindow({content: "Greenhill Library"});
         location2.setMap(map);
-        google.maps.event.addListener(location2, 'click', function ()
-        { location2info.open(map, location2) });
+        google.maps.event.addListener(location2, 'click', function (){ location2info.open(map, location2) });
 
-        var location3 = new google.maps.Marker(
-            { position: new google.maps.LatLng(53.340000, -1.480345) });
-        var location3info = new google.maps.InfoWindow({
-            content: "Woodseats Library"
-        });
+        var location3 = new google.maps.Marker({ position: new google.maps.LatLng(53.340000, -1.480345) });
+        var location3info = new google.maps.InfoWindow({content: "Woodseats Library"});
         location3.setMap(map);
-        google.maps.event.addListener(location3, 'click', function ()
-        { location3info.open(map, location3) });
+        google.maps.event.addListener(location3, 'click', function (){ location3info.open(map, location3) });
+
+        var location4 = new google.maps.Marker({ position: new google.maps.LatLng(53.380141, -1.467090) });
+        var location4info = new google.maps.InfoWindow({ content: "Central Library" });
+        location4.setMap(map);
+        google.maps.event.addListener(location4, 'click', function () { location4info.open(map, location4) });
+
+        var location5 = new google.maps.Marker({ position: new google.maps.LatLng(53.382610, -1.487842) });
+        var location5info = new google.maps.InfoWindow({ content: "Western Bank Library" });
+        location5.setMap(map);
+        google.maps.event.addListener(location5, 'click', function () { location5info.open(map, location5) });
+
+        var location6 = new google.maps.Marker({ position: new google.maps.LatLng(53.377891, -1.502914) });
+        var location6info = new google.maps.InfoWindow({ content: "Broomhill Library" });
+        location6.setMap(map);
+        google.maps.event.addListener(location6, 'click', function () { location6info.open(map, location6) });
+
+        var location7 = new google.maps.Marker({ position: new google.maps.LatLng(53.439606, -1.464522) });
+        var location7info = new google.maps.InfoWindow({ content: "Ecclesfield Library" });
+        location7.setMap(map);
+        google.maps.event.addListener(location7, 'click', function () { location7info.open(map, location7) });
+
+        var location8 = new google.maps.Marker({ position: new google.maps.LatLng(53.359500, -1.429486) });
+        var location8info = new google.maps.InfoWindow({ content: "Ecclesfield Library" });
+        location8.setMap(map);
+        google.maps.event.addListener(location8, 'click', function () { location8info.open(map, location8) });
+
+        var location9 = new google.maps.Marker({ position: new google.maps.LatLng(53.355331, -1.448356) });
+        var location9info = new google.maps.InfoWindow({ content: "Newfield Green Library" });
+        location9.setMap(map);
+        google.maps.event.addListener(location9, 'click', function () { location9info.open(map, location9) });
+
+        var location10 = new google.maps.Marker({ position: new google.maps.LatLng(53.378122, -1.454059) });
+        var location10info = new google.maps.InfoWindow({ content: "Park Library" });
+        location10.setMap(map);
+        google.maps.event.addListener(location10, 'click', function () { location10info.open(map, location10) });
+
+        var location11 = new google.maps.Marker({ position: new google.maps.LatLng(53.314916, -1.533712) });
+        var location11info = new google.maps.InfoWindow({ content: "Totley Library" });
+        location11.setMap(map);
+        google.maps.event.addListener(location11, 'click', function () { location11info.open(map, location11) });
     }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
+
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAobn4NuErZmfWtqOllY3qCD_geeo0Rj7Q&callback=myMap"></script>

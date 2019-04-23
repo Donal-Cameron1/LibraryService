@@ -21,9 +21,12 @@ namespace LibraryService.Controllers
         //private LibraryContext db = new LibraryContext();
 
         private IBookService _bookService;
+        private IUserService _userService;
+
         public BooksController()
         {
             _bookService = new BookService();
+            _userService = new UserService();
         }
 
         public IList<Book> BookTextSearch(IList<Book> query, string searchString)
@@ -50,7 +53,7 @@ namespace LibraryService.Controllers
             IList<Book> bookquery = _bookService.GetBooks();
             var pageNumber = page ?? 1;
 
-            
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 bookquery = BookTextSearch(bookquery, searchString);
@@ -195,7 +198,7 @@ namespace LibraryService.Controllers
       
         public ActionResult Bookmark(int id)
         {
-            _bookService.BookmarkBook(id, User.Identity.GetUserId()); 
+            _bookService.BookmarkBook(id, User.Identity.GetUserId());
             return RedirectToAction("Index");
         }
 
@@ -217,5 +220,94 @@ namespace LibraryService.Controllers
             return View(newBooks);
         }
 
+        public ActionResult CheckoutBook()
+        {
+            IList<Book> bookquery = _bookService.GetBooks();
+
+            ViewBag.Customer = Session["UserId"].ToString();
+
+            return View(bookquery);
+        }
+
+        public ActionResult CheckoutAnotherBook(string message)
+        {
+            IList<Book> bookquery = _bookService.GetBooks();
+
+            ViewBag.Customer = Session["UserId"].ToString();
+            ViewBag.message = message;
+
+            return View("CheckoutBook", bookquery);
+        }
+
+        public ActionResult SelectBook(int id)
+        {
+            var book = _bookService.GetBook(id);
+            var duedate = DateTime.Now.AddDays(14);
+            var listofitems = new Dictionary<Book, DateTime>();
+
+            if (Session["ItemList"] != null)
+            {
+                listofitems = (Dictionary<Book, DateTime>)Session["ItemList"];
+            }
+
+            listofitems.Add(book, duedate);
+            Session["ItemList"] = listofitems;
+
+            var message = book.Title + " added to checkout list.";
+
+            return RedirectToAction("CheckoutAnotherBook", new { message = message });
+
+        }
+
+        public ActionResult ShowBasket()
+        {
+            var itemlist = (Dictionary<Book, DateTime>)Session["ItemList"];
+
+            var viewlist = new Dictionary<string, DateTime>();
+
+            foreach (KeyValuePair<Book, DateTime> item in itemlist)
+            {
+                viewlist.Add(item.Key.Title, item.Value);
+            }
+
+            return View(viewlist);
+        }
+
+        public ActionResult Checkout()
+        {
+            // get the items from session
+            var itemlist = (Dictionary<Book, DateTime>)Session["ItemList"];
+            var customerid = Session["UserId"].ToString();
+            var thiscustomer = _userService.GetUser(customerid);
+            var currentlist = new Dictionary<Book, DateTime>();
+
+            if (thiscustomer.LoanedLibraryItems != null)
+            {
+                currentlist = thiscustomer.LoanedLibraryItems;
+            }
+
+            foreach (KeyValuePair<Book, DateTime> item in itemlist)
+            {
+                /// get item
+                var thisbook = _bookService.GetBook(item.Key.id);
+
+                /// change value of customer id
+                thisbook.UserId = customerid;
+
+                /// update item
+                _bookService.EditBook(item.Key);
+
+                // add items to customer
+                currentlist.Add(item.Key, item.Value);
+            }
+
+            //update the customer list of items
+            thiscustomer.LoanedLibraryItems = currentlist;
+
+            _userService.EditUser(thiscustomer);
+
+            return View();
+        }
     }
+
 }

@@ -66,7 +66,7 @@ namespace LibraryService.Controllers
 
             var onePageOfDVDs = dvdquery.ToPagedList(pageNumber, 10);
             ViewBag.onePageOfDVDs = onePageOfDVDs;
-            return View();
+            return View(dvdquery);
         }
 
         // GET: DVDs/Details/5
