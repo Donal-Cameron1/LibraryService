@@ -46,12 +46,14 @@
         </td>
         @if (item.Type == LibraryService.Models.Type.Book)
         {
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
-                @if (!item.BookmarkedBy.Where(u => u.UserId == HttpContext.Current.User.Identity.GetUserId()).Any())
-                {
-                    @Html.ActionLink("Bookmark", "BookmarkNewBook", new { id = item.id })}
-            </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
+            @if (!item.BookmarkedBy.Where(u => u.UserId == HttpContext.Current.User.Identity.GetUserId()).Any())
+            {
+                @Html.ActionLink("Bookmark", "BookmarkNewBook", new { id = item.id })
+                @Html.ActionLink("Reserve", "ReserveNewBook", new { id = item.id })
+            }
+        </td>
         }
         @if (item.Type == LibraryService.Models.Type.DVD)
         {

@@ -473,6 +473,9 @@
     <Content Include="Views\DVDs\Loan.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Home\ReserveNewDVD.cshtml" />
+    <Content Include="Views\LibraryItems\ReserveDVD.cshtml" />
+    <Content Include="Views\LibraryItems\ReserveBook.cshtml" />
+    <Content Include="Views\Home\ReserveNewBook.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

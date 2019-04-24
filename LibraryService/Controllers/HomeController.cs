@@ -140,18 +140,6 @@ namespace LibraryService.Controllers
             return View(newitems.Concat(books).Concat(dvds));                 
         }
 
-        public ActionResult BookmarkBook(int id)
-        {
-            _bookService.BookmarkBook(id, User.Identity.GetUserId());
-            return RedirectToAction("Searchbar", "Home");
-        }
-
-        public ActionResult BookmarkDVD(int id)
-        {
-            _dvdService.BookmarkDVD(id, User.Identity.GetUserId());
-            return RedirectToAction("Searchbar", "Home");
-        }
-
         public ActionResult BookmarkNewBook(int id)
         {
             _bookService.BookmarkBook(id, User.Identity.GetUserId());
@@ -178,9 +166,29 @@ namespace LibraryService.Controllers
         // POST: DVDs/Reserve/5
         [HttpPost, ActionName("ReserveNewDVD")]
         [ValidateAntiForgeryToken]
-        public ActionResult ReserveConfirmed(int id)
+        public ActionResult ReserveNewDVDConfirmed(int id)
         {
             _dvdService.Reserve(id, User.Identity.GetUserId());
+            return RedirectToAction("Index");
+        }
+
+        // GET: Books/Reserve/5
+        public ActionResult ReserveNewBook(int id)
+        {
+            Book book = _bookService.GetBook(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+            return View(book);
+        }
+
+        // POST: DVDs/Reserve/5
+        [HttpPost, ActionName("ReserveNewBook")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReserveNewBookConfirmed(int id)
+        {
+            _bookService.Reserve(id, User.Identity.GetUserId());
             return RedirectToAction("Index");
         }
 
