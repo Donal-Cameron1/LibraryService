@@ -105,7 +105,6 @@ namespace LibraryService.Services.Service
 
             Book book = _bookDAO.GetBook(id);
 
-            //todo: consider status.loaned
             if (book.Status == Status.Available)
             { 
                 book.Status = Status.Reserved;
@@ -114,13 +113,13 @@ namespace LibraryService.Services.Service
                 _bookDAO.ReserveBook(id, currentUserId);
             }
             //todo: Schedule service needed to change status after returndate? 
-            /*
+            
             if(book.Status == Status.Loaned)
             {
                 book.ReservedUntil = book.ReturnDate.Value.AddDays(5);
                 _bookDAO.EditBook(book);
                 _bookDAO.ReserveBook(id, currentUserId);
-            }*/
+            }
             
         }
     }

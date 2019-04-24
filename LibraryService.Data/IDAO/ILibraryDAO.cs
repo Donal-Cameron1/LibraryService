@@ -14,6 +14,6 @@ namespace LibraryService.Data.IDAO
         void DeleteLibrary(Library library);
         void EditLibrary(Library library);
         IQueryable<Library> GetLibraries();
-        //IQueryable<Library> SearchLibraries(IQueryable<Library> libraries, string searchString);
+        IQueryable<Library> SearchLibraries(IQueryable<Library> libraries, string searchString);
     }
 }

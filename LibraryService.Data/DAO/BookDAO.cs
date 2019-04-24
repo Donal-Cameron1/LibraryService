@@ -55,13 +55,6 @@ namespace LibraryService.Data.DAO
             db.Books.Attach(book);
             db.Entry(book).State = EntityState.Modified;
             db.SaveChanges();
-            /*var entry = db.Entry(book);
-            var state = entry.State;
-            db.Books.Attach(book);
-            var state1 = entry.State;
-            entry.State = EntityState.Modified;
-            db.Books.Attach(book);*/
-            //db.SaveChanges();
         }
 
         public Book GetBook(int id)
@@ -121,6 +114,7 @@ namespace LibraryService.Data.DAO
         {
             Book book = GetBookWithTracking(db, id);
             User user = UserDAO.GetUserWithTracking(db, currentUserId);
+            book.Status = Status.Available;
             user.ReservedLibraryItems.Remove(book);
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();

@@ -87,7 +87,7 @@ namespace LibraryService.Controllers
             if (!String.IsNullOrEmpty(genre))
             {
                 bookquery = BookGenreFilter(bookquery, genre);
-                dvdquery = DVDGenreFilter(dvdquery, genre);               
+                dvdquery = DVDGenreFilter(dvdquery, genre);
             }
             if (!String.IsNullOrEmpty(status))
             {
@@ -100,32 +100,88 @@ namespace LibraryService.Controllers
                 dvdquery = DVDTypeFilter(dvdquery, type);
             }
 
-            foreach (Book book in bookquery.ToList())
-            {
-                LibraryItem item = (LibraryItem)book;
-                item.Genre = (Genre) Enum.Parse(typeof(Genre),book.BookGenre.ToString());
-                items.Add(item);
-            }
+            items = items.Concat(CastBooksToLibraryItems(bookquery)).ToList();
+            items = items.Concat(CastDVDsToLibraryItems(dvdquery)).ToList();
 
+            return View(items);
+
+        }
+
+        private static List<LibraryItem> CastDVDsToLibraryItems(IList<DVD> dvdquery)
+        {
+            List<LibraryItem> items = new List<LibraryItem>();
             foreach (DVD dvd in dvdquery.ToList())
             {
                 LibraryItem item = (LibraryItem)dvd;
                 item.Genre = (Genre)Enum.Parse(typeof(Genre), dvd.DVDGenre.ToString());
+                items.Add(item);           
+            }
+            return items;
+        }
+
+        private static List<LibraryItem> CastBooksToLibraryItems(IList<Book> bookquery)
+        {
+            List<LibraryItem> items = new List<LibraryItem>();
+            foreach (Book book in bookquery.ToList())
+            {
+                LibraryItem item = (LibraryItem)book;
+                item.Genre = (Genre)Enum.Parse(typeof(Genre), book.BookGenre.ToString());
                 items.Add(item);
             }
-
-            return View(items);
-            
+            return items;
         }
 
         public ActionResult Index()
         {
-
-            IEnumerable<LibraryItem> dvds = _dvdService.GetNewDVDs().Cast<LibraryItem>();
-            IEnumerable<LibraryItem> books = _bookService.GetNewBooks().Cast<LibraryItem>();
             IList<LibraryItem> newitems = new List<LibraryItem>();
+            IEnumerable<LibraryItem> dvds = CastDVDsToLibraryItems(_dvdService.GetNewDVDs());
+            IEnumerable<LibraryItem> books = CastBooksToLibraryItems(_bookService.GetNewBooks());          
 
             return View(newitems.Concat(books).Concat(dvds));                 
+        }
+
+        public ActionResult BookmarkBook(int id)
+        {
+            _bookService.BookmarkBook(id, User.Identity.GetUserId());
+            return RedirectToAction("Searchbar", "Home");
+        }
+
+        public ActionResult BookmarkDVD(int id)
+        {
+            _dvdService.BookmarkDVD(id, User.Identity.GetUserId());
+            return RedirectToAction("Searchbar", "Home");
+        }
+
+        public ActionResult BookmarkNewBook(int id)
+        {
+            _bookService.BookmarkBook(id, User.Identity.GetUserId());
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult BookmarkNewDVD(int id)
+        {
+            _dvdService.BookmarkDVD(id, User.Identity.GetUserId());
+            return RedirectToAction("Index", "Home");
+        }
+
+        // GET: Books/Reserve/5
+        public ActionResult ReserveNewDVD(int id)
+        {
+            DVD dvd = _dvdService.GetDVD(id);
+            if (dvd == null)
+            {
+                return HttpNotFound();
+            }
+            return View(dvd);
+        }
+
+        // POST: DVDs/Reserve/5
+        [HttpPost, ActionName("ReserveNewDVD")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReserveConfirmed(int id)
+        {
+            _dvdService.Reserve(id, User.Identity.GetUserId());
+            return RedirectToAction("Index");
         }
 
         public ActionResult About()

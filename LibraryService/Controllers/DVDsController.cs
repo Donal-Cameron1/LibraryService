@@ -43,7 +43,6 @@ namespace LibraryService.Controllers
         // GET: DVDs
         public ActionResult Index(string searchString, string genre, string status, int? page)
         {
-            //IQueryable<DVD> dvds = _dvdService.GetDVDs().AsQueryable<DVD>();
             IList<DVD> dvdquery = _dvdService.GetDVDs();
             var pageNumber = page ?? 1;
 
@@ -59,10 +58,6 @@ namespace LibraryService.Controllers
             {
                 dvdquery = DVDStatusFilter(dvdquery, status);
             }
-
-            //ViewBag.UserId = User.Identity.GetUserId();
-            //ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
-            //string uid = User.Identity.GetUserId();
 
             var onePageOfDVDs = dvdquery.ToPagedList(pageNumber, 10);
             ViewBag.onePageOfDVDs = onePageOfDVDs;

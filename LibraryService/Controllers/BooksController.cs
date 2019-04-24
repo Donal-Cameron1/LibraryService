@@ -49,7 +49,6 @@ namespace LibraryService.Controllers
         // GET: Books
         public ActionResult Index(string searchString, string genre, string status, int? page)
         {
-            //IQueryable<Book> books = _bookService.GetBooks().AsQueryable<Book>();
             IList<Book> bookquery = _bookService.GetBooks();
             var pageNumber = page ?? 1;
 
@@ -70,10 +69,6 @@ namespace LibraryService.Controllers
             {
                 ViewBag.message = "Sorry, we can't find any books";
             }
-
-            //string uid = User.Identity.GetUserId();
-            //ViewBag.UserId = User.Identity.GetUserId();
-            //ViewBag.Return = DateTime.Today.AddDays(14).ToString("dd/MM/yyyy");
 
             var onePageOfProducts = bookquery.ToPagedList(pageNumber, 2);
             ViewBag.OnePageOfProducts = onePageOfProducts;
@@ -161,15 +156,7 @@ namespace LibraryService.Controllers
             return RedirectToAction("Index");
         }
 
-        /*protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }*/
-
+   
         // GET: Books/Reserve/5
         public ActionResult Reserve(int id)
         {
@@ -200,12 +187,6 @@ namespace LibraryService.Controllers
         {
             _bookService.BookmarkBook(id, User.Identity.GetUserId());
             return RedirectToAction("Index");
-        }
-
-        public ActionResult BookmarkNewBook(int id)
-        {
-            _bookService.BookmarkBook(id, User.Identity.GetUserId());
-            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult DeleteBookmark(int id)
