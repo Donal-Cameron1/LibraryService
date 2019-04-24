@@ -17,6 +17,8 @@ namespace LibraryService.Data.IDAO
 
         User GetUser(string id);
 
+        User GetUserByUsername(string username);
+
         void CreateUser(User user);
 
         void DeleteUser(User user);

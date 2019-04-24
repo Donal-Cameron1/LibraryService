@@ -52,25 +52,8 @@ namespace LibraryService.Data.DAO
 
         public void UpdateBook(Book book)
         {
-            var _book = this.GetBook(book.id);
-
-            _book.Author = book.Author;
-            _book.BookGenre = book.BookGenre;
-            _book.Library = book.Library;
-            _book.Pages = book.Pages;
-            _book.User = book.User;
-            _book.id = book.id;
-            _book.AgeRestriction = book.AgeRestriction;
-            _book.BookmarkedBy = book.BookmarkedBy;
-            _book.DateAdded = book.DateAdded;
-            _book.LibraryId = book.LibraryId;
-            _book.LoanedBy = book.LoanedBy;
-            _book.PublishedAt = book.PublishedAt;
-            _book.Publisher = book.Publisher;
-            _book.PurchaseValue = book.PurchaseValue;
-            _book.ReservedBy = book.ReservedBy;
-            _book.Genre = book.Genre;
-
+            db.Books.Attach(book);
+            db.Entry(book).State = EntityState.Modified;
             db.SaveChanges();
         }
 

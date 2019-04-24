@@ -29,6 +29,7 @@ namespace LibraryService.Data.DAO
 
         public void EditLibrary(Library library)
         {
+            db.Libraries.Attach(library);
             db.Entry(library).State = EntityState.Modified;
             db.SaveChanges();
         }

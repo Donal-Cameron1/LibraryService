@@ -25,7 +25,6 @@ namespace LibraryService.Data.DAO
 
         public void EditUser(User user)
         {
-            db.Users.Attach(user);
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }
@@ -38,6 +37,12 @@ namespace LibraryService.Data.DAO
         public User GetUser(string id)
         {
             return db.Users.AsNoTracking().Where(u => u.UserId == id).FirstOrDefault(); 
+        }
+
+        public User GetUserByUsername(string username)
+        {
+            var user = from u in db.Users where u.UserName == username select u;
+            return user.First();
         }
 
         public static User GetUserWithTracking(LibraryContext context, string id)
@@ -56,10 +61,9 @@ namespace LibraryService.Data.DAO
 
         public void DeleteUser(User user)
         {
+            db.Users.Attach(user);
             db.Users.Remove(user);
             db.SaveChanges();
-        }
-
-      
+        }     
     }
 }

@@ -9,7 +9,7 @@ namespace LibraryService.Services.IService
 {
     public interface IBookService
     {
-        Book GetBook(int it);
+        Book GetBook(int id);
 
         IList<Book> GetBooks();
 

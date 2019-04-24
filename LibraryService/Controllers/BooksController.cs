@@ -134,7 +134,7 @@ namespace LibraryService.Controllers
         {
             if (ModelState.IsValid)
             {
-                _bookService.EditBook(book);
+                _bookService.UpdateBook(book);
                 return RedirectToAction("Index");
             }
             return View(book);
