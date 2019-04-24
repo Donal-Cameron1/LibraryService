@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +16,6 @@ namespace LibraryService.Data.DAO
     {
         private LibraryContext db = new LibraryContext();
         
-
         public IList<Book> BookGenreFilter(IList<Book> query, string genre)
         {
             return query.Where(b => b.BookGenre.ToString().Equals(genre)).ToList<Book>();
@@ -50,16 +50,19 @@ namespace LibraryService.Data.DAO
             db.SaveChanges();
         }
 
-        public void EditBook(Book book)
+        public void UpdateBook(Book book)
         {
-            db.Books.Attach(book);
             db.Entry(book).State = EntityState.Modified;
             db.SaveChanges();
         }
 
         public Book GetBook(int id)
         {
-            return db.Books.AsNoTracking().Where(b => b.id == id).FirstOrDefault();
+            var book = 
+                from b in db.Books
+                where b.id == id
+                select b;
+            return book.First();
         }
 
         public IList<Book> GetBooks()
@@ -79,8 +82,11 @@ namespace LibraryService.Data.DAO
         public IList<Book> GetNewBooks()
         {
             var baselineDate = DateTime.Now.AddDays(-7);
-            IList<Book> newBooks = db.Books.AsNoTracking().Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList();
-            return newBooks;
+            IQueryable<Book> newbooks =  
+                from b in db.Books
+                where b.DateAdded > baselineDate
+                select b;
+            return newbooks.OrderByDescending(x => x.DateAdded).ToList();
         }
 
         public void BookmarkBook(int id, string currentUserId)
@@ -108,6 +114,20 @@ namespace LibraryService.Data.DAO
             user.ReservedLibraryItems.Add(book);
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
+        }
+
+        public void LoanBook(List<int> bookIds, string UserId)
+        {
+            User user = UserDAO.GetUserWithTracking(db, UserId);
+
+            foreach (int id in bookIds)
+            {
+                var thisbook = this.GetBook(id);
+                thisbook.UserId = UserId;
+                thisbook.Status = Status.Loaned;
+
+                this.UpdateBook(thisbook);
+            }   
         }
 
         public void DeleteReservation(int id, string currentUserId)

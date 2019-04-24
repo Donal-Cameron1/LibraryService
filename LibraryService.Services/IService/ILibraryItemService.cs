@@ -9,6 +9,6 @@ namespace LibraryService.Services.IService
 {
     public interface ILibraryItemService
     {
-        User GetUser(string UserId);
+
     }
 }

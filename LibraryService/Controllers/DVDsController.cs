@@ -116,7 +116,7 @@ namespace LibraryService.Controllers
         {
             if (ModelState.IsValid)
             {
-                _dvdService.EditDVD(dvd);
+                _dvdService.UpdateDVD(dvd);
                 return RedirectToAction("Index");
             }
             return View(dvd);

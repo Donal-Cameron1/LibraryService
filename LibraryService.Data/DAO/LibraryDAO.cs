@@ -29,6 +29,7 @@ namespace LibraryService.Data.DAO
 
         public void EditLibrary(Library library)
         {
+            db.Libraries.Attach(library);
             db.Entry(library).State = EntityState.Modified;
             db.SaveChanges();
         }
@@ -41,7 +42,7 @@ namespace LibraryService.Data.DAO
             return libraries;
         }
 
-        public Library GetLibrary(string id)
+        public Library GetLibrary(int id)
         {
             return db.Libraries.Find(id);
         }
@@ -52,12 +53,5 @@ namespace LibraryService.Data.DAO
                                        || s.PostCode.Contains(searchString));
             return libraries;
         }
-
-        /*public IQueryable<Library> SearchLibraries(IQueryable<Library> libraries, string searchString)
-        {
-            libraries = libraries.Where(s => s.Name.Contains(searchString)
-                                       || s.PostCode.Contains(searchString));
-            return libraries;
-        }*/
     }
 }

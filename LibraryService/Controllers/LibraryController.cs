@@ -39,12 +39,8 @@ namespace LibraryService.Controllers
         }
 
         // GET: Library/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Library library = _libraryService.GetLibrary(id); 
             if (library == null)
             {
@@ -81,12 +77,8 @@ namespace LibraryService.Controllers
         }
 
         // GET: Library/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Library library = _libraryService.GetLibrary(id);
             if (library == null)
             {
@@ -111,12 +103,8 @@ namespace LibraryService.Controllers
         }
 
         // GET: Library/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Library library = _libraryService.GetLibrary(id); 
             if (library == null)
             {
@@ -128,7 +116,7 @@ namespace LibraryService.Controllers
         // POST: Library/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Library library = _libraryService.GetLibrary(id);
             _libraryService.DeleteLibrary(library);

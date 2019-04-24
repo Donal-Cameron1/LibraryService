@@ -74,9 +74,9 @@ namespace LibraryService.Services.Service
             return _dvdDAO.DVDTypeFilter(query, type);
         }
 
-        public void EditDVD(DVD dvd)
+        public void UpdateDVD(DVD dvd)
         {
-            _dvdDAO.EditDVD(dvd);
+            _dvdDAO.UpdateDVD(dvd);
         }
 
         public DVD GetDVD(int id)
@@ -102,7 +102,7 @@ namespace LibraryService.Services.Service
             {
                 dvd.Status = Status.Reserved;
                 dvd.ReservedUntil = DateTime.Today.AddDays(5);
-                _dvdDAO.EditDVD(dvd);
+                _dvdDAO.UpdateDVD(dvd);
                 _dvdDAO.ReserveDVD(id, currentUserId);
             }
             //todo: Schedule service needed to change status after returndate? 

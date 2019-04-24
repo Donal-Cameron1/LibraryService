@@ -183,17 +183,17 @@ namespace LibraryService.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     UserManager.AddToRole(user.Id, "User");
-                    //Roles.AddUserToRole(user.UserName, "User");
 
                     //add user to LibraryContext DB
-                    _userService.CreateUser(new User { UserId = user.Id, Role = user.Roles.ToString()});
-                  
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    var newuser = new User()
+                    {
+                        UserId = user.Id,
+                        Password = model.Password,
+                        MemberSince = DateTime.Today,
+                        UserName = user.Email,
+                        Role = "User"
+                    };
+                    _userService.CreateUser(newuser);
 
                     return RedirectToAction("Index", "Home");
                 }

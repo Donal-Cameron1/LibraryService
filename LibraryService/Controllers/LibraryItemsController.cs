@@ -19,6 +19,7 @@ namespace LibraryService.Controllers
         private LibraryContext db = new LibraryContext();
 
         private ILibraryItemService _libraryItemService;
+        private IUserService _userService;
         private IBookService _bookService;
         private IDVDService _dvdService;
 
@@ -27,12 +28,13 @@ namespace LibraryService.Controllers
             _bookService = new BookService();
             _dvdService = new DVDService();
             _libraryItemService = new LibraryItemService();
+            _userService = new UserService();
         }
 
         public ActionResult ShowBookmarks(string currentUser)
         {
             // retrieve user
-            User user = _libraryItemService.GetUser(User.Identity.GetUserId());
+            User user = _userService.GetUser(User.Identity.GetUserId());
 
             //show list of bookmarked books
             if (user == null || user.BookmarkedLibraryItems == null || !user.BookmarkedLibraryItems.Any())
@@ -48,7 +50,7 @@ namespace LibraryService.Controllers
         public ActionResult ShowItemsOfUser(string currentUser)
         {
             // retrieve user
-            User user = _libraryItemService.GetUser(User.Identity.GetUserId());
+            User user = _userService.GetUser(User.Identity.GetUserId());
 
             if(user == null || user.ReservedLibraryItems == null || !user.ReservedLibraryItems.Any())
             {

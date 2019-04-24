@@ -6,9 +6,9 @@ namespace LibraryService.DAL
 {
     public class LibraryContext : DbContext
     {
-
         public LibraryContext() : base("LibraryContext")
         {
+
         }
 
         public DbSet<Library> Libraries { get; set; }
@@ -32,21 +32,6 @@ namespace LibraryService.DAL
                              cs.MapRightKey("BookId");
                              cs.ToTable("UserBookmarkedLibraryItems");
                          });
-
-           /* modelBuilder.Entity<User>()
-                       .HasMany(u => u.LoanedBooks)
-                       .WithOptional(b => b.LoanedBy)
-                       .HasForeignKey(u => u.LoanedById);
-                       
-
-            
-            modelBuilder.Entity<User>()
-                       .HasMany(u => u.ReservedBooks)
-                       .WithRequired(b => b.ReservedBy)
-                       .HasForeignKey(u => u.id);
-
-            */
-
         }
     }
 }

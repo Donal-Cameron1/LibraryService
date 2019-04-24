@@ -36,7 +36,6 @@ namespace LibraryService.Models
         [Required]
         [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber)]
-        //[RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{6})$", ErrorMessage = "Not a valid phone number")]
         public string TelephoneNumber { get; set; }
 
         [Required]
@@ -50,6 +49,5 @@ namespace LibraryService.Models
         public int Capacity { get; set; }
 
         public virtual ICollection<Book> Books { get; set; }
-
     }
 }

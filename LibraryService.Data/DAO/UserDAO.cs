@@ -15,28 +15,23 @@ namespace LibraryService.Data.DAO
 
         public User GetCurrentUser(string currentUserId)
         {
-             return db.Users
-                .AsNoTracking()
-                .Include(u => u.BookmarkedLibraryItems)
-                .Include(u => u.ReservedLibraryItems)
-                //.Include(u => u.LoanedLibraryItems)
-                .SingleOrDefault(x => x.UserId == currentUserId);       
+            return db.Users
+               .AsNoTracking()
+               .Include(u => u.BookmarkedLibraryItems)
+               .Include(u => u.ReservedLibraryItems)
+               //.Include(u => u.LoanedLibraryItems)
+               .SingleOrDefault(x => x.UserId == currentUserId);
         }
 
         public void EditUser(User user)
         {
-            db.Users.Attach(user);
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }
 
         public IList<User> GetUsers()
         {
-            return db.Users.AsNoTracking()
-                //.Include(u => u.BookmarkedLibraryItems)
-                //.Include(u => u.ReservedLibraryItems)
-                //.Include(u => u.LoanedLibraryItems)
-                .ToList();
+            return db.Users.AsNoTracking().ToList();
         }
 
         public User GetUser(string id)
@@ -44,12 +39,17 @@ namespace LibraryService.Data.DAO
             return db.Users.AsNoTracking().Where(u => u.UserId == id).FirstOrDefault(); 
         }
 
+        public User GetUserByUsername(string username)
+        {
+            var user = from u in db.Users where u.UserName == username select u;
+            return user.First();
+        }
+
         public static User GetUserWithTracking(LibraryContext context, string id)
         {
             return context.Users
                 .Include(u => u.BookmarkedLibraryItems)
                 .Include(u => u.ReservedLibraryItems)
-                //.Include(u => u.LoanedLibraryItems)
                 .Where(u => u.UserId == id).FirstOrDefault();
         }
 
@@ -61,10 +61,9 @@ namespace LibraryService.Data.DAO
 
         public void DeleteUser(User user)
         {
+            db.Users.Attach(user);
             db.Users.Remove(user);
             db.SaveChanges();
-        }
-
-      
+        }     
     }
 }
