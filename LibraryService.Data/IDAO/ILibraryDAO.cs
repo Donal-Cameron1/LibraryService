@@ -18,5 +18,7 @@ namespace LibraryService.Data.IDAO
         void EditLibrary(Library library);
 
         IQueryable<Library> GetLibraries();
+
+        IQueryable<Library> SearchLibraries(IQueryable<Library> libraries, string searchString);
     }
 }

@@ -98,7 +98,6 @@ namespace LibraryService.Services.Service
         {
             DVD dvd = _dvdDAO.GetDVD(id);
 
-            //todo: consider status.reserved and status.loaned
             if (dvd.Status == Status.Available)
             {
                 dvd.Status = Status.Reserved;
@@ -106,6 +105,14 @@ namespace LibraryService.Services.Service
                 _dvdDAO.UpdateDVD(dvd);
                 _dvdDAO.ReserveDVD(id, currentUserId);
             }
+            //todo: Schedule service needed to change status after returndate? 
+            /*
+            if(book.Status == Status.Loaned)
+            {
+                book.ReservedUntil = book.ReturnDate.Value.AddDays(5);
+                _bookDAO.EditBook(book);
+                _bookDAO.ReserveBook(id, currentUserId);
+            }*/
         }
 
         public void DeleteReservation(int id, string currentUserId)

@@ -134,6 +134,7 @@ namespace LibraryService.Data.DAO
         {
             Book book = GetBookWithTracking(db, id);
             User user = UserDAO.GetUserWithTracking(db, currentUserId);
+            book.Status = Status.Available;
             user.ReservedLibraryItems.Remove(book);
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();

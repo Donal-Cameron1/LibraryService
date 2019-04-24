@@ -39,7 +39,10 @@ namespace LibraryService.Models
         public string TelephoneNumber { get; set; }
 
         [Required]
-        public string Coord { get; set; }
+        public double Longitude { get; set; }
+
+        [Required]
+        public double Latitude { get; set; }
 
         [Required]
         [Range(100,5000000)]

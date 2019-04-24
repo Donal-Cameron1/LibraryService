@@ -110,6 +110,15 @@ namespace LibraryService.Services.Service
                 _bookDAO.UpdateBook(book);
                 _bookDAO.ReserveBook(id, currentUserId);
             }
+            //todo: Schedule service needed to change status after returndate? 
+            
+            if(book.Status == Status.Loaned)
+            {
+                book.ReservedUntil = book.ReturnDate.Value.AddDays(5);
+                _bookDAO.EditBook(book);
+                _bookDAO.ReserveBook(id, currentUserId);
+            }
+            
         }
 
         public void LoanBook(List<int> idList, string currentUserId)

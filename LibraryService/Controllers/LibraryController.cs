@@ -26,16 +26,13 @@ namespace LibraryService.Controllers
         // GET: Library
         public ActionResult Index(string searchString)
         {
-            //IQueryable<Library> libraries = from s
-              //                              in db.Libraries
-               //                             select s;
             IQueryable<Library> libraries = _libraryService.GetLibraries();
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                //_libraryService.SearchLibraries(libraries, searchString);
-                libraries = libraries.Where(s => s.Name.Contains(searchString)
-                                       || s.PostCode.Contains(searchString));
+                _libraryService.SearchLibraries(libraries, searchString);
+                //libraries = libraries.Where(s => s.Name.Contains(searchString)
+                                      // || s.PostCode.Contains(searchString));
             }
 
             return View(libraries.ToList());
@@ -126,13 +123,6 @@ namespace LibraryService.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+
     }
 }

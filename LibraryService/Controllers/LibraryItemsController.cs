@@ -20,9 +20,13 @@ namespace LibraryService.Controllers
 
         private ILibraryItemService _libraryItemService;
         private IUserService _userService;
+        private IBookService _bookService;
+        private IDVDService _dvdService;
 
         public LibraryItemsController()
         {
+            _bookService = new BookService();
+            _dvdService = new DVDService();
             _libraryItemService = new LibraryItemService();
             _userService = new UserService();
         }
@@ -57,5 +61,58 @@ namespace LibraryService.Controllers
                 return View(user.ReservedLibraryItems);
             }
         }
+
+        public ActionResult BookmarkBook(int id)
+        {
+            _bookService.BookmarkBook(id, User.Identity.GetUserId());
+            return RedirectToAction("Searchbar", "Home");
+        }
+
+        public ActionResult BookmarkDVD(int id)
+        {
+            _dvdService.BookmarkDVD(id, User.Identity.GetUserId());
+            return RedirectToAction("Searchbar", "Home");
+        }
+
+        // GET: Books/Reserve/5
+        public ActionResult ReserveDVD(int id)
+        {
+            DVD dvd = _dvdService.GetDVD(id);
+            if (dvd == null)
+            {
+                return HttpNotFound();
+            }
+            return View(dvd);
+        }
+
+        // POST: DVDs/Reserve/5
+        [HttpPost, ActionName("ReserveDVD")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReserveDVDConfirmed(int id)
+        {
+            _dvdService.Reserve(id, User.Identity.GetUserId());
+            return RedirectToAction("Searchbar", "Home");
+        }
+
+        // GET: Books/Reserve/5
+        public ActionResult ReserveBook(int id)
+        {
+            Book book = _bookService.GetBook(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+            return View(book);
+        }
+
+        // POST: DVDs/Reserve/5
+        [HttpPost, ActionName("ReserveBook")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReserveBookConfirmed(int id)
+        {
+            _bookService.Reserve(id, User.Identity.GetUserId());
+            return RedirectToAction("Searchbar", "Home");
+        }
+
     }
 }

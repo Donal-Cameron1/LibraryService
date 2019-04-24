@@ -16,7 +16,7 @@
         <div class="form-group">
             @Html.Label("Search:", new { @class = "col-sm-1 control-label" })
             @Html.TextBox("SearchString", "", new { @class = "col-md-2 control-label" })
-            <input class="ol-md-2 control-label" type="submit" value="Search" />
+            <input class="input-group mb-3" placeholder="Search" type="submit" value="Search" />
             <div>
                 @Html.DropDownList("Genre",
                             new SelectList(Enum.GetValues(typeof(LibraryService.Models.Genre))),
@@ -76,17 +76,21 @@
             </td>
             @if (item.Type == LibraryService.Models.Type.Book)
             {
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
-                    @if (!item.BookmarkedBy.Where(u => u.UserId == HttpContext.Current.User.Identity.GetUserId()).Any()) {
-                        @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id, Controller = "Books" })}
-                </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
+                @if (!item.BookmarkedBy.Where(u => u.UserId == HttpContext.Current.User.Identity.GetUserId()).Any())
+                {
+                    @Html.ActionLink("Bookmark", "BookmarkBook", new { id = item.id, Controller = "LibraryItems" })
+                    @Html.ActionLink("Reserve", "ReserveBook", new { id = item.id, Controller = "LibraryItems" })
+                }
+            </td>
             }
             @if (item.Type == LibraryService.Models.Type.DVD)
             {
                 <td>
                     @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
-                    @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id, Controller = "Books" })
+                    @Html.ActionLink("Bookmark", "BookmarkDVD", new { id = item.id , Controller = "LibraryItems"}) |
+                    @Html.ActionLink("Reserve", "ReserveDVD", new { id = item.id, Controller = "LibraryItems" })
                 </td>
             }
         </tr>

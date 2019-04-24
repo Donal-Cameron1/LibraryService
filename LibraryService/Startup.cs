@@ -16,7 +16,8 @@ namespace LibraryService
             app.UseHangfireDashboard();
             app.UseHangfireServer();
 
-            //RecurringJob.AddOrUpdate(() => new Services.Service.LibraryItemService().UpdateStatus(), Cron.Daily);
+            RecurringJob.AddOrUpdate(() => new Services.Service.LibraryItemService().UpdateStatus(), Cron.Daily);
+
         }
     }
 }
