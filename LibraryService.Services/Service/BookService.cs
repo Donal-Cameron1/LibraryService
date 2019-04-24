@@ -24,7 +24,6 @@ namespace LibraryService.Services.Service
             _dbUtils = new DbUtils();
         }
 
-
         public IList<Book> BookGenreFilter(IList<Book> query, string genre)
         {
             return _bookDAO.BookGenreFilter(query, genre);
@@ -80,9 +79,9 @@ namespace LibraryService.Services.Service
             _bookDAO.DeleteReservation(id, currentUserId);
         }
 
-        public void EditBook(Book book)
+        public void UpdateBook(Book book)
         {
-            _bookDAO.EditBook(book);
+            _bookDAO.UpdateBook(book);
         }
 
         public Book GetBook(int id)
@@ -102,26 +101,15 @@ namespace LibraryService.Services.Service
 
         public void Reserve(int id, string currentUserId)
         {
-
             Book book = _bookDAO.GetBook(id);
 
-            //todo: consider status.loaned
             if (book.Status == Status.Available)
-            { 
+            {
                 book.Status = Status.Reserved;
                 book.ReservedUntil = DateTime.Today.AddDays(5);
-                _bookDAO.EditBook(book);
+                _bookDAO.UpdateBook(book);
                 _bookDAO.ReserveBook(id, currentUserId);
             }
-            //todo: Schedule service needed to change status after returndate? 
-            /*
-            if(book.Status == Status.Loaned)
-            {
-                book.ReservedUntil = book.ReturnDate.Value.AddDays(5);
-                _bookDAO.EditBook(book);
-                _bookDAO.ReserveBook(id, currentUserId);
-            }*/
-            
         }
     }
 }

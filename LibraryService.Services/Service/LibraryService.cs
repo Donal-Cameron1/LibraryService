@@ -49,14 +49,9 @@ namespace LibraryService.Services.Service
             return _libraryDAO.GetLibraries();
         }
 
-        public Library GetLibrary(string id)
+        public Library GetLibrary(int id)
         {
             return _libraryDAO.GetLibrary(id);
         }
-
-        /*public IQueryable<Library> SearchLibraries(IQueryable<Library> libraries, string searchString)
-        {
-            return _libraryDAO.SearchLibraries(libraries, searchString);
-        }*/
     }
 }
