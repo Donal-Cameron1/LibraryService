@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace LibraryService.Services.Service
 {
-    public class LibraryService : ILibraryService
+    public class LibrarySiteService : ILibraryService
     {
         private ILibraryDAO _libraryDAO;
         private IUserDAO _userDAO;
         private DbUtils _dbUtils;
 
-        public LibraryService()
+        public LibrarySiteService()
         {
             _libraryDAO = new LibraryDAO();
             _userDAO = new UserDAO();
@@ -49,7 +49,7 @@ namespace LibraryService.Services.Service
             return _libraryDAO.GetLibraries();
         }
 
-        public Library GetLibrary(string id)
+        public Library GetLibrary(int id)
         {
             return _libraryDAO.GetLibrary(id);
         }
