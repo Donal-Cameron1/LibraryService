@@ -220,7 +220,7 @@ namespace LibraryService.Controllers
             return View(newBooks);
         }
 
-        public ActionResult CheckoutBook()
+        /*public ActionResult CheckoutBook()
         {
             IList<Book> bookquery = _bookService.GetBooks();
 
@@ -307,7 +307,7 @@ namespace LibraryService.Controllers
             _userService.EditUser(thiscustomer);
 
             return View();
-        }
+        }*/
     }
 
 }

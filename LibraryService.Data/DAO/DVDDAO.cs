@@ -122,11 +122,9 @@ namespace LibraryService.Data.DAO
         {
             DVD dvd = GetDVDWithTracking(db, id);
             User user = UserDAO.GetUserWithTracking(db, currentUserId);
-            user.LoanedLibraryDVD.Add(dvd);
+            user.LoanedLibraryItems.Add(dvd);
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }
-
-
     }
 }
