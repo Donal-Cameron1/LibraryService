@@ -111,5 +111,11 @@ namespace LibraryService.Services.Service
                 _bookDAO.ReserveBook(id, currentUserId);
             }
         }
+
+        public void LoanBook(List<int> idList, string currentUserId)
+        {
+            _bookDAO.LoanBook(idList, currentUserId);
+        }
+
     }
 }

@@ -220,7 +220,7 @@ namespace LibraryService.Controllers
             return View(newBooks);
         }
 
-        /*public ActionResult CheckoutBook()
+        public ActionResult CheckoutBook()
         {
             IList<Book> bookquery = _bookService.GetBooks();
 
@@ -275,39 +275,44 @@ namespace LibraryService.Controllers
 
         public ActionResult Checkout()
         {
-            // get the items from session
+            // get the items from session and convert to list of IDs
             var itemlist = (Dictionary<Book, DateTime>)Session["ItemList"];
+
+            var idList = new List<int>();
+            foreach (KeyValuePair<Book, DateTime> book in itemlist)
+            {
+                idList.Add(book.Key.id);
+            }
+            
+            // get the customer details
             var customerid = Session["UserId"].ToString();
             var thiscustomer = _userService.GetUser(customerid);
+
+            // add the customer ID to each of the books:
+            _bookService.LoanBook(idList, customerid);
+
+
+            //update the customer list of loaned Books
             var currentlist = new Dictionary<Book, DateTime>();
 
-            if (thiscustomer.LoanedLibraryItems != null)
+            // if the customer already has books out, get the current list
+            if (thiscustomer.LoanedBooks != null)
             {
-                currentlist = thiscustomer.LoanedLibraryItems;
+                currentlist = thiscustomer.LoanedBooks;
             }
 
-            foreach (KeyValuePair<Book, DateTime> item in itemlist)
+            // now add each of the requested books to the list
+            foreach (KeyValuePair<Book, DateTime> book in itemlist)
             {
-                /// get item
-                var thisbook = _bookService.GetBook(item.Key.id);
-
-                /// change value of customer id
-                thisbook.UserId = customerid;
-
-                /// update item
-                _bookService.EditBook(item.Key);
-
-                // add items to customer
-                currentlist.Add(item.Key, item.Value);
+                currentlist.Add(book.Key, book.Value);
             }
 
-            //update the customer list of items
-            thiscustomer.LoanedLibraryItems = currentlist;
-
+            // update the list in the database
+            thiscustomer.LoanedBooks = currentlist;
             _userService.EditUser(thiscustomer);
 
             return View();
-        }*/
+        }
     }
 
 }

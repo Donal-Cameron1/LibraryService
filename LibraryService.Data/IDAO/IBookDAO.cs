@@ -38,5 +38,6 @@ namespace LibraryService.Data.IDAO
 
         void DeleteBookmark(int id, string userId);
 
+        void LoanBook(List<int> idList, string currentUserId);
     }
 }

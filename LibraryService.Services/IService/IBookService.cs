@@ -38,5 +38,8 @@ namespace LibraryService.Services.IService
         void Reserve(int id, string currentUserId);
 
         void DeleteReservation(int id, string UserId);
+
+        void LoanBook(List<int> idList, string currentUserId);
+
     }
 }

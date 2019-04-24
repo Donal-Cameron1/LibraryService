@@ -52,7 +52,6 @@ namespace LibraryService.Data.DAO
 
         public void UpdateBook(Book book)
         {
-            db.Books.Attach(book);
             db.Entry(book).State = EntityState.Modified;
             db.SaveChanges();
         }
@@ -115,6 +114,20 @@ namespace LibraryService.Data.DAO
             user.ReservedLibraryItems.Add(book);
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
+        }
+
+        public void LoanBook(List<int> bookIds, string UserId)
+        {
+            User user = UserDAO.GetUserWithTracking(db, UserId);
+
+            foreach (int id in bookIds)
+            {
+                var thisbook = this.GetBook(id);
+                thisbook.UserId = UserId;
+                thisbook.Status = Status.Loaned;
+
+                this.UpdateBook(thisbook);
+            }   
         }
 
         public void DeleteReservation(int id, string currentUserId)
