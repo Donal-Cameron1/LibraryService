@@ -39,23 +39,26 @@ namespace LibraryService.Services.Service
             //IList<User> users = _userDAO.GetUsers();
             foreach(User user in _userDAO.GetUsers())
             {
-                //ICollection<LibraryItem> items = user.ReservedLibraryItems;
-                foreach(LibraryItem item in user.ReservedLibraryItems.ToList())
+                if (user.ReservedLibraryItems != null)
                 {
-                    if(item.ReservedUntil != null && (item.ReservedUntil.Value.AddDays(1).CompareTo(DateTime.Today) <= 0))
+                    //ICollection<LibraryItem> items = user.ReservedLibraryItems;
+                    foreach (LibraryItem item in user.ReservedLibraryItems.ToList())
                     {
-                      
-                        item.ReservedUntil = null;
-                        item.Status = Status.Available;
-                        if(item.Type == Models.Type.Book)
+                        if (item.ReservedUntil != null && (item.ReservedUntil.Value.AddDays(1).CompareTo(DateTime.Today) <= 0))
                         {
-                            _bookDAO.EditBook((Book)item);
-                            _bookDAO.DeleteReservation(item.id, user.UserId);
-                        }
-                        if(item.Type == Models.Type.DVD)
-                        {
-                            _dvdDAO.EditDVD((DVD)item);
-                            _dvdDAO.DeleteReservation(item.id, user.UserId);
+
+                            item.ReservedUntil = null;
+                            item.Status = Status.Available;
+                            if (item.Type == Models.Type.Book)
+                            {
+                                _bookDAO.EditBook((Book)item);
+                                _bookDAO.DeleteReservation(item.id, user.UserId);
+                            }
+                            if (item.Type == Models.Type.DVD)
+                            {
+                                _dvdDAO.EditDVD((DVD)item);
+                                _dvdDAO.DeleteReservation(item.id, user.UserId);
+                            }
                         }
                     }
                 }
