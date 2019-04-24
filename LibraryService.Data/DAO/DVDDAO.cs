@@ -49,7 +49,7 @@ namespace LibraryService.Data.DAO
             return query.Where(d => d.Type.ToString().Equals(type)).ToList<DVD>();
         }
 
-        public void EditDVD(DVD dvd)
+        public void UpdateDVD(DVD dvd)
         {
             db.DVD.Attach(dvd);
             db.Entry(dvd).State = EntityState.Modified;
@@ -115,14 +115,12 @@ namespace LibraryService.Data.DAO
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }
-        
 
-         public void LoanDVD (int id, string currentUserId)
-
+        public void LoanDVD(int id, string currentUserId, DateTime duedate)
         {
             DVD dvd = GetDVDWithTracking(db, id);
             User user = UserDAO.GetUserWithTracking(db, currentUserId);
-            user.LoanedLibraryItems.Add(dvd);
+            user.LoanedDVDs.Add(dvd, duedate);
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }

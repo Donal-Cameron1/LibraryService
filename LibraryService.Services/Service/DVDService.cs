@@ -19,7 +19,7 @@ namespace LibraryService.Services.Service
 
         public DVDService()
         {
-            _dvdDAO = new DVDDAO();
+            //_dvdDAO = new DVDDAO();
             _userDAO = new UserDAO();
             _dbUtils = new DbUtils();
         }

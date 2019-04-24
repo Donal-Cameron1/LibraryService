@@ -13,7 +13,6 @@ namespace LibraryService.Services.Service
 {
     public class LibraryItemService : ILibraryItemService
     {
-        private ILibraryItemDAO _libraryItemDAO;
         private IUserDAO _userDAO;
         private DbUtils _dbUtils;
         private IBookDAO _bookDAO;
@@ -25,7 +24,7 @@ namespace LibraryService.Services.Service
             _userDAO = new UserDAO();
             _dbUtils = new DbUtils();
             _bookDAO = new BookDAO();
-            _dvdDAO = new DVDDAO();
+            //_dvdDAO = new DVDDAO();
         }
 
         public User GetUser(string currentUserId)

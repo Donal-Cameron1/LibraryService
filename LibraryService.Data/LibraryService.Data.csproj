@@ -59,11 +59,9 @@
     <Compile Include="DAL\LibraryInitialiser.cs" />
     <Compile Include="DAO\DVDDAO.cs" />
     <Compile Include="DAO\LibraryDAO.cs" />
-    <Compile Include="DAO\LibraryItemDAO.cs" />
     <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="IDAO\IDVDDAO.cs" />
     <Compile Include="IDAO\ILibraryDAO.cs" />
-    <Compile Include="IDAO\ILibraryItemDAO.cs" />
     <Compile Include="IDAO\IUserDAO.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="DAO\BookDAO.cs" />

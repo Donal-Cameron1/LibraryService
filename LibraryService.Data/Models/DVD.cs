@@ -26,7 +26,6 @@ namespace LibraryService.Models
         [Display(Name = "Genre")]
         public DVDGenre DVDGenre { get; set; }
 
-
         public virtual Library Library { get; set; }
         public virtual User User { get; set; }
     }

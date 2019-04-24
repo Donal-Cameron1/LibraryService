@@ -33,7 +33,6 @@ namespace LibraryService.Models
         _18 = 18
     }
 
-
     public class LibraryItem
     {
         [Key]
@@ -82,7 +81,6 @@ namespace LibraryService.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<DateTime> ReturnDate { get; set; }
 
-        
         public Nullable<DateTime> ReservedUntil { get; set; }
 
         public ICollection<User> BookmarkedBy { get; set; } = new List<User>();

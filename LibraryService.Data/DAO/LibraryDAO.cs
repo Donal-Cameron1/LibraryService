@@ -41,16 +41,9 @@ namespace LibraryService.Data.DAO
             return libraries;
         }
 
-        public Library GetLibrary(string id)
+        public Library GetLibrary(int id)
         {
             return db.Libraries.Find(id);
         }
-
-        /*public IQueryable<Library> SearchLibraries(IQueryable<Library> libraries, string searchString)
-        {
-            libraries = libraries.Where(s => s.Name.Contains(searchString)
-                                       || s.PostCode.Contains(searchString));
-            return libraries;
-        }*/
     }
 }

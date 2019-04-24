@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +16,6 @@ namespace LibraryService.Data.DAO
     {
         private LibraryContext db = new LibraryContext();
         
-
         public IList<Book> BookGenreFilter(IList<Book> query, string genre)
         {
             return query.Where(b => b.BookGenre.ToString().Equals(genre)).ToList<Book>();
@@ -50,23 +50,37 @@ namespace LibraryService.Data.DAO
             db.SaveChanges();
         }
 
-        public void EditBook(Book book)
+        public void UpdateBook(Book book)
         {
-            db.Books.Attach(book);
-            db.Entry(book).State = EntityState.Modified;
+            var _book = this.GetBook(book.id);
+
+            _book.Author = book.Author;
+            _book.BookGenre = book.BookGenre;
+            _book.Library = book.Library;
+            _book.Pages = book.Pages;
+            _book.User = book.User;
+            _book.id = book.id;
+            _book.AgeRestriction = book.AgeRestriction;
+            _book.BookmarkedBy = book.BookmarkedBy;
+            _book.DateAdded = book.DateAdded;
+            _book.LibraryId = book.LibraryId;
+            _book.LoanedBy = book.LoanedBy;
+            _book.PublishedAt = book.PublishedAt;
+            _book.Publisher = book.Publisher;
+            _book.PurchaseValue = book.PurchaseValue;
+            _book.ReservedBy = book.ReservedBy;
+            _book.Genre = book.Genre;
+
             db.SaveChanges();
-            /*var entry = db.Entry(book);
-            var state = entry.State;
-            db.Books.Attach(book);
-            var state1 = entry.State;
-            entry.State = EntityState.Modified;
-            db.Books.Attach(book);*/
-            //db.SaveChanges();
         }
 
         public Book GetBook(int id)
         {
-            return db.Books.AsNoTracking().Where(b => b.id == id).FirstOrDefault();
+            var book = 
+                from b in db.Books
+                where b.id == id
+                select b;
+            return book.First();
         }
 
         public IList<Book> GetBooks()
@@ -86,8 +100,11 @@ namespace LibraryService.Data.DAO
         public IList<Book> GetNewBooks()
         {
             var baselineDate = DateTime.Now.AddDays(-7);
-            IList<Book> newBooks = db.Books.AsNoTracking().Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList();
-            return newBooks;
+            IQueryable<Book> newbooks =  
+                from b in db.Books
+                where b.DateAdded > baselineDate
+                select b;
+            return newbooks.OrderByDescending(x => x.DateAdded).ToList();
         }
 
         public void BookmarkBook(int id, string currentUserId)
