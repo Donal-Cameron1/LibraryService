@@ -44,7 +44,11 @@ namespace LibraryService.Data.DAO
 
         public Library GetLibrary(int id)
         {
-            return db.Libraries.Find(id);
+            IQueryable<Library> libraries = from s
+                                            in db.Libraries
+                                            where s.LibraryId == id
+                                            select s;
+            return libraries.First();
         }
 
         public IQueryable<Library> SearchLibraries(IQueryable<Library> libraries, string searchString)

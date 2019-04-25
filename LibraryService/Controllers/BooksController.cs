@@ -10,6 +10,7 @@ using LibraryService.DAL;
 using LibraryService.Models;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
+using LibraryService.ViewModels;
 using Microsoft.AspNet.Identity;
 using PagedList;
 
@@ -22,11 +23,13 @@ namespace LibraryService.Controllers
 
         private IBookService _bookService;
         private IUserService _userService;
+        private ILibraryService _libraryService;
 
         public BooksController()
         {
             _bookService = new BookService();
             _userService = new UserService();
+            _libraryService = new LibrarySiteService();
         }
 
         public IList<Book> BookTextSearch(IList<Book> query, string searchString)
@@ -44,6 +47,24 @@ namespace LibraryService.Controllers
             return _bookService.BookStatusFilter(query, status);
         }
 
+        public ActionResult Index2()
+        {
+            var viewModel = new List<BooksIndexVIewModel>();
+            IList<Book> books = _bookService.GetBooks();
+
+            foreach (var book in books)
+            {
+                int libraryid = book.LibraryId;
+                var thislibrary = _libraryService.GetLibrary(book.LibraryId);
+                var indexentry = new BooksIndexVIewModel()
+                {
+                    book = book,
+                    libraryname = _libraryService.GetLibrary(book.LibraryId).Name
+                };
+                viewModel.Add(indexentry);
+            }
+            return View(viewModel);
+        }
 
 
         // GET: Books
@@ -51,7 +72,6 @@ namespace LibraryService.Controllers
         {
             IList<Book> bookquery = _bookService.GetBooks();
             var pageNumber = page ?? 1;
-
 
             if (!String.IsNullOrEmpty(searchString))
             {
