@@ -465,6 +465,7 @@
     <Content Include="Views\LibraryItems\ReserveDVD.cshtml" />
     <Content Include="Views\LibraryItems\ReserveBook.cshtml" />
     <Content Include="Views\Home\ReserveNewBook.cshtml" />
+    <Content Include="Views\Books\ReturnBooks.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

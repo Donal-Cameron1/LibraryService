@@ -131,9 +131,18 @@ namespace LibraryService.Controllers
             ViewBag.Customer = id;
 
             return RedirectToAction("CheckoutBook", "Books");
+                       
+        }
 
+        public ActionResult ReturnBook(string id)
 
+        {
+            Session["UserId"] = id;
 
+            ViewBag.Customer = id;
+
+            return RedirectToAction("ReturnBooks", "Books");
+                       
         }
     }
 }

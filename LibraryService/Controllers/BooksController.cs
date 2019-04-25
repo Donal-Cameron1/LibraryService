@@ -176,7 +176,7 @@ namespace LibraryService.Controllers
             return RedirectToAction("Index");
         }
 
-   
+
         // GET: Books/Reserve/5
         public ActionResult Reserve(int id)
         {
@@ -202,7 +202,7 @@ namespace LibraryService.Controllers
             _bookService.DeleteReservation(id, User.Identity.GetUserId());
             return RedirectToAction("ShowItemsOfUser", "LibraryItems");
         }
-      
+
         public ActionResult Bookmark(int id)
         {
             _bookService.BookmarkBook(id, User.Identity.GetUserId());
@@ -284,7 +284,7 @@ namespace LibraryService.Controllers
             {
                 idList.Add(book.Key.id);
             }
-            
+
             // get the customer details
             var customerid = Session["UserId"].ToString();
             var thiscustomer = _userService.GetUser(customerid);
@@ -314,6 +314,25 @@ namespace LibraryService.Controllers
 
             return View();
         }
+
+        public ActionResult ReturnBooks()
+        {
+            var customerid = Session["UserId"].ToString();
+            var BookList = _bookService.GetBooksForUserID(customerid);
+            ViewBag.CustomerID = customerid;
+            return View(BookList);
+        }
+
+        public ActionResult ReturnBook(int BookID)
+        {
+            _bookService.ReturnBook(BookID);
+            ViewBag.Message = _bookService.GetBook(BookID).Title + " Has Been Returned";
+            return RedirectToAction("ReturnBooks");
+
+
+        }
+
+
     }
 
 }
