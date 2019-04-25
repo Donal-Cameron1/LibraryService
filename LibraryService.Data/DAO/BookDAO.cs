@@ -126,6 +126,7 @@ namespace LibraryService.Data.DAO
                 var thisbook = this.GetBook(id);
                 thisbook.UserId = UserId;
                 thisbook.Status = Status.Loaned;
+                thisbook.ReturnDate = DateTime.Now.AddDays(14);
 
                 this.UpdateBook(thisbook);
             }   
@@ -140,5 +141,26 @@ namespace LibraryService.Data.DAO
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }
+
+        public List<Book> GetBooksForUserID(string UserID)
+        {
+                IQueryable<Book> books =
+                from b in db.Books
+                where b.UserId == UserID
+                select b;
+            return books.ToList();
+
+        }
+
+        public void ReturnBook(int BookID)
+        {
+            var ThisBook = this.GetBook(BookID);
+            ThisBook.Status = Status.Available;
+            ThisBook.UserId = null;
+            ThisBook.ReturnDate = null;
+            this.UpdateBook(ThisBook);
+
+        }
+
     }
 }

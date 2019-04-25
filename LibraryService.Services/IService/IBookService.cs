@@ -41,5 +41,9 @@ namespace LibraryService.Services.IService
 
         void LoanBook(List<int> idList, string currentUserId);
 
+        List<Book> GetBooksForUserID(string UserID);
+
+        void ReturnBook(int BookID);
+
     }
 }
