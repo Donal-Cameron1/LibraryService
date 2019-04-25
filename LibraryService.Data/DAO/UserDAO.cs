@@ -36,7 +36,10 @@ namespace LibraryService.Data.DAO
 
         public User GetUser(string id)
         {
-            return db.Users.AsNoTracking().Where(u => u.UserId == id).FirstOrDefault(); 
+            return db.Users
+                .Include(u => u.BookmarkedLibraryItems)
+                .Include(u => u.ReservedLibraryItems)
+                .AsNoTracking().Where(u => u.UserId == id).FirstOrDefault(); 
         }
 
         public User GetUserByUsername(string username)
