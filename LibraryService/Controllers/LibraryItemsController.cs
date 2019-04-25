@@ -62,6 +62,28 @@ namespace LibraryService.Controllers
             }
         }
 
+        // GET: Books/Details/5
+        public ActionResult DetailsBook(int id)
+        {
+            Book book = _bookService.GetBook(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+            return View(book);
+        }
+
+        // GET: DVDs/Details/5
+        public ActionResult DetailsDVD(int id)
+        {
+            DVD dvd = _dvdService.GetDVD(id);
+            if (dvd == null)
+            {
+                return HttpNotFound();
+            }
+            return View(dvd);
+        }
+
         public ActionResult BookmarkBook(int id)
         {
             _bookService.BookmarkBook(id, User.Identity.GetUserId());

@@ -77,7 +77,7 @@
             @if (item.Type == LibraryService.Models.Type.Book)
             {
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
+                @Html.ActionLink("Details", "DetailsBook", new { id = item.id, Controller = "LibraryItems" }) |
                 @if (!item.BookmarkedBy.Where(u => u.UserId == HttpContext.Current.User.Identity.GetUserId()).Any())
                 {
                     @Html.ActionLink("Bookmark", "BookmarkBook", new { id = item.id, Controller = "LibraryItems" })
@@ -88,7 +88,7 @@
             @if (item.Type == LibraryService.Models.Type.DVD)
             {
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
+                    @Html.ActionLink("Details", "DetailsDVD", new { id = item.id, Controller = "LibraryItems" }) |
                     @Html.ActionLink("Bookmark", "BookmarkDVD", new { id = item.id , Controller = "LibraryItems"}) |
                     @Html.ActionLink("Reserve", "ReserveDVD", new { id = item.id, Controller = "LibraryItems" })
                 </td>

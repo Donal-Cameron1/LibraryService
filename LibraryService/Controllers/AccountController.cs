@@ -78,7 +78,7 @@ namespace LibraryService.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid && Roles.IsUserInRole("User"))
+            /*if (!ModelState.IsValid && Roles.IsUserInRole("User"))
             {
                 return View(model);
             } else 
@@ -89,7 +89,7 @@ namespace LibraryService.Controllers
             if(!ModelState.IsValid && Roles.IsUserInRole("Admin"))
             {
                 return View();
-            }
+            }*/
 
 
             // This doesn't count login failures towards account lockout

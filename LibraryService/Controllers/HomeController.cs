@@ -18,11 +18,13 @@ namespace LibraryService.Controllers
         private ILibraryItemService _libraryItemService;
         private IBookService _bookService;
         private IDVDService _dvdService;
+        private IUserService _userService;
 
         public HomeController()
         {
             _bookService = new BookService();
             _dvdService = new DVDService();
+            _userService = new UserService();
             _libraryItemService = new LibraryItemService();
         }
 
@@ -100,9 +102,8 @@ namespace LibraryService.Controllers
                 dvdquery = DVDTypeFilter(dvdquery, type);
             }
 
-            items = items.Concat(CastBooksToLibraryItems(bookquery)).ToList();
-            items = items.Concat(CastDVDsToLibraryItems(dvdquery)).ToList();
-
+            //concatenate bookquery and dvdquery to one list of LibraryItems
+            items = items.Concat(CastBooksToLibraryItems(bookquery)).Concat(CastDVDsToLibraryItems(dvdquery)).ToList();
             return View(items);
 
         }
@@ -138,6 +139,28 @@ namespace LibraryService.Controllers
             IEnumerable<LibraryItem> books = CastBooksToLibraryItems(_bookService.GetNewBooks());          
 
             return View(newitems.Concat(books).Concat(dvds));                 
+        }
+
+        // GET: Books/Details/5
+        public ActionResult DetailsBook(int id)
+        {
+            Book book = _bookService.GetBook(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+            return View(book);
+        }
+
+        // GET: DVDs/Details/5
+        public ActionResult DetailsDVD(int id)
+        {
+            DVD dvd = _dvdService.GetDVD(id);
+            if (dvd == null)
+            {
+                return HttpNotFound();
+            }
+            return View(dvd);
         }
 
         public ActionResult BookmarkNewBook(int id)

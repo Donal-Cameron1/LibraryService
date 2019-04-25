@@ -90,6 +90,7 @@ namespace LibraryService.Controllers
                 ViewBag.message = "Sorry, we can't find any books";
             }
 
+            //show 10 Books on one page
             var onePageOfBooks = bookquery.ToPagedList(pageNumber, 10);
             ViewBag.OnePageOfBooks = onePageOfBooks;
 

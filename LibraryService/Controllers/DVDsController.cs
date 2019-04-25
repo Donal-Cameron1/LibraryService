@@ -59,6 +59,7 @@ namespace LibraryService.Controllers
                 dvdquery = DVDStatusFilter(dvdquery, status);
             }
 
+            //show 10 DVDs on one page
             var onePageOfDVDs = dvdquery.ToPagedList(pageNumber, 10);
             ViewBag.onePageOfDVDs = onePageOfDVDs;
             return View();
@@ -141,15 +142,6 @@ namespace LibraryService.Controllers
             DVD dvd = _dvdService.GetDVD(id);
             _dvdService.DeleteDVD(dvd);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
 
         public ActionResult GetNewDVDs()
