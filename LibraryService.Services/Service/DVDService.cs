@@ -104,15 +104,13 @@ namespace LibraryService.Services.Service
                 dvd.ReservedUntil = DateTime.Today.AddDays(5);
                 _dvdDAO.UpdateDVD(dvd);
                 _dvdDAO.ReserveDVD(id, currentUserId);
-            }
-            //todo: Schedule service needed to change status after returndate? 
-            /*
-            if(book.Status == Status.Loaned)
+            }           
+            if(dvd.Status == Status.Loaned)
             {
-                book.ReservedUntil = book.ReturnDate.Value.AddDays(5);
-                _bookDAO.EditBook(book);
-                _bookDAO.ReserveBook(id, currentUserId);
-            }*/
+                dvd.ReservedUntil = dvd.ReturnDate.Value.AddDays(5);
+                _dvdDAO.UpdateDVD(dvd);
+                _dvdDAO.ReserveDVD(id, currentUserId);
+            }
         }
 
         public void DeleteReservation(int id, string currentUserId)

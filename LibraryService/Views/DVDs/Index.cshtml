@@ -14,9 +14,12 @@
     {
         <h2>List of DVDs</h2>
 
-        <p>
-            @Html.ActionLink("Create New", "Create")
-        </p>
+        if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
+        {
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+        }
 
         using (Html.BeginForm())
         {
@@ -44,92 +47,62 @@
             <thead class="bg-info">
                 <tr>
                     <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                        @Html.DisplayNameFor(model => model.Director)
+                        @Html.DisplayNameFor(model => model.Title)
                     </th>
                     <th onclick="sort(1)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                        @Html.DisplayNameFor(model => model.Duration)
+                        @Html.DisplayNameFor(model => model.Director)
                     </th>
                     <th onclick="sort(2)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
                         @Html.DisplayNameFor(model => model.DVDGenre)
                     </th>
                     <th onclick="sort(3)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                        @Html.DisplayNameFor(model => model.Title)
-                    </th>
-                    <th onclick="sort(4)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                        @Html.DisplayNameFor(model => model.Publisher)
-                    </th>
-                    <th onclick="sort(5)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                        @Html.DisplayNameFor(model => model.AgeRestriction)
-                    </th>
-                    <th onclick="sort(6)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                        @Html.DisplayNameFor(model => model.PublishedAt)
-                    </th>
-                    <th onclick="sort(7)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                        @Html.DisplayNameFor(model => model.Status)
-                    </th>
-                    <th onclick="sort(8)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                        @Html.DisplayNameFor(model => model.Type)
-                    </th>
-                    <th onclick="sort(9)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                        @Html.DisplayNameFor(model => model.Genre)
-                    </th>
-                    <th onclick="sort(10)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                        @Html.DisplayNameFor(model => model.DateAdded)
-                    </th>
-                    <th onclick="sort(11)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
                         @Html.DisplayNameFor(model => model.LibraryId)
                     </th>
-                    <th onclick="sort(12)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                        @Html.DisplayNameFor(model => model.UserId)
+                    <th onclick="sort(4)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                        @Html.DisplayNameFor(model => model.Status)
                     </th>
+
                     <th></th>
                 </tr>
             </thead>
 
             @foreach (var item in ViewBag.onePageOfDVDs)
-                {
+            {
                 <tr>
                     <td>
-                        @item.Director
+                        @item.Title
                     </td>
                     <td>
-                        @item.Duration min
+                        @item.Director
                     </td>
                     <td>
                         @item.DVDGenre
                     </td>
                     <td>
-                        @item.Title
-                    </td>
-                    <td>
-                        @item.Publisher
-                    </td>
-                    <td>
-                        @item.AgeRestriction.ToString().Replace("_", " ")
-                    </td>
-                    <td>
-                        @item.PublishedAt
+                        @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
                     </td>
                     <td>
                         @item.Status
                     </td>
                     <td>
-                        @item.Type
-                    </td>
-                    <td>
-                        @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.id })
-                        @if (Request.IsAuthenticated)
+                        @if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
                         {
                             <div>
-                                |
-                                @Html.ActionLink("Reserve", "Reserve", new { id = item.id })|
-                                @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
+                                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.id })
                             </div>
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Details", "Details", new { id = item.id })
+                            if (Request.IsAuthenticated)
+                            {
+                                <div>
+                                    | @Html.ActionLink("Reserve", "Reserve", new { id = item.id }) |
+                                    @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
+                                </div>
+                            }
                         }
                     </td>
                 </tr>

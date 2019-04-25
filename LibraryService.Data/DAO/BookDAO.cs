@@ -82,6 +82,7 @@ namespace LibraryService.Data.DAO
         public IList<Book> GetNewBooks()
         {
             var baselineDate = DateTime.Now.AddDays(-7);
+            //get books that got added in the last 7 days
             IQueryable<Book> newbooks =  
                 from b in db.Books
                 where b.DateAdded > baselineDate

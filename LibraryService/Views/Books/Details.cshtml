@@ -11,11 +11,19 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.id)
+            @Html.DisplayNameFor(model => model.Title)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.id)
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author)
         </dd>
 
         <dt>
@@ -35,19 +43,27 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.BookGenre)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.BookGenre)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Genre)
+            @Html.DisplayNameFor(model => model.PublishedAt)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Genre)
+            @Html.DisplayFor(model => model.PublishedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AgeRestriction)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AgeRestriction).ToString().Replace("_", " ")
         </dd>
 
         <dt>
@@ -66,49 +82,41 @@
             @Html.DisplayFor(model => model.Status)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
+        @if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.PurchaseValue)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.PurchaseValue)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AgeRestriction)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ReturnDate)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.AgeRestriction).ToString().Replace("_", " ")
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.ReturnDate)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PurchaseValue)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateAdded)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PurchaseValue)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ReturnDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ReturnDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateAdded)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateAdded)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.DateAdded)
+            </dd>
+        }
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
+    { 
+    <div>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    </div>
+    }
     @Html.ActionLink("Back to List", "Index")
 </p>

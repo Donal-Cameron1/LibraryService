@@ -70,8 +70,8 @@ namespace LibraryService.Controllers
                 ViewBag.message = "Sorry, we can't find any books";
             }
 
-            var onePageOfProducts = bookquery.ToPagedList(pageNumber, 2);
-            ViewBag.OnePageOfProducts = onePageOfProducts;
+            var onePageOfBooks = bookquery.ToPagedList(pageNumber, 10);
+            ViewBag.OnePageOfBooks = onePageOfBooks;
 
             return View();
         }
@@ -201,6 +201,8 @@ namespace LibraryService.Controllers
             return View(newBooks);
         }
 
+
+        
         public ActionResult CheckoutBook()
         {
             IList<Book> bookquery = _bookService.GetBooks();
