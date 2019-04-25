@@ -126,5 +126,15 @@ namespace LibraryService.Services.Service
             _bookDAO.LoanBook(idList, currentUserId);
         }
 
+
+        public List<Book> GetBooksForUserID(string UserID)
+        {
+            return _bookDAO.GetBooksForUserID(UserID);
+        }
+
+        public void ReturnBook(int BookID)
+        {
+            _bookDAO.ReturnBook(BookID);
+        }
     }
 }

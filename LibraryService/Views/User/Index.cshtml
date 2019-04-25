@@ -32,7 +32,8 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>  @Html.ActionLink("Borrow", "StartCheckout", new { id = item.UserId })</td>
+        <td>  @Html.ActionLink("Borrow", "StartCheckout", new { id = item.UserId }) |
+        @Html.ActionLink("Return", "ReturnBook", new { id = item.UserId })        </td>
 
         <td>
             @Html.DisplayFor(modelItem => item.UserName)
@@ -50,9 +51,9 @@
             @Html.DisplayFor(modelItem => item.DateOfBirth)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
+            @Html.ActionLink("Edit", "Edit", new { id = item.UserId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.UserId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.UserId })
         </td>
     </tr>
 }
