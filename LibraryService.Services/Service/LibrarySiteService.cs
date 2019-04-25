@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace LibraryService.Services.Service
 {
-    public class LibraryService : ILibraryService
+    public class LibrarySiteService : ILibraryService
     {
         private ILibraryDAO _libraryDAO;
         private IUserDAO _userDAO;
         private DbUtils _dbUtils;
 
-        public LibraryService()
+        public LibrarySiteService()
         {
             _libraryDAO = new LibraryDAO();
             _userDAO = new UserDAO();

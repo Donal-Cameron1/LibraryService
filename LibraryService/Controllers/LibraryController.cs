@@ -20,7 +20,7 @@ namespace LibraryService.Controllers
         private ILibraryService _libraryService;
         public LibraryController()
         {
-            _libraryService = new Services.Service.LibraryService();
+            _libraryService = new Services.Service.LibrarySiteService();
         }
 
         // GET: Library
