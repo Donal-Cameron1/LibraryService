@@ -2,6 +2,8 @@
 using Owin;
 using Hangfire;
 using LibraryService.DAL;
+using System.Net.Mail;
+using System.Net;
 
 [assembly: OwinStartupAttribute(typeof(LibraryService.Startup))]
 namespace LibraryService
@@ -18,6 +20,7 @@ namespace LibraryService
 
             RecurringJob.AddOrUpdate(() => new Services.Service.LibraryItemService().UpdateStatus(), Cron.Daily);
 
+            RecurringJob.AddOrUpdate(() => new Services.Service.LibraryItemService().SendOverdueMail(), Cron.Daily);
         }
     }
 }

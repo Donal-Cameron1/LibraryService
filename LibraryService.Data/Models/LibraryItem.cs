@@ -67,7 +67,7 @@ namespace LibraryService.Models
         public decimal PurchaseValue { get; set; }
 
         [Display(Name = "Date added")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<DateTime> DateAdded { get; set; }
 
         [Required]
