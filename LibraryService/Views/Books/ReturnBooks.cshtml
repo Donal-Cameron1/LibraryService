@@ -2,8 +2,11 @@
 
 @{
     ViewBag.Title = "ReturnBook";
-    
+
 }
+@if (Model.Any())
+{
+
 <div class=" bg-info">
 
     <h2>Return Books</h2>
@@ -36,7 +39,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
@@ -57,10 +61,16 @@
         </td>
         
         <td>
-            @Html.ActionLink("Renew", "RenewBook", new { BookID=item.id }) |
-            @Html.ActionLink("Return", "ReturnBook", new { BookID=item.id }) |
+            @Html.ActionLink("Renew", "RenewBook", new { BookID = item.id }) |
+            @Html.ActionLink("Return", "ReturnBook", new { BookID = item.id }) |
               </td>
     </tr>
 }
 
 </table>
+}
+else
+{
+    <h2>Your items </h2>
+        <p>You currently have no items loaned</p>
+}

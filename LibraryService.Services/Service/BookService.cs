@@ -136,5 +136,10 @@ namespace LibraryService.Services.Service
         {
             _bookDAO.ReturnBook(BookID);
         }
+
+        public void RenewBook(int BookID)
+        {
+            _bookDAO.RenewBook(BookID);
+        }
     }
 }

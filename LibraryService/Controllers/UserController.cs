@@ -15,14 +15,14 @@ namespace LibraryService.Controllers
 {
     public class UserController : Controller
     {
-        
+
         private LibraryContext db = new LibraryContext();
         private IUserService _userService;
 
         public UserController()
         {
             _userService = new UserService();
-        }  
+        }
 
         // GET: User
         public ActionResult Index()
@@ -105,7 +105,7 @@ namespace LibraryService.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = _userService.GetUser(id); 
+            User user = _userService.GetUser(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -131,7 +131,7 @@ namespace LibraryService.Controllers
             ViewBag.Customer = id;
 
             return RedirectToAction("CheckoutBook", "Books");
-                       
+
         }
 
         public ActionResult ReturnBook(string id)
@@ -142,7 +142,20 @@ namespace LibraryService.Controllers
             ViewBag.Customer = id;
 
             return RedirectToAction("ReturnBooks", "Books");
-                       
+
         }
+
+        public ActionResult RenewBook(string id)
+
+        {
+            Session["UserId"] = id;
+
+            ViewBag.Customer = id;
+
+            return RedirectToAction("RenewBooks", "Books");
+
+        }
+
     }
-}
+
+    }

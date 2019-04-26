@@ -470,6 +470,7 @@
     <Content Include="Views\Home\DetailsDVD.cshtml" />
     <Content Include="Views\LibraryItems\DetailsBook.cshtml" />
     <Content Include="Views\LibraryItems\DetailsDVD.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

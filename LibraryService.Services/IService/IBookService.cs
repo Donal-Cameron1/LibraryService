@@ -45,5 +45,7 @@ namespace LibraryService.Services.IService
 
         void ReturnBook(int BookID);
 
+        void RenewBook(int BookID);
+
     }
 }
