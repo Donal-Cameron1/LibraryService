@@ -15,6 +15,7 @@ namespace LibraryService
 
         public void Configuration(IAppBuilder app)
         {
+
             ConfigureAuth(app);
 
             GlobalConfiguration.Configuration.UseSqlServerStorage(new LibraryContext().Database.Connection.ConnectionString);  // Copy connection string
