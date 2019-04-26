@@ -38,12 +38,14 @@ namespace LibraryService.Data.IDAO
 
         void DeleteBookmark(int id, string userId);
 
-        void LoanBook(List<int> idList, string currentUserId);
+        IList<LibraryItem> GetReservedBooks();
 
-        List<Book> GetBooksForUserID(string UserID);
+        //void LoanBook(List<int> idList, string currentUserId);
 
-        void ReturnBook(int BookID);
+        //List<Book> GetBooksForUserID(string UserID);
 
-        void RenewBook(int BookID);
+        //void ReturnBook(int BookID);
+
+        //void RenewBook(int BookID);
     }
 }

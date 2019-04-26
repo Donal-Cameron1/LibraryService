@@ -471,6 +471,7 @@
     <Content Include="Views\LibraryItems\DetailsBook.cshtml" />
     <Content Include="Views\LibraryItems\DetailsDVD.cshtml" />
     <Content Include="Views\Shared\_LoginPartialAdmin.cshtml" />
+    <Content Include="Views\Admin\GetReservedItems.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

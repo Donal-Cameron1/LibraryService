@@ -142,7 +142,13 @@ namespace LibraryService.Data.DAO
             db.SaveChanges();
         }
 
-        public List<Book> GetBooksForUserID(string UserID)
+        public IList<LibraryItem> GetReservedBooks()
+        {
+           return db.LibraryItems.Where(b => b.Status == Status.Reserved).ToList();
+
+        }
+
+        /*public List<Book> GetBooksForUserID(string UserID)
         {
                 IQueryable<Book> books =
                 from b in db.Books
@@ -168,7 +174,8 @@ namespace LibraryService.Data.DAO
             ThisBook.ReturnDate = DateTime.Today.AddDays(7);
             this.UpdateBook(ThisBook);
 
-        }
+        }*/
+
 
     }
 }

@@ -19,6 +19,7 @@ namespace LibraryService.Services.Service
         private DbUtils _dbUtils;
         private IBookDAO _bookDAO;
         private IDVDDAO _dvdDAO;
+        private ILibraryItemDAO _libraryItemDAO;
 
         public LibraryItemService()
         {
@@ -26,7 +27,46 @@ namespace LibraryService.Services.Service
             _dbUtils = new DbUtils();
             _bookDAO = new BookDAO();
             _dvdDAO = new DVDDAO();
+            _libraryItemDAO = new LibraryItemDAO();
         }
+
+        public IList<LibraryItem> GetReservedItems(string id)
+        {
+            IList<LibraryItem> reservedLibraryItems = new List<LibraryItem>();
+            IList<LibraryItem> reservedBooks = _libraryItemDAO.GetReservedLibraryItems(id);
+            //IList<DVD> reservedDVDs = _dvdDAO.GetReservedDVDs();
+
+            reservedLibraryItems = reservedBooks;
+
+            return reservedLibraryItems;
+        }
+
+
+        private static List<LibraryItem> CastDVDsToLibraryItems(IList<DVD> dvdquery)
+        {
+            List<LibraryItem> items = new List<LibraryItem>();
+            foreach (DVD dvd in dvdquery.ToList())
+            {
+                LibraryItem item = (LibraryItem)dvd;
+                item.Genre = (Genre)Enum.Parse(typeof(Genre), dvd.DVDGenre.ToString());
+                items.Add(item);
+            }
+            return items;
+        }
+
+        private static List<LibraryItem> CastBooksToLibraryItems(IList<Book> bookquery)
+        {
+            List<LibraryItem> items = new List<LibraryItem>();
+            foreach (Book book in bookquery.ToList())
+            {
+                LibraryItem item = (LibraryItem)book;
+                item.Genre = (Genre)Enum.Parse(typeof(Genre), book.BookGenre.ToString());
+                items.Add(item);
+            }
+            return items;
+        }
+
+
 
         public void UpdateStatus()
         {
@@ -56,6 +96,11 @@ namespace LibraryService.Services.Service
             }
         }
 
+        public void LoanLibraryItem(int id)
+        {
+            _libraryItemDAO.LoanLibraryItem(id);
+        }
+
         public void SendOverdueMail()
         {
             SmtpClient client = new SmtpClient("smtp.googlemail.com");
@@ -66,24 +111,9 @@ namespace LibraryService.Services.Service
 
             foreach (User user in _userDAO.GetUsers())
             {
-                foreach(KeyValuePair<Book, DateTime> book_duedate in user.LoanedBooks)
+                foreach(LibraryItem libraryItem in user.LoanedLibraryItems)
                 {
-                    if (book_duedate.Value.AddDays(1).CompareTo(DateTime.Today) <= 0)
-                    {
-                        MailMessage mailMessage = new MailMessage();
-                        mailMessage.From = new MailAddress("LibraryServiceSheffield@gmail.com");
-                        mailMessage.To.Add(user.UserName);
-                        mailMessage.Subject = "Hello There";
-                        mailMessage.Body = "Hello my friend!";
-
-                        client.Send(mailMessage);
-                    }
-
-                }
-
-                foreach (KeyValuePair<DVD, DateTime> dvd_overdue in user.LoanedDVDs)
-                {
-                    if (dvd_overdue.Value.AddDays(1).CompareTo(DateTime.Today) <= 0)
+                    if (libraryItem.ReturnDate.Value.AddDays(1).CompareTo(DateTime.Today) <= 0)
                     {
                         MailMessage mailMessage = new MailMessage();
                         mailMessage.From = new MailAddress("LibraryServiceSheffield@gmail.com");

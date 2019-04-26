@@ -35,10 +35,12 @@ namespace LibraryService.Data.IDAO
 
         IList<DVD> GetDVDs();
 
-        void LoanDVD(int id, string UserId, DateTime duedate);
+        //void LoanDVD(int id, string UserId, DateTime duedate);
 
         void DeleteReservation(int id, string userId);
 
         void DeleteBookmark(int id, string currentUserId);
+
+        IList<DVD> GetReservedDVDs();
     }
 }

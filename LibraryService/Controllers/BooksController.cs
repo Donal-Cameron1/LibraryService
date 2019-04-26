@@ -220,126 +220,132 @@ namespace LibraryService.Controllers
             IList<Book> newBooks = _bookService.GetNewBooks();
             return View(newBooks);
         }
-      
-        public ActionResult CheckoutBook()
+
+        public ActionResult LoanItem(int id)
         {
-            IList<Book> bookquery = _bookService.GetBooks();
-
-            ViewBag.Customer = Session["UserId"].ToString();
-
-            return View(bookquery);
-        }
-
-        public ActionResult CheckoutAnotherBook(string message)
-        {
-            IList<Book> bookquery = _bookService.GetBooks();
-
-            ViewBag.Customer = Session["UserId"].ToString();
-            ViewBag.message = message;
-
-            return View("CheckoutBook", bookquery);
-        }
-
-        public ActionResult SelectBook(int id)
-        {
-            var book = _bookService.GetBook(id);
-            var duedate = DateTime.Now.AddDays(14);
-            var listofitems = new Dictionary<Book, DateTime>();
-
-            if (Session["ItemList"] != null)
-            {
-                listofitems = (Dictionary<Book, DateTime>)Session["ItemList"];
-            }
-
-            listofitems.Add(book, duedate);
-            Session["ItemList"] = listofitems;
-
-            var message = book.Title + " added to checkout list.";
-
-            return RedirectToAction("CheckoutAnotherBook", new { message = message });
-
-        }
-
-        public ActionResult ShowBasket()
-        {
-            var itemlist = (Dictionary<Book, DateTime>)Session["ItemList"];
-
-            var viewlist = new Dictionary<string, DateTime>();
-
-            foreach (KeyValuePair<Book, DateTime> item in itemlist)
-            {
-                viewlist.Add(item.Key.Title, item.Value);
-            }
-
-            return View(viewlist);
-        }
-
-        public ActionResult Checkout()
-        {
-            // get the items from session and convert to list of IDs
-            var itemlist = (Dictionary<Book, DateTime>)Session["ItemList"];
-
-            var idList = new List<int>();
-            foreach (KeyValuePair<Book, DateTime> book in itemlist)
-            {
-                idList.Add(book.Key.id);
-            }
-
-            // get the customer details
-            var customerid = Session["UserId"].ToString();
-            var thiscustomer = _userService.GetUser(customerid);
-
-            // add the customer ID to each of the books:
-            _bookService.LoanBook(idList, customerid);
-
-
-            //update the customer list of loaned Books
-            var currentlist = new Dictionary<Book, DateTime>();
-
-            // if the customer already has books out, get the current list
-            if (thiscustomer.LoanedBooks != null)
-            {
-                currentlist = thiscustomer.LoanedBooks;
-            }
-
-            // now add each of the requested books to the list
-            foreach (KeyValuePair<Book, DateTime> book in itemlist)
-            {
-                currentlist.Add(book.Key, book.Value);
-            }
-
-            // update the list in the database
-            thiscustomer.LoanedBooks = currentlist;
-            _userService.EditUser(thiscustomer);
-
+            _bookService.LoanBook(id);
             return View();
         }
+    }
 
-        public ActionResult ReturnBooks()       
+    /*public ActionResult CheckoutBook()
+    {
+        IList<Book> bookquery = _bookService.GetBooks();
+
+        ViewBag.Customer = Session["UserId"].ToString();
+
+        return View(bookquery);
+    }
+
+    public ActionResult CheckoutAnotherBook(string message)
+    {
+        IList<Book> bookquery = _bookService.GetBooks();
+
+        ViewBag.Customer = Session["UserId"].ToString();
+        ViewBag.message = message;
+
+        return View("CheckoutBook", bookquery);
+    }
+
+    public ActionResult SelectBook(int id)
+    {
+        var book = _bookService.GetBook(id);
+        var duedate = DateTime.Now.AddDays(14);
+        var listofitems = new Dictionary<Book, DateTime>();
+
+        if (Session["ItemList"] != null)
         {
-            var customerid = Session["UserId"].ToString();
-            var BookList = _bookService.GetBooksForUserID(customerid);
-            ViewBag.CustomerID = customerid;
-            return View(BookList);
+            listofitems = (Dictionary<Book, DateTime>)Session["ItemList"];
         }
 
-        public ActionResult ReturnBook(int BookID)
-        {
-            _bookService.ReturnBook(BookID);
-            ViewBag.Message = _bookService.GetBook(BookID).Title + " Has Been Returned";
-            return RedirectToAction("ReturnBooks");
-        }
+        listofitems.Add(book, duedate);
+        Session["ItemList"] = listofitems;
 
-        public ActionResult RenewBook(int BookID)
-        {
-            _bookService.RenewBook(BookID);
-            ViewBag.Message = _bookService.GetBook(BookID).Title + " Has Been Renewed";
-            return RedirectToAction("ReturnBooks");
+        var message = book.Title + " added to checkout list.";
 
-
-        }
-
+        return RedirectToAction("CheckoutAnotherBook", new { message = message });
 
     }
 
+    public ActionResult ShowBasket()
+    {
+        var itemlist = (Dictionary<Book, DateTime>)Session["ItemList"];
+
+        var viewlist = new Dictionary<string, DateTime>();
+
+        foreach (KeyValuePair<Book, DateTime> item in itemlist)
+        {
+            viewlist.Add(item.Key.Title, item.Value);
+        }
+
+        return View(viewlist);
+    }
+
+    public ActionResult Checkout()
+    {
+        // get the items from session and convert to list of IDs
+        var itemlist = (Dictionary<Book, DateTime>)Session["ItemList"];
+
+        var idList = new List<int>();
+        foreach (KeyValuePair<Book, DateTime> book in itemlist)
+        {
+            idList.Add(book.Key.id);
+        }
+
+        // get the customer details
+        var customerid = Session["UserId"].ToString();
+        var thiscustomer = _userService.GetUser(customerid);
+
+        // add the customer ID to each of the books:
+        _bookService.LoanBook(idList, customerid);
+
+
+        //update the customer list of loaned Books
+        var currentlist = new Dictionary<Book, DateTime>();
+
+        // if the customer already has books out, get the current list
+        if (thiscustomer.LoanedBooks != null)
+        {
+            currentlist = thiscustomer.LoanedBooks;
+        }
+
+        // now add each of the requested books to the list
+        foreach (KeyValuePair<Book, DateTime> book in itemlist)
+        {
+            currentlist.Add(book.Key, book.Value);
+        }
+
+        // update the list in the database
+        thiscustomer.LoanedBooks = currentlist;
+        _userService.EditUser(thiscustomer);
+
+        return View();
+    }
+
+    public ActionResult ReturnBooks()       
+    {
+        var customerid = Session["UserId"].ToString();
+        var BookList = _bookService.GetBooksForUserID(customerid);
+        ViewBag.CustomerID = customerid;
+        return View(BookList);
+    }
+
+    public ActionResult ReturnBook(int BookID)
+    {
+        _bookService.ReturnBook(BookID);
+        ViewBag.Message = _bookService.GetBook(BookID).Title + " Has Been Returned";
+        return RedirectToAction("ReturnBooks");
+    }
+
+    public ActionResult RenewBook(int BookID)
+    {
+        _bookService.RenewBook(BookID);
+        ViewBag.Message = _bookService.GetBook(BookID).Title + " Has Been Renewed";
+        return RedirectToAction("ReturnBooks");
+
+
+    }*/
+
+
 }
+

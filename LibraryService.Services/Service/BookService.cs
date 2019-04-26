@@ -121,7 +121,16 @@ namespace LibraryService.Services.Service
             
         }
 
-        public void LoanBook(List<int> idList, string currentUserId)
+        public void LoanBook(int id)
+        {
+            //get book that is supposed to get loaned
+            Book book = _bookDAO.GetBook(id);
+
+            //get user that is mapped to the book 
+            User user = book.ReservedBy;
+        }
+
+        /*public void LoanBook(List<int> idList, string currentUserId)
         {
             _bookDAO.LoanBook(idList, currentUserId);
         }
@@ -140,6 +149,6 @@ namespace LibraryService.Services.Service
         public void RenewBook(int BookID)
         {
             _bookDAO.RenewBook(BookID);
-        }
+        }*/
     }
 }

@@ -7,7 +7,7 @@ using LibraryService.Models;
 
 namespace LibraryService.DAL
 {
-    public class LibraryInitialiser : CreateDatabaseIfNotExists<LibraryContext>
+    public class LibraryInitialiser : CreateDatabaseIfNotExists<LibraryContext> 
     {
         protected override void Seed(LibraryContext context)
         {

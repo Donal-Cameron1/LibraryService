@@ -117,13 +117,23 @@ namespace LibraryService.Data.DAO
             db.SaveChanges();
         }
 
-        public void LoanDVD(int id, string currentUserId, DateTime duedate)
+        public IList<DVD> GetReservedDVDs()
+        {
+            IQueryable<DVD> reservedDVDs;
+            reservedDVDs = from d
+                           in db.DVD
+                           where d.Status.Equals(Status.Reserved)
+                           select d;
+            return reservedDVDs.AsNoTracking().ToList<DVD>();
+        }
+
+        /*public void LoanDVD(int id, string currentUserId, DateTime duedate)
         {
             DVD dvd = GetDVDWithTracking(db, id);
             User user = UserDAO.GetUserWithTracking(db, currentUserId);
             user.LoanedDVDs.Add(dvd, duedate);
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
-        }
+        }*/
     }
 }

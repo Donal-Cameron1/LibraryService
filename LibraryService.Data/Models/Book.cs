@@ -22,5 +22,6 @@ namespace LibraryService.Models
 
         public virtual Library Library { get; set; }
         public virtual User User { get; set; }
+
     }
 }

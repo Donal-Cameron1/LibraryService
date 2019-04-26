@@ -62,6 +62,7 @@ namespace LibraryService.Controllers
             }
         }
 
+
         // GET: Books/Details/5
         public ActionResult DetailsBook(int id)
         {
@@ -127,7 +128,7 @@ namespace LibraryService.Controllers
             return View(book);
         }
 
-        // POST: DVDs/Reserve/5
+        // POST: Books/Reserve/5
         [HttpPost, ActionName("ReserveBook")]
         [ValidateAntiForgeryToken]
         public ActionResult ReserveBookConfirmed(int id)

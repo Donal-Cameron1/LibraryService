@@ -19,7 +19,7 @@ namespace LibraryService.Data.DAO
                .AsNoTracking()
                .Include(u => u.BookmarkedLibraryItems)
                .Include(u => u.ReservedLibraryItems)
-               //.Include(u => u.LoanedLibraryItems)
+               .Include(u => u.LoanedLibraryItems)
                .SingleOrDefault(x => x.UserId == currentUserId);
         }
 
@@ -31,7 +31,11 @@ namespace LibraryService.Data.DAO
 
         public IList<User> GetUsers()
         {
-            return db.Users.AsNoTracking().ToList();
+            return db.Users.AsNoTracking()
+                .Include(u => u.BookmarkedLibraryItems)
+                .Include(u => u.ReservedLibraryItems)
+                .Include(u => u.LoanedLibraryItems)
+               .ToList();
         }
 
         public User GetUser(string id)
@@ -39,6 +43,7 @@ namespace LibraryService.Data.DAO
             return db.Users
                 .Include(u => u.BookmarkedLibraryItems)
                 .Include(u => u.ReservedLibraryItems)
+                .Include(u => u.LoanedLibraryItems)
                 .AsNoTracking().Where(u => u.UserId == id).FirstOrDefault(); 
         }
 
@@ -53,6 +58,7 @@ namespace LibraryService.Data.DAO
             return context.Users
                 .Include(u => u.BookmarkedLibraryItems)
                 .Include(u => u.ReservedLibraryItems)
+                .Include(u => u.LoanedLibraryItems)
                 .Where(u => u.UserId == id).FirstOrDefault();
         }
 

@@ -38,14 +38,15 @@ namespace LibraryService.Services.IService
         void Reserve(int id, string currentUserId);
 
         void DeleteReservation(int id, string UserId);
+        void LoanBook(int id);
 
-        void LoanBook(List<int> idList, string currentUserId);
+        //void LoanBook(List<int> idList, string currentUserId);
 
-        List<Book> GetBooksForUserID(string UserID);
+        //List<Book> GetBooksForUserID(string UserID);
 
-        void ReturnBook(int BookID);
+        //void ReturnBook(int BookID);
 
-        void RenewBook(int BookID);
+        //void RenewBook(int BookID);
 
     }
 }
