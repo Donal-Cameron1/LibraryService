@@ -331,6 +331,13 @@ namespace LibraryService.Controllers
             _bookService.ReturnBook(BookID);
             ViewBag.Message = _bookService.GetBook(BookID).Title + " Has Been Returned";
             return RedirectToAction("ReturnBooks");
+        }
+
+        public ActionResult RenewBook(int BookID)
+        {
+            _bookService.RenewBook(BookID);
+            ViewBag.Message = _bookService.GetBook(BookID).Title + " Has Been Renewed";
+            return RedirectToAction("ReturnBooks");
 
 
         }

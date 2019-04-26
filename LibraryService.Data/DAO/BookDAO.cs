@@ -162,5 +162,13 @@ namespace LibraryService.Data.DAO
 
         }
 
+        public void RenewBook(int BookID)
+        {
+            var ThisBook = this.GetBook(BookID);
+            ThisBook.ReturnDate = DateTime.Today.AddDays(7);
+            this.UpdateBook(ThisBook);
+
+        }
+
     }
 }

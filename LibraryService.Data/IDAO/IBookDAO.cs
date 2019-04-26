@@ -43,5 +43,7 @@ namespace LibraryService.Data.IDAO
         List<Book> GetBooksForUserID(string UserID);
 
         void ReturnBook(int BookID);
+
+        void RenewBook(int BookID);
     }
 }
