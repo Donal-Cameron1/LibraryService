@@ -8,7 +8,9 @@ namespace LibraryService.DAL
     {
         public LibraryContext() : base("LibraryContext")
         {
-
+            Database.CreateIfNotExists();
+            //Database.SetInitializer<LibraryContext>(new LibraryInitialiser());
+            //new LibraryInitialiser().InitializeDatabase(this);
         }
 
         public DbSet<Library> Libraries { get; set; }

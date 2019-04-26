@@ -7,7 +7,7 @@ using LibraryService.Models;
 
 namespace LibraryService.DAL
 {
-    public class LibraryInitialiser : DropCreateDatabaseIfModelChanges<LibraryContext>
+    public class LibraryInitialiser : DropCreateDatabaseAlways<LibraryContext>
     {
         protected override void Seed(LibraryContext context)
         {
