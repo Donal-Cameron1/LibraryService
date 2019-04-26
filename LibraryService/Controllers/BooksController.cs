@@ -177,7 +177,6 @@ namespace LibraryService.Controllers
             return RedirectToAction("Index");
         }
 
-
         // GET: Books/Reserve/5
         public ActionResult Reserve(int id)
         {
@@ -221,9 +220,7 @@ namespace LibraryService.Controllers
             IList<Book> newBooks = _bookService.GetNewBooks();
             return View(newBooks);
         }
-
-
-        
+      
         public ActionResult CheckoutBook()
         {
             IList<Book> bookquery = _bookService.GetBooks();
@@ -318,7 +315,7 @@ namespace LibraryService.Controllers
             return View();
         }
 
-        public ActionResult ReturnBooks()
+        public ActionResult ReturnBooks()       
         {
             var customerid = Session["UserId"].ToString();
             var BookList = _bookService.GetBooksForUserID(customerid);
@@ -331,8 +328,6 @@ namespace LibraryService.Controllers
             _bookService.ReturnBook(BookID);
             ViewBag.Message = _bookService.GetBook(BookID).Title + " Has Been Returned";
             return RedirectToAction("ReturnBooks");
-
-
         }
 
 
