@@ -134,6 +134,7 @@ namespace LibraryService.Controllers
 
         public ActionResult Index()
         {
+
             IList<LibraryItem> newitems = new List<LibraryItem>();
             IEnumerable<LibraryItem> dvds = CastDVDsToLibraryItems(_dvdService.GetNewDVDs());
             IEnumerable<LibraryItem> books = CastBooksToLibraryItems(_bookService.GetNewBooks());          

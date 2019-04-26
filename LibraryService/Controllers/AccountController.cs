@@ -13,6 +13,7 @@ using LibraryService.DAL;
 using System.Web.Security;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
+using System.Collections.Generic;
 
 namespace LibraryService.Controllers
 {
@@ -191,8 +192,8 @@ namespace LibraryService.Controllers
                         Password = model.Password,
                         MemberSince = DateTime.Today,
                         UserName = user.Email,
-                        Role = "User"
-                    };
+                        Roles = new List<string>(new string[] { "User" })
+                };
                     _userService.CreateUser(newuser);
 
                     return RedirectToAction("Index", "Home");

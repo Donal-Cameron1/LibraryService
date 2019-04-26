@@ -19,7 +19,7 @@ namespace LibraryService.Models
 
         public string Address { get; set; }
 
-        public string Role { get; set; }
+        public IList<string> Roles { get; set; }
 
         public Nullable<DateTime> MemberSince { get; set; }
 

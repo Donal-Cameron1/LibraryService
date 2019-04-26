@@ -1,4 +1,7 @@
+using LibraryService.Data.IDAO;
 using LibraryService.Models;
+using LibraryService.Services.IService;
+using LibraryService.Services.Service;
 using Microsoft.AspNet.Identity.Owin;
 using System.Data.Entity;
 using System.Linq;
@@ -13,9 +16,11 @@ namespace LibraryService
     public class UsersAdminController : Controller
     {
         ApplicationDbContext context;
+        IUserService _userService;
         public UsersAdminController()
         {
             context = new ApplicationDbContext();
+            _userService = new UserService();
         }
 
         public UsersAdminController(ApplicationUserManager userManager, ApplicationRoleManager roleManager)
@@ -169,6 +174,10 @@ namespace LibraryService
                 selectedRole = selectedRole ?? new string[] { };
 
                 Microsoft.AspNet.Identity.IdentityResult result = await UserManager.AddToRolesAsync(user.Id, selectedRole.Except(userRoles).ToArray<string>());
+
+                var currentUser = _userService.GetUser(user.Id);
+                currentUser.Roles = await UserManager.GetRolesAsync(user.Id);
+                _userService.EditUser(currentUser);
 
                 if (!result.Succeeded)
                 {
