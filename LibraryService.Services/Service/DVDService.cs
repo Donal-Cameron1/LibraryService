@@ -5,13 +5,10 @@ using LibraryService.Models;
 using LibraryService.Services.IService;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibraryService.Services.Service
 {
-    public class DVDService : IDVDService 
+    public class DVDService : IDVDService
     {
         private IDVDDAO _dvdDAO;
         private IUserDAO _userDAO;
@@ -104,8 +101,8 @@ namespace LibraryService.Services.Service
                 dvd.ReservedUntil = DateTime.Today.AddDays(5);
                 _dvdDAO.UpdateDVD(dvd);
                 _dvdDAO.ReserveDVD(id, currentUserId);
-            }           
-            if(dvd.Status == Status.Loaned)
+            }
+            if (dvd.Status == Status.Loaned)
             {
                 dvd.ReservedUntil = dvd.ReturnDate.Value.AddDays(5);
                 _dvdDAO.UpdateDVD(dvd);

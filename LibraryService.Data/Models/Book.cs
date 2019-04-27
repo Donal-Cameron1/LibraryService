@@ -4,9 +4,9 @@ namespace LibraryService.Models
 {
     public enum BookGenre
     {
-        Action,Crime, Fantasy, Horror, Poetry, Romance, Thriller
+        Action, Crime, Fantasy, Horror, Poetry, Romance, Thriller
     }
-    public class Book: LibraryItem
+    public class Book : LibraryItem
     {
         [Required]
         [RegularExpression("[A-Z](.*)", ErrorMessage = "Author has to begin with a capital letter")]
@@ -17,7 +17,7 @@ namespace LibraryService.Models
         public BookGenre BookGenre { get; set; }
 
         [Required]
-        [Range(5,5000)]
+        [Range(5, 5000)]
         public int Pages { get; set; }
 
         public virtual Library Library { get; set; }

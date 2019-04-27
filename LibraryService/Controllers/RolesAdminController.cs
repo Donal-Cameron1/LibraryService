@@ -1,8 +1,8 @@
+using LibraryService.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using LibraryService.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LibraryService
 {

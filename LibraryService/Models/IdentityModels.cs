@@ -1,9 +1,9 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LibraryService.Models
 {
@@ -67,7 +67,7 @@ namespace LibraryService.Models
                 manager.Create(role);
             }
 
-            
+
             if (!context.Users.Any(u => u.UserName == "admin"))
             {
                 UserStore<ApplicationUser> store = new UserStore<ApplicationUser>(context);

@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using LibraryService.DAL;
+﻿using LibraryService.DAL;
 using LibraryService.Models;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
 using Microsoft.AspNet.Identity;
 using PagedList;
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace LibraryService.Controllers
 {
@@ -176,6 +171,12 @@ namespace LibraryService.Controllers
             return RedirectToAction("ShowItemsOfUser", "LibraryItems");
         }
 
+        public ActionResult DeleteReservationInList(int id)
+        {
+            _dvdService.DeleteReservation(id, User.Identity.GetUserId());
+            return RedirectToAction("Index", "DVDs");
+        }
+
         public ActionResult Bookmark(int id)
         {
             _dvdService.BookmarkDVD(id, User.Identity.GetUserId());
@@ -186,6 +187,12 @@ namespace LibraryService.Controllers
         {
             _dvdService.DeleteBookmark(id, User.Identity.GetUserId());
             return RedirectToAction("ShowBookmarks", "LibraryItems");
+        }
+
+        public ActionResult DeleteBookmarkInList(int id)
+        {
+            _dvdService.DeleteBookmark(id, User.Identity.GetUserId());
+            return RedirectToAction("Index", "DVDs");
         }
     }
 }

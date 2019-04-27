@@ -1,13 +1,10 @@
-﻿using LibraryService.Data.IDAO;
+﻿using LibraryService.Data.DAL;
 using LibraryService.Data.DAO;
+using LibraryService.Data.IDAO;
 using LibraryService.Models;
 using LibraryService.Services.IService;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LibraryService.Data.DAL;
 
 namespace LibraryService.Services.Service
 {
@@ -111,14 +108,14 @@ namespace LibraryService.Services.Service
                 _bookDAO.ReserveBook(id, currentUserId);
             }
             //todo: Schedule service needed to change status after returndate? 
-            
-            if(book.Status == Status.Loaned)
+
+            if (book.Status == Status.Loaned)
             {
                 book.ReservedUntil = book.ReturnDate.Value.AddDays(5);
                 _bookDAO.UpdateBook(book);
                 _bookDAO.ReserveBook(id, currentUserId);
             }
-            
+
         }
 
         public void LoanBook(int id)

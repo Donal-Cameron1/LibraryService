@@ -10,7 +10,7 @@ using System.Web.Mvc;
 namespace LibraryService
 {
     public class InitAdminController : Controller
-    {        
+    {
         public ApplicationDbContext db;
         public DropCreateDatabaseIfModelChanges<DbContext> dbInit;
 
@@ -79,7 +79,7 @@ namespace LibraryService
                 }
                 return true;
             }
-            catch(Exception )
+            catch (Exception)
             {
                 return false;
             }

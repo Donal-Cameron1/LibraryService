@@ -2,10 +2,9 @@
 using LibraryService.DAL;
 using LibraryService.Data.IDAO;
 using LibraryService.Models;
-using System.Linq;
-using System.Data.Entity;
-using LibraryService.Data.DAL;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 
 namespace LibraryService.Data.DAO
 {
@@ -44,7 +43,7 @@ namespace LibraryService.Data.DAO
                 .Include(u => u.BookmarkedLibraryItems)
                 .Include(u => u.ReservedLibraryItems)
                 .Include(u => u.LoanedLibraryItems)
-                .AsNoTracking().Where(u => u.UserId == id).FirstOrDefault(); 
+                .AsNoTracking().Where(u => u.UserId == id).FirstOrDefault();
         }
 
         public User GetUserByUsername(string username)
@@ -73,6 +72,6 @@ namespace LibraryService.Data.DAO
             db.Users.Attach(user);
             db.Users.Remove(user);
             db.SaveChanges();
-        }     
+        }
     }
 }

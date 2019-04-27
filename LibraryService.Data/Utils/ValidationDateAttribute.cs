@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace LibraryService.utils
 {
@@ -17,6 +14,6 @@ namespace LibraryService.utils
 
     public class ValidationYearInPast : RangeAttribute
     {
-        public ValidationYearInPast() : base(1500, DateTime.Today.Year) { }                
+        public ValidationYearInPast() : base(1500, DateTime.Today.Year) { }
     }
 }

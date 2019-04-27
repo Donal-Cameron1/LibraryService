@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using LibraryService.DAL;
+﻿using LibraryService.DAL;
 using LibraryService.Models;
 using LibraryService.Services.IService;
-using LibraryService.Services.Service;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace LibraryService.Controllers
 {
@@ -32,7 +26,7 @@ namespace LibraryService.Controllers
             {
                 _libraryService.SearchLibraries(libraries, searchString);
                 //libraries = libraries.Where(s => s.Name.Contains(searchString)
-                                      // || s.PostCode.Contains(searchString));
+                // || s.PostCode.Contains(searchString));
             }
 
             return View(libraries.ToList());
@@ -41,7 +35,7 @@ namespace LibraryService.Controllers
         // GET: Library/Details/5
         public ActionResult Details(int id)
         {
-            Library library = _libraryService.GetLibrary(id); 
+            Library library = _libraryService.GetLibrary(id);
             if (library == null)
             {
                 return HttpNotFound();
@@ -105,7 +99,7 @@ namespace LibraryService.Controllers
         // GET: Library/Delete/5
         public ActionResult Delete(int id)
         {
-            Library library = _libraryService.GetLibrary(id); 
+            Library library = _libraryService.GetLibrary(id);
             if (library == null)
             {
                 return HttpNotFound();

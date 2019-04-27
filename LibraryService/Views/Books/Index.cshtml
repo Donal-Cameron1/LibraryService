@@ -2,11 +2,16 @@
 @model IEnumerable<LibraryService.Models.Book>
 
 @{
+    /**/
+
     ViewBag.Title = "Index";
 }
 
+
 @using PagedList.Mvc;
 @using PagedList;
+@using Microsoft.AspNet.Identity
+@using LibraryService.Models;
 
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
@@ -15,11 +20,11 @@
     if (books.Count > 0)
     {
         <h2>List of Books</h2>
-        if(this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
+        if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
         {
-        <p>
-            @Html.ActionLink("Create New", "Create") 
-        </p>
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
         }
 
         using (Html.BeginForm())
@@ -42,79 +47,111 @@
             </p>
         }
 
-    <table class="table" id="myTable">
-        <thead class="bg-info">
-            <tr>
-                <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th onclick="sort(1)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.Author)
-                </th>
-                <th onclick="sort(2)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.BookGenre)
-                </th>
-                <th onclick="sort(3)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.LibraryId)
-                </th>
-                <th onclick="sort(4)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.Status)
-                </th>
-                <th></th>
-            </tr>
+        <table class="table" id="myTable">
+            <thead class="bg-info">
+                <tr>
+                    <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th onclick="sort(1)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                        @Html.DisplayNameFor(model => model.Author)
+                    </th>
+                    <th onclick="sort(2)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                        @Html.DisplayNameFor(model => model.BookGenre)
+                    </th>
+                    <th onclick="sort(3)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                        @Html.DisplayNameFor(model => model.LibraryId)
+                    </th>
+                    <th onclick="sort(4)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th></th>
+                </tr>
             </thead>
             @foreach (var item in ViewBag.OnePageOfBooks)
             {
-        <tr>
-            <td>
-                @item.Title
-            </td>
-            <td>
-                @item.Author
-            </td>
-            <td>
-                @item.BookGenre
-            </td>
-            <td>
-                @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
-            </td>
-            <td>
-                @item.Status
-            </td>
+                <tr>
+                    <td>
+                        @item.Title
+                    </td>
+                    <td>
+                        @item.Author
+                    </td>
+                    <td>
+                        @item.BookGenre
+                    </td>
+                    <td>
+                        @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
+                    </td>
+                    <td>
+                        @item.Status
+                    </td>
 
-            <td>
-                @if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
-                {
-                <div>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.id })
-                </div>
-                }
-                else
-                {
-                    @Html.ActionLink("Details", "Details", new { id = item.id })
-                    if (Request.IsAuthenticated)
-                    {
-                <div>
-                    | @Html.ActionLink("Reserve", "Reserve", new { id = item.id }) |
-                    @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
-                </div>
-                    }
-                }
-            </td>
-        </tr>
+                    <td>
+                        @if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
+                        {
+                            <div>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.id })
+                            </div>
+                        }
+                        @if (Request.IsAuthenticated)
+                        {
+                            if (item.Status == Status.Reserved)
+                            {
+                                if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
+                                {
+                                    <div>
+                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                        @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
+                                        @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div>
+                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                        @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
+                                        @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
+                                {
+                                    <div>
+                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                        @Html.ActionLink("Reserve", "Reserve", new { id = item.id }) |
+                                        @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div>
+                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                        @Html.ActionLink("Reserve", "Reserve", new { id = item.id }) |
+                                        @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
+                                    </div>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Details", "Details", new { id = item.id })
+                        }
+                    </td>
+                </tr>
             }
-
-            @Html.PagedListPager((IPagedList)ViewBag.OnePageOfBooks, page => Url.Action("Index", new { page }))
-
         </table>
+
+        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfBooks, page => Url.Action("Index", new { page }))
     }
     else
     {
         <h2>Sorry.</h2>
         <p>We can't find any books you are looking for</p>
-        @Html.ActionLink("Back to List", "Index")
     }
 }
 

@@ -20,7 +20,7 @@ namespace LibraryService.DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            Database.SetInitializer<LibraryContext>(new LibraryInitialiser());           
+            Database.SetInitializer<LibraryContext>(new LibraryInitialiser());
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Entity<User>()

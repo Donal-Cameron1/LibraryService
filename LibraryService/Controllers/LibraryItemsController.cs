@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using LibraryService.DAL;
+﻿using LibraryService.DAL;
 using LibraryService.Models;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
 using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace LibraryService.Controllers
 {
@@ -52,7 +47,7 @@ namespace LibraryService.Controllers
             // retrieve user
             User user = _userService.GetUser(User.Identity.GetUserId());
 
-            if(user == null || user.ReservedLibraryItems == null || !user.ReservedLibraryItems.Any())
+            if (user == null || user.ReservedLibraryItems == null || !user.ReservedLibraryItems.Any())
             {
                 return View(new List<LibraryItem>());
             }

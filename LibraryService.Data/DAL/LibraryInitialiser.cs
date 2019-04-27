@@ -1,13 +1,11 @@
-﻿using System;
+﻿using LibraryService.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data.Entity;
-using LibraryService.Models;
 
 namespace LibraryService.DAL
 {
-    public class LibraryInitialiser : CreateDatabaseIfNotExists<LibraryContext> 
+    public class LibraryInitialiser : CreateDatabaseIfNotExists<LibraryContext>
     {
         protected override void Seed(LibraryContext context)
         {
@@ -25,7 +23,7 @@ namespace LibraryService.DAL
                     new Library {Address="Western Bank", Housenumber="205", PostCode="S10 2TN", Name="Western Bank Library", Capacity=304985, TelephoneNumber="0114 842394", OpeningHours="Monday - Friday 8am-9pm", Latitude=53.382613, Longitude=-1.487837},
                     new Library {Address="Taptonville Road", Housenumber="10", PostCode="S10 5BR", Name="Broomhill Library", Capacity=304985, TelephoneNumber="0114 842394", OpeningHours="Monday - Friday 8am-9pm", Latitude=53.377817, Longitude=-1.502968}
              };
-            
+
             Libraries.ForEach(s => context.Libraries.Add(s));
             context.SaveChanges();
 
@@ -68,12 +66,12 @@ namespace LibraryService.DAL
                 new DVD {Title="Harry Potter and the Chamber of Secrets", Director="Chris Columbus", Publisher="Warner Bros. Pictures", DVDGenre=DVDGenre.Fantasy, Duration=161, AgeRestriction=AgeRestriction._12, PurchaseValue=7.99M, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded=new DateTime(2019,4,3), PublishedAt=2007},
                 new DVD {Title="Forrest Gumpp", Director="Robert Zemeckis", Publisher="Paramount Pictures", DVDGenre=DVDGenre.Drama, Duration=142, AgeRestriction=AgeRestriction._12, PurchaseValue=8.99M, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded= new DateTime(2019,3,31), PublishedAt=2007},
                 new DVD {Title="Star Wars:Episode IV: A new hope", Director="George Lucas", Publisher="LucasFilms Ltd.", DVDGenre=DVDGenre.Fantasy, Duration=152, AgeRestriction=AgeRestriction.PG, PurchaseValue=9.99M, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded=new DateTime(2019,1,12),PublishedAt=1977},
-                new DVD {Title="Raiders of the lost ark", Director="Steven Spielberg", Publisher="LucasFilm Ltd. ", DVDGenre=DVDGenre.Action, Duration=115, AgeRestriction=AgeRestriction._12, PurchaseValue=6.99M, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded=new DateTime(2019,6,12), PublishedAt=1982},       
+                new DVD {Title="Raiders of the lost ark", Director="Steven Spielberg", Publisher="LucasFilm Ltd. ", DVDGenre=DVDGenre.Action, Duration=115, AgeRestriction=AgeRestriction._12, PurchaseValue=6.99M, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded=new DateTime(2019,6,12), PublishedAt=1982},
                 new DVD {Title="Indiana Jones and the kingdom of the crystal skull", Director="Steven Spielberg", Publisher="LucasFilm Ltd.", DVDGenre=DVDGenre.Action, Duration=122, AgeRestriction=AgeRestriction._12, PurchaseValue=8.99M, Type=Models.Type.DVD, LibraryId=3, Status=Status.Available, DateAdded= new DateTime(2019,3,31), PublishedAt=2008},
                 new DVD {Title="Star Wars:Episode V: The empire strikes back", Director="Irvin Kershner", Publisher="LucasFilm Ltd.", DVDGenre=DVDGenre.Fantasy, Duration=124, AgeRestriction=AgeRestriction.PG, PurchaseValue=9.99M, Type=Models.Type.DVD, LibraryId=2, Status=Status.Available, DateAdded=new DateTime(2019,1,12),PublishedAt=1980},
                 new DVD {Title="Indiana Jones and the temple of doom", Director="Steven Spielberg", Publisher="LucasFilm Ltd. ", DVDGenre=DVDGenre.Action, Duration=118, AgeRestriction=AgeRestriction.PG, PurchaseValue=6.99M, Type=Models.Type.DVD, LibraryId=2, Status=Status.Available, DateAdded=new DateTime(2019,6,12), PublishedAt=1984},
                 new DVD {Title="Indiana Jones and the last crusade", Director="Steven Spielberg", Publisher="LucasFilm Ltd.", DVDGenre=DVDGenre.Action, Duration=127, AgeRestriction=AgeRestriction._12, PurchaseValue=8.99M, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded= new DateTime(2019,3,31), PublishedAt=1989},
-                new DVD {Title="Back to the future", Director="Robert Zemeckis", Publisher="Universal Pictures", DVDGenre=DVDGenre.Fantasy, Duration=116, AgeRestriction=AgeRestriction.PG, PurchaseValue=6.99M, Type=Models.Type.DVD, LibraryId=2, Status=Status.Available, DateAdded=new DateTime(2019,1,12),PublishedAt=1985},    
+                new DVD {Title="Back to the future", Director="Robert Zemeckis", Publisher="Universal Pictures", DVDGenre=DVDGenre.Fantasy, Duration=116, AgeRestriction=AgeRestriction.PG, PurchaseValue=6.99M, Type=Models.Type.DVD, LibraryId=2, Status=Status.Available, DateAdded=new DateTime(2019,1,12),PublishedAt=1985},
                 new DVD {Title="Interstellar", Director="Christopher Nolan", Publisher="Legacy Pictures", DVDGenre=DVDGenre.Drama, Duration=169, AgeRestriction=AgeRestriction._12, PurchaseValue=9.99M, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded=new DateTime(2019,6,12), PublishedAt=2014},
                 new DVD {Title="Dunkirk", Director="Christopher Nolan", Publisher="Warner Bros. Pictures", DVDGenre=DVDGenre.Drama, Duration=106, AgeRestriction=AgeRestriction._12, PurchaseValue=11.99M, Type=Models.Type.DVD, LibraryId=3, Status=Status.Available, DateAdded= new DateTime(2019,3,31), PublishedAt=2017},
                 new DVD {Title="The Martian", Director="Ridley Scott", Publisher="20th Century Fox", DVDGenre=DVDGenre.Drama, Duration=144, AgeRestriction=AgeRestriction._12, PurchaseValue=5.99M, Type=Models.Type.DVD, LibraryId=1, Status=Status.Available, DateAdded=new DateTime(2019,1,12),PublishedAt=2015},
@@ -96,7 +94,7 @@ namespace LibraryService.DAL
                 new DVD {Title="Avengers infinity war", Director="Joe Russo", Publisher="Marvel Studios", DVDGenre=DVDGenre.Action, Duration=149, AgeRestriction=AgeRestriction._12, PurchaseValue=8.99M, Type=Models.Type.DVD, LibraryId=2, Status=Status.Available, DateAdded= new DateTime(2019,3,31), PublishedAt=2018}
             };
             DVD.ForEach(s => context.DVD.Add(s));
-            context.SaveChanges();      
+            context.SaveChanges();
         }
     }
 }

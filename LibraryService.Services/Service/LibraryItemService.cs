@@ -8,8 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibraryService.Services.Service
 {
@@ -47,7 +45,7 @@ namespace LibraryService.Services.Service
             List<LibraryItem> items = new List<LibraryItem>();
             foreach (DVD dvd in dvdquery.ToList())
             {
-                LibraryItem item = (LibraryItem)dvd;
+                LibraryItem item = dvd;
                 item.Genre = (Genre)Enum.Parse(typeof(Genre), dvd.DVDGenre.ToString());
                 items.Add(item);
             }
@@ -59,7 +57,7 @@ namespace LibraryService.Services.Service
             List<LibraryItem> items = new List<LibraryItem>();
             foreach (Book book in bookquery.ToList())
             {
-                LibraryItem item = (LibraryItem)book;
+                LibraryItem item = book;
                 item.Genre = (Genre)Enum.Parse(typeof(Genre), book.BookGenre.ToString());
                 items.Add(item);
             }
@@ -70,7 +68,7 @@ namespace LibraryService.Services.Service
 
         public void UpdateStatus()
         {
-            foreach(User user in _userDAO.GetUsers())
+            foreach (User user in _userDAO.GetUsers())
             {
                 if (user.ReservedLibraryItems != null)
                 {
@@ -111,7 +109,7 @@ namespace LibraryService.Services.Service
 
             foreach (User user in _userDAO.GetUsers())
             {
-                foreach(LibraryItem libraryItem in user.LoanedLibraryItems)
+                foreach (LibraryItem libraryItem in user.LoanedLibraryItems)
                 {
                     if (libraryItem.ReturnDate.Value.AddDays(1).CompareTo(DateTime.Today) <= 0)
                     {

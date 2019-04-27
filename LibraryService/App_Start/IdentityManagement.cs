@@ -3,15 +3,15 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using System;
 using Owin;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace LibraryService
 {
-	public class RoleViewModel
+    public class RoleViewModel
     {
         public string Id { get; set; }
         [Required(AllowEmptyStrings = false)]

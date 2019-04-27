@@ -1,13 +1,10 @@
 ﻿using LibraryService.DAL;
-using LibraryService.Data.DAL;
 using LibraryService.Data.IDAO;
 using LibraryService.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibraryService.Data.DAO
 {
@@ -68,9 +65,11 @@ namespace LibraryService.Data.DAO
 
         public IList<DVD> GetDVDs()
         {
-            IQueryable<DVD> dvdquery;
-            dvdquery = from d in db.DVD select d;
-            return dvdquery.AsNoTracking().ToList<DVD>();
+            return db.DVD
+                .Include(b => b.BookmarkedBy)
+                .Include(b => b.ReservedBy)
+                .Include(b => b.LoanedBy)
+                .AsNoTracking().ToList();
         }
 
         public IList<DVD> GetNewDVDs()

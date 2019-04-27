@@ -25,9 +25,9 @@
 
 @if (message != null)
 {
-    <div class="bg-success">
-        @message
-    </div>
+<div class="bg-success">
+    @message
+</div>
 }
 @{
     <table class="table" id="myTable">
@@ -62,44 +62,44 @@
 
         @foreach (var item in books)
         {
-            <tr>
-                <td>
-                    @Html.ActionLink("Select", "SelectBook", new { id = item.id })
-                </td>
-                <td>
-                    @item.Title
-                </td>
-                <td>
-                    @item.Publisher
-                </td>
-                <td>
-                    @item.Pages
-                </td>
-                <td>
-                    @item.BookGenre
-                </td>
-                <td>
-                    @item.Status
-                </td>
-                <td>
-                    @item.AgeRestriction.ToString().Replace("_", " ")
-                </td>
-                <td>
-                    @item.PurchaseValue
-                </td>
-                <td>
-                    @item.PublishedAt
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.id })
-                    @if (Request.IsAuthenticated)
+        <tr>
+            <td>
+                @Html.ActionLink("Select", "SelectBook", new { id = item.id })
+            </td>
+            <td>
+                @item.Title
+            </td>
+            <td>
+                @item.Publisher
+            </td>
+            <td>
+                @item.Pages
+            </td>
+            <td>
+                @item.BookGenre
+            </td>
+            <td>
+                @item.Status
+            </td>
+            <td>
+                @item.AgeRestriction.ToString().Replace("_", " ")
+            </td>
+            <td>
+                @item.PurchaseValue
+            </td>
+            <td>
+                @item.PublishedAt
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.id })
+                @if (Request.IsAuthenticated)
                     {
-                        <div>
-                            @Html.ActionLink("Borrow", "Borrow", new { id = item.id })
-                        </div>
+                <div>
+                    @Html.ActionLink("Borrow", "Borrow", new { id = item.id })
+                </div>
                     }
-                </td>
-            </tr>
+            </td>
+        </tr>
         }
     </table>
 }

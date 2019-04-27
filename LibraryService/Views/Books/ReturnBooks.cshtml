@@ -24,22 +24,22 @@
         <th>
             @Html.DisplayNameFor(model => model.Publisher)
         </th>
-                       
+
         <th>
             @Html.DisplayNameFor(model => model.LibraryId)
         </th>
-        
+
         <th>
             @Html.DisplayNameFor(model => model.ReturnDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ReservedUntil)
         </th>
-       
+
         <th></th>
     </tr>
 
-@foreach (var item in Model)
+    @foreach (var item in Model)
 {
     <tr>
         <td>
@@ -48,22 +48,22 @@
         <td>
             @Html.DisplayFor(modelItem => item.Publisher)
         </td>
-        
+
         <td>
             @Html.DisplayFor(modelItem => item.LibraryId)
         </td>
-        
+
         <td>
             @Html.DisplayFor(modelItem => item.ReturnDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ReservedUntil)
         </td>
-        
+
         <td>
             @Html.ActionLink("Renew", "RenewBook", new { BookID = item.id }) |
             @Html.ActionLink("Return", "ReturnBook", new { BookID = item.id }) |
-              </td>
+        </td>
     </tr>
 }
 
@@ -71,6 +71,6 @@
 }
 else
 {
-    <h2>Your items </h2>
-        <p>You currently have no items loaned</p>
+<h2>Your items </h2>
+<p>You currently have no items loaned</p>
 }

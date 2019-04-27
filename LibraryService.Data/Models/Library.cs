@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -45,7 +42,7 @@ namespace LibraryService.Models
         public double Latitude { get; set; }
 
         [Required]
-        [Range(100,5000000)]
+        [Range(100, 5000000)]
         public int Capacity { get; set; }
 
         public virtual ICollection<Book> Books { get; set; }

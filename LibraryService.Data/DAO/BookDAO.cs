@@ -1,21 +1,17 @@
 ﻿using LibraryService.DAL;
-using LibraryService.Data.DAL;
 using LibraryService.Data.IDAO;
 using LibraryService.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibraryService.Data.DAO
 {
     public class BookDAO : IBookDAO
     {
         private LibraryContext db = new LibraryContext();
-        
+
         public IList<Book> BookGenreFilter(IList<Book> query, string genre)
         {
             return query.Where(b => b.BookGenre.ToString().Equals(genre)).ToList<Book>();
@@ -58,7 +54,7 @@ namespace LibraryService.Data.DAO
 
         public Book GetBook(int id)
         {
-            var book = 
+            var book =
                 from b in db.Books
                 where b.id == id
                 select b;
@@ -67,11 +63,11 @@ namespace LibraryService.Data.DAO
 
         public IList<Book> GetBooks()
         {
-            IQueryable<Book> bookquery;
-            bookquery = from b
-                        in db.Books
-                        select b;
-            return bookquery.AsNoTracking().ToList<Book>();
+            return db.Books
+                .Include(b => b.BookmarkedBy)
+                .Include(b => b.ReservedBy)
+                .Include(b => b.LoanedBy)
+                .AsNoTracking().ToList();
         }
 
         public static Book GetBookWithTracking(LibraryContext context, int id)
@@ -83,7 +79,7 @@ namespace LibraryService.Data.DAO
         {
             var baselineDate = DateTime.Now.AddDays(-7);
             //get books that got added in the last 7 days
-            IQueryable<Book> newbooks =  
+            IQueryable<Book> newbooks =
                 from b in db.Books
                 where b.DateAdded > baselineDate
                 select b;
@@ -129,7 +125,7 @@ namespace LibraryService.Data.DAO
                 thisbook.ReturnDate = DateTime.Now.AddDays(14);
 
                 this.UpdateBook(thisbook);
-            }   
+            }
         }
 
         public void DeleteReservation(int id, string currentUserId)
@@ -144,7 +140,7 @@ namespace LibraryService.Data.DAO
 
         public IList<LibraryItem> GetReservedBooks()
         {
-           return db.LibraryItems.Where(b => b.Status == Status.Reserved).ToList();
+            return db.LibraryItems.Where(b => b.Status == Status.Reserved).ToList();
 
         }
 

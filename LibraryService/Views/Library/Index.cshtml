@@ -19,9 +19,9 @@
             font-size: 15px;
         }
 
-        .active, .collapsible:hover {
-            background-color: #555;
-        }
+            .active, .collapsible:hover {
+                background-color: #555;
+            }
 
         .content {
             padding: 0 18px;
@@ -39,10 +39,10 @@
 
 @using (Html.BeginForm())
 {
-    <p>
-        Search Libraries: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
-    </p>
+<p>
+    Search Libraries: @Html.TextBox("SearchString")
+    <input type="submit" value="Search" />
+</p>
 }
 
 <div class="container">
@@ -51,17 +51,17 @@
             <table class="table">
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            <button class="collapsible">@item.Name</button>
-                            <div class="content">
-                                <p>@item.Address </p>
-                                <p>@item.PostCode </p>
-                                <p>@item.TelephoneNumber</p>
-                                <p>@item.OpeningHours</p>
-                            </div>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        <button class="collapsible">@item.Name</button>
+                        <div class="content">
+                            <p>@item.Address </p>
+                            <p>@item.PostCode </p>
+                            <p>@item.TelephoneNumber</p>
+                            <p>@item.OpeningHours</p>
+                        </div>
+                    </td>
+                </tr>
                 }
 
             </table>
@@ -72,7 +72,7 @@
     </div>
 </div>
 
-   <script>
+<script>
     var coll = document.getElementsByClassName("collapsible");
     var i;
 

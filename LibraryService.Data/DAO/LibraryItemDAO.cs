@@ -1,9 +1,9 @@
-﻿using System;
+﻿using LibraryService.DAL;
+using LibraryService.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using LibraryService.DAL;
-using LibraryService.Models;
 
 namespace LibraryService.Services.Service
 {

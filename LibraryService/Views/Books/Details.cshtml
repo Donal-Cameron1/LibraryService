@@ -84,36 +84,36 @@
 
         @if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
         {
-            <dt>
-                @Html.DisplayNameFor(model => model.PurchaseValue)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.PurchaseValue)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.PurchaseValue)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.PurchaseValue)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ReturnDate)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReturnDate)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ReturnDate)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.ReturnDate)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.DateAdded)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateAdded)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.DateAdded)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.DateAdded)
+        </dd>
         }
 
     </dl>
 </div>
 <p>
     @if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
-    { 
+    {
     <div>
         @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
     </div>

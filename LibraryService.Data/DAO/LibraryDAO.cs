@@ -2,12 +2,8 @@
 using LibraryService.Data.DAL;
 using LibraryService.Data.IDAO;
 using LibraryService.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibraryService.Data.DAO
 {
@@ -36,7 +32,7 @@ namespace LibraryService.Data.DAO
 
         public IQueryable<Library> GetLibraries()
         {
-            IQueryable<Library> libraries = from s 
+            IQueryable<Library> libraries = from s
                                             in db.Libraries
                                             select s;
             return libraries;

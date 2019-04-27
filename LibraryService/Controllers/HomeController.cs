@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using LibraryService.DAL;
+﻿using LibraryService.DAL;
 using LibraryService.Models;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
 using Microsoft.AspNet.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace LibraryService.Controllers
 {
     public class HomeController : Controller
     {
         private LibraryContext db = new LibraryContext();
-    
+
         private ILibraryItemService _libraryItemService;
         private IBookService _bookService;
         private IDVDService _dvdService;
@@ -30,19 +29,19 @@ namespace LibraryService.Controllers
 
         public IList<Book> BookTextSearch(IList<Book> query, string searchString)
         {
-             return _bookService.BookTextSearch(query, searchString);         
+            return _bookService.BookTextSearch(query, searchString);
         }
 
         public IList<Book> BookGenreFilter(IList<Book> query, string genre)
         {
             return _bookService.BookGenreFilter(query, genre);
-        } 
-        
+        }
+
         public IList<DVD> DVDTextSearch(IList<DVD> query, string searchString)
         {
             return _dvdService.DVDTextSearch(query, searchString);
         }
-        
+
         public IList<DVD> DVDGenreFilter(IList<DVD> query, string genre)
         {
             return _dvdService.DVDGenreFilter(query, genre);
@@ -113,9 +112,9 @@ namespace LibraryService.Controllers
             List<LibraryItem> items = new List<LibraryItem>();
             foreach (DVD dvd in dvdquery.ToList())
             {
-                LibraryItem item = (LibraryItem)dvd;
+                LibraryItem item = dvd;
                 item.Genre = (Genre)Enum.Parse(typeof(Genre), dvd.DVDGenre.ToString());
-                items.Add(item);           
+                items.Add(item);
             }
             return items;
         }
@@ -125,7 +124,7 @@ namespace LibraryService.Controllers
             List<LibraryItem> items = new List<LibraryItem>();
             foreach (Book book in bookquery.ToList())
             {
-                LibraryItem item = (LibraryItem)book;
+                LibraryItem item = book;
                 item.Genre = (Genre)Enum.Parse(typeof(Genre), book.BookGenre.ToString());
                 items.Add(item);
             }
@@ -136,9 +135,9 @@ namespace LibraryService.Controllers
         {
             IList<LibraryItem> newitems = new List<LibraryItem>();
             IEnumerable<LibraryItem> dvds = CastDVDsToLibraryItems(_dvdService.GetNewDVDs());
-            IEnumerable<LibraryItem> books = CastBooksToLibraryItems(_bookService.GetNewBooks());          
+            IEnumerable<LibraryItem> books = CastBooksToLibraryItems(_bookService.GetNewBooks());
 
-            return View(newitems.Concat(books).Concat(dvds));                 
+            return View(newitems.Concat(books).Concat(dvds));
         }
 
         // GET: Books/Details/5
@@ -217,9 +216,9 @@ namespace LibraryService.Controllers
 
         public ActionResult About()
         {
-            string currentUserId = User.Identity.GetUserId(); 
+            string currentUserId = User.Identity.GetUserId();
             currentUserId = "a";
-            
+
             ViewBag.Message = "Your application description page.";
 
             return View();
