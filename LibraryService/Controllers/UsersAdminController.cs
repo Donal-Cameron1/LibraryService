@@ -1,5 +1,7 @@
 using LibraryService.Models;
+using LibraryService.utils;
 using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -9,7 +11,7 @@ using System.Web.Mvc;
 
 namespace LibraryService
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = CustomRoles.AdminOrStaff)]
     public class UsersAdminController : Controller
     {
         ApplicationDbContext context;
@@ -52,9 +54,16 @@ namespace LibraryService
 
         //
         // GET: /Users/
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchString)
         {
-            return View(await UserManager.Users.ToListAsync());
+            if (String.IsNullOrEmpty(searchString))
+            {
+                return View(await UserManager.Users.ToListAsync());
+            }
+            else
+            {
+                return View(await UserManager.Users.Where(u => u.UserName.Contains(searchString)).ToListAsync());
+            }
         }
 
         //

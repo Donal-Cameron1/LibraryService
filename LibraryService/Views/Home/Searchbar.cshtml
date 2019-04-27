@@ -10,6 +10,9 @@
 <h2>Find your item.</h2>
 
 @using Microsoft.AspNet.Identity
+@using LibraryService.Models
+
+
 @using (Html.BeginForm())
 {
 <p>
@@ -74,23 +77,105 @@
         <td>
             @Html.DisplayFor(modelItem => item.Genre)
         </td>
+
         @if (item.Type == LibraryService.Models.Type.Book)
             {
         <td>
-            @Html.ActionLink("Details", "DetailsBook", new { id = item.id, Controller = "LibraryItems" }) |
-            @if (!item.BookmarkedBy.Where(u => u.UserId == HttpContext.Current.User.Identity.GetUserId()).Any())
+            @if (Request.IsAuthenticated)
+            {
+                if (item.Status == Status.Reserved)
                 {
-            @Html.ActionLink("Bookmark", "BookmarkBook", new { id = item.id, Controller = "LibraryItems" })
-            @Html.ActionLink("Reserve", "ReserveBook", new { id = item.id, Controller = "LibraryItems" })
+                    if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
+                    {
+                        <div>
+                            @Html.ActionLink("Details", "DetailsBook", new { id = item.id, Controller = "LibraryItems" }) |
+                            @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
+                            @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            @Html.ActionLink("Details", "DetailsBook", new { id = item.id, Controller = "LibraryItems" }) |
+                            @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
+                            @Html.ActionLink("Bookmark", "BookmarkBook", new { id = item.id })
+                        </div>
+                    }
                 }
-        </td>
+                else
+                {
+                    if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
+                    {
+                        <div>
+                            @Html.ActionLink("Details", "DetailsBook", new { id = item.id, Controller = "LibraryItems" }) |
+                            @Html.ActionLink("Reserve", "ReserveBook", new { id = item.id, Controller = "LibraryItems" }) |
+                            @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            @Html.ActionLink("Details", "DetailsBook", new { id = item.id, Controller = "LibraryItems" }) |
+                            @Html.ActionLink("Reserve", "ReserveBook", new { id = item.id, Controller = "LibraryItems" }) |
+                            @Html.ActionLink("Bookmark", "BookmarkBook", new { id = item.id, Controller = "LibraryItems" })
+                        </div>
+                    }
+                }
             }
+            else
+            {
+                @Html.ActionLink("Details", "DetailsBook", new { id = item.id, Controller = "LibraryItems" })
+            }
+        </td>
+        }
         @if (item.Type == LibraryService.Models.Type.DVD)
             {
         <td>
-            @Html.ActionLink("Details", "DetailsDVD", new { id = item.id, Controller = "LibraryItems" }) |
-            @Html.ActionLink("Bookmark", "BookmarkDVD", new { id = item.id , Controller = "LibraryItems"}) |
-            @Html.ActionLink("Reserve", "ReserveDVD", new { id = item.id, Controller = "LibraryItems" })
+            @if (Request.IsAuthenticated)
+            {
+                if (item.Status == Status.Reserved)
+                {
+                    if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
+                    {
+                        <div>
+                            @Html.ActionLink("Details", "DetailsDVD", new { id = item.id, Controller = "LibraryItems" }) |
+                            @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
+                            @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            @Html.ActionLink("Details", "DetailsDVD", new { id = item.id, Controller = "LibraryItems" }) |
+                            @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
+                            @Html.ActionLink("Bookmark", "BookmarkDVD", new { id = item.id, Controller = "LibraryItems" })
+                        </div>
+                    }
+                }
+                else
+                {
+                    if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
+                    {
+                        <div>
+                            @Html.ActionLink("Details", "DetailsDVD", new { id = item.id, Controller = "LibraryItems" }) |
+                            @Html.ActionLink("Reserve", "ReserveDVD", new { id = item.id, Controller = "LibraryItems" }) |
+                            @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            @Html.ActionLink("Details", "DetailsDVD", new { id = item.id, Controller = "LibraryItems" }) |
+                            @Html.ActionLink("Reserve", "ReserveDVD", new { id = item.id, Controller = "LibraryItems" }) |
+                            @Html.ActionLink("Bookmark", "BookmarkDVD", new { id = item.id, Controller = "LibraryItems" })
+                        </div>
+                    }
+                }
+            }
+            else
+            {
+                @Html.ActionLink("Details", "DetailsDVD", new { id = item.id, Controller="LibraryItems"})
+            }
         </td>
             }
     </tr>

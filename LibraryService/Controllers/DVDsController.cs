@@ -139,12 +139,6 @@ namespace LibraryService.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult GetNewDVDs()
-        {
-            IList<DVD> newDVDs = _dvdService.GetNewDVDs();
-            return View(newDVDs);
-        }
-
         // GET: Books/Reserve/5
         public ActionResult Reserve(int id)
         {

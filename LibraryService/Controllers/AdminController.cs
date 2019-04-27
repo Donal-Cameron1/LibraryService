@@ -2,13 +2,16 @@
 using LibraryService.Models;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
+using LibraryService.utils;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace LibraryService.Controllers
 
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = CustomRoles.AdminOrStaff)]
+    //[Authorize(Roles = "Admin")]
 
     public class AdminController : Controller
     {
@@ -38,6 +41,39 @@ namespace LibraryService.Controllers
         {
             IList<LibraryItem> reservedItems = _libraryItemService.GetReservedItems(id);
             return View(reservedItems);
+        }
+
+        public ActionResult GetLoanedLibraryItems(string searchString)
+        {
+            IList<LibraryItem> loanedItems = _libraryItemService.GetLoanedLibraryItems();
+            IList<LibraryItem> items = new List<LibraryItem>();
+
+            if (String.IsNullOrEmpty(searchString))
+            {
+                return View(loanedItems);
+            }
+            else 
+            {
+                items = _libraryItemService.TextSearch(loanedItems, searchString);
+                return View(items);    
+            }
+
+        }
+
+        public ActionResult GetOverdueLibraryItems(string searchString)
+        {
+            IList<LibraryItem> overdueItems = _libraryItemService.GetOverdueLibraryItems();
+            IList<LibraryItem> items = new List<LibraryItem>();
+
+            if (String.IsNullOrEmpty(searchString))
+            {
+                return View(overdueItems);
+            }
+            else
+            {
+                items = _libraryItemService.TextSearch(overdueItems, searchString);
+                return View(items);
+            }
         }
 
         public ActionResult LoanItem(int id, string ReservedBy)

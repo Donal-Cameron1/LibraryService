@@ -42,7 +42,7 @@ namespace LibraryService.Controllers
             return _bookService.BookStatusFilter(query, status);
         }
 
-        public ActionResult Index2()
+        /*public ActionResult Index2()
         {
             var viewModel = new List<BooksIndexVIewModel>();
             IList<Book> books = _bookService.GetBooks();
@@ -59,7 +59,7 @@ namespace LibraryService.Controllers
                 viewModel.Add(indexentry);
             }
             return View(viewModel);
-        }
+        }*/
 
 
         // GET: Books
@@ -220,12 +220,6 @@ namespace LibraryService.Controllers
         {
             _bookService.DeleteBookmark(id, User.Identity.GetUserId());
             return RedirectToAction("Index", "Books");
-        }
-
-        public ActionResult GetNewBooks()
-        {
-            IList<Book> newBooks = _bookService.GetNewBooks();
-            return View(newBooks);
         }
 
         public ActionResult LoanItem(int id)

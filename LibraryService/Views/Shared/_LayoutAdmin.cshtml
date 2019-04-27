@@ -22,14 +22,21 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Books", "Index", "Books")</li>
-                    <li>@Html.ActionLink("DVDs", "Index", "DVDs")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Catalogue <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Books", "Index", "Books")</li>
+                            <li>@Html.ActionLink("DVDs", "Index", "DVDs")</li>
+                        </ul>
+                    </li>
                     <li>@Html.ActionLink("Libraries", "Index", "Library")</li>
-                    <li>@Html.ActionLink("Customers", "Index", "User")</li>
                     <li>@Html.ActionLink("Users", "Index", "UsersAdmin")</li>
+                    <li>@Html.ActionLink("Return Items", "GetLoanedLibraryItems", "Admin")</li>
+                    <li>@Html.ActionLink("Overdue Items", "GetOverdueLibraryItems", "Admin")</li>
+                    @if (User.IsInRole("Admin")) { 
                     <li>@Html.ActionLink("Roles", "Index", "RolesAdmin")</li>
                     <li>@Html.ActionLink("Create Admin", "Index", "InitAdmin")</li>
-
+                    }
                 </ul>
                 @Html.Partial("_LoginPartialAdmin")
             </div>

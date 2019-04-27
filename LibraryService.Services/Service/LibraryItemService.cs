@@ -28,17 +28,37 @@ namespace LibraryService.Services.Service
             _libraryItemDAO = new LibraryItemDAO();
         }
 
+        public IList<LibraryItem> GetLibraryItems()
+        {
+            IList<LibraryItem> libraryItems = new List<LibraryItem>();
+            libraryItems = _libraryItemDAO.GetLibraryItems();
+
+            return libraryItems;
+        }
+
         public IList<LibraryItem> GetReservedItems(string id)
         {
             IList<LibraryItem> reservedLibraryItems = new List<LibraryItem>();
-            IList<LibraryItem> reservedBooks = _libraryItemDAO.GetReservedLibraryItems(id);
-            //IList<DVD> reservedDVDs = _dvdDAO.GetReservedDVDs();
-
-            reservedLibraryItems = reservedBooks;
+            reservedLibraryItems = _libraryItemDAO.GetReservedLibraryItems(id);
 
             return reservedLibraryItems;
         }
 
+        public IList<LibraryItem> GetLoanedLibraryItems()
+        {
+            IList<LibraryItem> loanedLibraryItems = new List<LibraryItem>();
+            loanedLibraryItems = _libraryItemDAO.GetLoanedLibraryItems();
+
+            return loanedLibraryItems;
+        }
+
+        public IList<LibraryItem> GetOverdueLibraryItems()
+        {
+            IList<LibraryItem> overdueItems = new List<LibraryItem>();
+            overdueItems = _libraryItemDAO.GetOverdueLibraryItems();
+
+            return overdueItems;
+        }
 
         private static List<LibraryItem> CastDVDsToLibraryItems(IList<DVD> dvdquery)
         {
@@ -124,6 +144,11 @@ namespace LibraryService.Services.Service
 
                 }
             }
+        }
+
+        public IList<LibraryItem> TextSearch(IList<LibraryItem> loanedItems, string searchString)
+        {
+            return _libraryItemDAO.TextSearch(loanedItems, searchString);
         }
     }
 }

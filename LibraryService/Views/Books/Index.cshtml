@@ -96,50 +96,53 @@
                                 @Html.ActionLink("Details", "Details", new { id = item.id })
                             </div>
                         }
-                        @if (Request.IsAuthenticated)
+                        else
                         {
-                            if (item.Status == Status.Reserved)
+                            if (Request.IsAuthenticated)
                             {
-                                if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
+                                if (item.Status == Status.Reserved)
                                 {
-                                    <div>
-                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                                        @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
-                                        @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
-                                    </div>
+                                    if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
+                                    {
+                                        <div>
+                                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                            @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
+                                            @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div>
+                                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                            @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
+                                            @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
+                                        </div>
+                                    }
                                 }
                                 else
                                 {
-                                    <div>
-                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                                        @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
-                                        @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
-                                    </div>
+                                    if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
+                                    {
+                                        <div>
+                                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                            @Html.ActionLink("Reserve", "Reserve", new { id = item.id }) |
+                                            @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div>
+                                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                            @Html.ActionLink("Reserve", "Reserve", new { id = item.id }) |
+                                            @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
+                                        </div>
+                                    }
                                 }
                             }
                             else
                             {
-                                if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
-                                {
-                                    <div>
-                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                                        @Html.ActionLink("Reserve", "Reserve", new { id = item.id }) |
-                                        @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div>
-                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                                        @Html.ActionLink("Reserve", "Reserve", new { id = item.id }) |
-                                        @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
-                                    </div>
-                                }
+                                @Html.ActionLink("Details", "Details", new { id = item.id })
                             }
-                        }
-                        else
-                        {
-                            @Html.ActionLink("Details", "Details", new { id = item.id })
                         }
                     </td>
                 </tr>

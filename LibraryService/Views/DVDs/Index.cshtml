@@ -43,7 +43,6 @@
             </p>
         }
 
-        @Html.ActionLink("See New DVDs", "GetNewDVDs")
 
         <table class="table" id="myTable">
             <thead class="bg-info">
@@ -95,7 +94,8 @@
                                 @Html.ActionLink("Details", "Details", new { id = item.id })
                             </div>
                         }
-                        @if (Request.IsAuthenticated)
+                        else
+                        {if (Request.IsAuthenticated)
                         {
                             if (item.Status == Status.Reserved)
                             {
@@ -139,6 +139,7 @@
                         else
                         {
                             @Html.ActionLink("Details", "Details", new { id = item.id })
+                        }
                         }
                     </td>
                 </tr>

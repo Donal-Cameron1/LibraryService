@@ -3,6 +3,7 @@ using LibraryService.Models;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -57,7 +58,7 @@ namespace LibraryService.Controllers
             }
         }
 
-        public ActionResult ShowLoanedItemsOfUser(string currentUser)
+        public ActionResult ShowLoanedItemsOfUser(string currentUser, string searchString)
         {
             User user = _userService.GetUser(User.Identity.GetUserId());
 
