@@ -51,6 +51,7 @@ namespace LibraryService.Models
 
         [Required]
         [Display(Name = "Published at")]
+        [ValidationYearInPast(ErrorMessage = "Published at must be in the past")]
         public int PublishedAt { get; set; }   
         
         public Status Status { get; set; }

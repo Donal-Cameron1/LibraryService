@@ -14,4 +14,9 @@ namespace LibraryService.utils
                   DateTime.Now.ToShortDateString())
         { }
     }
+
+    public class ValidationYearInPast : RangeAttribute
+    {
+        public ValidationYearInPast() : base(1500, DateTime.Today.Year) { }                
+    }
 }

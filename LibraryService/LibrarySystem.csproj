@@ -448,7 +448,7 @@
     <Content Include="Views\DVDs\Details.cshtml" />
     <Content Include="Views\DVDs\Edit.cshtml" />
     <Content Include="Views\DVDs\Index.cshtml" />
-    <Content Include="Views\Library\Detailspartial.cshtml" />
+    <Content Include="Views\Library\_MapsPartial.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\LibraryItems\ShowBookmarks.cshtml" />
     <Content Include="Views\Books\GetNewBooks.cshtml" />
@@ -472,6 +472,7 @@
     <Content Include="Views\LibraryItems\DetailsDVD.cshtml" />
     <Content Include="Views\Shared\_LoginPartialAdmin.cshtml" />
     <Content Include="Views\Admin\GetReservedItems.cshtml" />
+    <Content Include="Views\LibraryItems\ShowLoanedItemsOfUser.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

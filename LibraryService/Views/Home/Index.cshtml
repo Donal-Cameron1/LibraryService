@@ -5,11 +5,19 @@
 }
 @using Microsoft.AspNet.Identity
 
+
+<!--if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
+{
+    <p>HI</p>
+}else
+{-->
+
 <div class="jumbotron">
     <h2>See what's new</h2>
     <p class="lead">Or search through our catalogue.</p>
     <p>
-        @Html.ActionLink("Search >>", "Searchbar", "Home", null, new { @class = "btn btn-primary btn-lg"}) </p>
+        @Html.ActionLink("Search >>", "Searchbar", "Home", null, new { @class = "btn btn-primary btn-lg" })
+    </p>
 </div>
 
 <table class="table">
@@ -34,43 +42,44 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Publisher)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        @if (item.Type == LibraryService.Models.Type.Book)
-        {
-        <td>
-            @Html.ActionLink("Details", "DetailsBook", new { id = item.id}) |
-            @if (!item.BookmarkedBy.Where(u => u.UserId == HttpContext.Current.User.Identity.GetUserId()).Any())
-            {
-                @Html.ActionLink("Bookmark", "BookmarkNewBook", new { id = item.id })
-                @Html.ActionLink("Reserve", "ReserveNewBook", new { id = item.id })
-            }
-        </td>
-        }
-        @if (item.Type == LibraryService.Models.Type.DVD)
-        {
+        <tr>
             <td>
-                @Html.ActionLink("Details", "DetailsDVD", new { id = item.id }) |
-                @if (Request.IsAuthenticated) {
-                    @Html.ActionLink("Bookmark", "BookmarkNewDVD", new { id = item.id })
-                    @Html.ActionLink("Reserve", "ReserveNewDVD", new { id = item.id })}
+                @Html.DisplayFor(modelItem => item.Title)
             </td>
-        }
-    </tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            @if (item.Type == LibraryService.Models.Type.Book)
+            {
+                <td>
+                    @Html.ActionLink("Details", "DetailsBook", new { id = item.id }) |
+                    @if (!item.BookmarkedBy.Where(u => u.UserId == HttpContext.Current.User.Identity.GetUserId()).Any())
+                    {
+                        @Html.ActionLink("Bookmark", "BookmarkNewBook", new { id = item.id })
+                        @Html.ActionLink("Reserve", "ReserveNewBook", new { id = item.id })
+                    }
+                </td>
+            }
+            @if (item.Type == LibraryService.Models.Type.DVD)
+            {
+                <td>
+                    @Html.ActionLink("Details", "DetailsDVD", new { id = item.id }) |
+                    @if (Request.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Bookmark", "BookmarkNewDVD", new { id = item.id })
+                        @Html.ActionLink("Reserve", "ReserveNewDVD", new { id = item.id })}
+                </td>
+            }
+        </tr>
     }
 
 </table>

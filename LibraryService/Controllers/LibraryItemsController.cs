@@ -62,6 +62,20 @@ namespace LibraryService.Controllers
             }
         }
 
+        public ActionResult ShowLoanedItemsOfUser(string currentUser)
+        {
+            User user = _userService.GetUser(User.Identity.GetUserId());
+
+            if (user == null || user.LoanedLibraryItems == null || !user.LoanedLibraryItems.Any())
+            {
+                return View(new List<LibraryItem>());
+            }
+            else
+            {
+                return View(user.LoanedLibraryItems);
+            }
+        }
+
 
         // GET: Books/Details/5
         public ActionResult DetailsBook(int id)
