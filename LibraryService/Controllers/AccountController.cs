@@ -75,20 +75,7 @@ namespace LibraryService.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            /*if (!ModelState.IsValid && Roles.IsUserInRole("User"))
-            {
-                return View(model);
-            } else 
-            if (!ModelState.IsValid && Roles.IsUserInRole("Staff"))
-            {
-                return View();
-            } else 
-            if(!ModelState.IsValid && Roles.IsUserInRole("Admin"))
-            {
-                return View();
-            }*/
-
-
+         
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             SignInStatus result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);

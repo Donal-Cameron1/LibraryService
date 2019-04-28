@@ -5,7 +5,7 @@ namespace LibraryService.Services.IService
 {
     public interface ILibraryItemService
     {
-        IList<LibraryItem> GetReservedItems(string id);
+        IList<LibraryItem> GetReservedLibraryItemsOfUser(string id);
         void LoanLibraryItem(int id);
         void ExtendLoan(int id);
         void ReturnLibraryItem(int id);
@@ -18,5 +18,6 @@ namespace LibraryService.Services.IService
         void ReserveLibraryItem(int id, string currentUserId);
         void DeleteReservation(int id, string currentUserId);
         LibraryItem GetLibraryItem(int id);
+        IList<LibraryItem> GetLoanedLibraryItemsOfUser(string id);
     }
 }

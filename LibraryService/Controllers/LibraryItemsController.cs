@@ -43,7 +43,7 @@ namespace LibraryService.Controllers
             }
         }
 
-        public ActionResult ShowItemsOfUser(string currentUser)
+        public ActionResult ShowReservedItemsOfUser(string currentUser)
         {
             // retrieve user
             User user = _userService.GetUser(User.Identity.GetUserId());
@@ -96,17 +96,6 @@ namespace LibraryService.Controllers
             }
         }
 
-        // GET: DVDs/Details/5
-        public ActionResult DetailsDVD(int id)
-        {
-            DVD dvd = _dvdService.GetDVD(id);
-            if (dvd == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dvd);
-        }
-
         // GET: Books/Reserve/5
         public ActionResult ReserveLibraryItem(int id, string method, string contr)
         {
@@ -132,8 +121,6 @@ namespace LibraryService.Controllers
 
 
         // POST: DVDs/Reserve/5
-        //[HttpPost, ActionName("ReserveLibraryItem")]
-        //[ValidateAntiForgeryToken]
         public ActionResult ReserveLibraryItemConfirmed(int id, string method, string contr)
         {
             _libraryItemService.ReserveLibraryItem(id, User.Identity.GetUserId());

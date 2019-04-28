@@ -12,8 +12,6 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     PagedList<LibraryService.Models.DVD> dvds = ViewBag.onePageOfDVDs;
-    if (dvds.Count > 0)
-    {
         <h2>List of DVDs</h2>
 
         if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
@@ -41,9 +39,10 @@
                        new { @class = "form-control" })
                 </div>
             </p>
-        }
+    }
 
-
+    if (dvds.Count > 0)
+    {
         <table class="table" id="myTable">
             <thead class="bg-info">
                 <tr>
@@ -121,27 +120,49 @@
                                 {
                                     if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
                                     {
-                                        <div>
-                                            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" }) |
-                                            @Html.ActionLink("Reserve", "ReserveLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" }) |
-                                            @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" })
-                                        </div>
+                                        if (item.Status == Status.Reserved)
+                                        {
+                                            <div>
+                                                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" }) |
+                                                @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" })
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div>
+                                                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" }) |
+                                                @Html.ActionLink("Reserve", "ReserveLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" }) |
+                                                @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" })
+                                            </div>
+                                        }
+
+
                                     }
                                     else
                                     {
-                                        <div>
-                                            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" }) |
-                                            @Html.ActionLink("Reserve", "ReserveLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" }) |
-                                            @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" })
-                                        </div>
+                                        if (item.Status == Status.Reserved)
+                                        {
+                                            <div>
+                                                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" }) |
+                                                @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" })
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div>
+                                                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" }) |
+                                                @Html.ActionLink("Reserve", "ReserveLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" }) |
+                                                @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" })
+                                            </div>
+                                        }
                                     }
                                 }
                             }
                             else
                             {
-                                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" }) 
-}
-}
+                                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" })
+                            }
+                        }
                     </td>
                 </tr>
             }
@@ -155,9 +176,7 @@
     else
 
     {
-        <h2>Sorry.</h2>
         <p>We can't find any DVDs you are looking for.</p>
-        @Html.ActionLink("Back to list", "Index")
     }
 }
 

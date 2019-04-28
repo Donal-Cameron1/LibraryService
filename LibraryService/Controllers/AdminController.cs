@@ -36,10 +36,16 @@ namespace LibraryService.Controllers
             return View();
         }
 
-        public ActionResult GetReservedItems(string id)
+        public ActionResult GetReservedLibraryItemsOfUser(string id)
         {
-            IList<LibraryItem> reservedItems = _libraryItemService.GetReservedItems(id);
+            IList<LibraryItem> reservedItems = _libraryItemService.GetReservedLibraryItemsOfUser(id);
             return View(reservedItems);
+        }
+
+        public ActionResult GetLoanedLibraryItemsOfUser(string id)
+        {
+            IList<LibraryItem> loanedItems = _libraryItemService.GetLoanedLibraryItemsOfUser(id);
+            return View(loanedItems);
         }
 
         public ActionResult GetLoanedLibraryItems(string searchString)

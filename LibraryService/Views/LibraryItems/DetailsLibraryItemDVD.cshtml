@@ -115,9 +115,10 @@
 <p>
     @if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
     {
-        <div>
-            @Html.ActionLink("Edit", "Edit", new { Controller = "DVDs", id = Model.id }) |
-        </div>
+    <div>
+        @Html.ActionLink("Edit", "Edit", new { Controller = "DVDs", id = Model.id }) |
+        @Html.ActionLink("Back to List", (string)ViewBag.method, (string)ViewBag.contr)
+    </div>
     }
     @Html.ActionLink("Back to List", (string)ViewBag.method, (string)ViewBag.contr)
 </p>

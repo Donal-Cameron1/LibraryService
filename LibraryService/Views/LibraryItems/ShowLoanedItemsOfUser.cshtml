@@ -71,22 +71,20 @@
         <td>
             @Html.DisplayFor(modelItem => item.ReturnDate)
         </td>
+        @if (item.ReservedBy == null && item.ReservedUntil == null)
+        {
+            <td>
+                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |
+                @Html.ActionLink("Extend loan", "ExtendLoan", new { id = item.id })
+            </td>
 
-        @if (item.Type == LibraryService.Models.Type.Book)
-                {
-        <td>
-            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |
-            @Html.ActionLink("Extend loan", "ExtendLoan", new { id = item.id })
-        </td>
-                }
-        @if (item.Type == LibraryService.Models.Type.DVD)
-                {
-        <td>
-            @Html.ActionLink("Extend loan", "ExtendLoan", new { id = item.id })
-            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |           
-        </td>
-                }
-
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) 
+            </td>
+        }
     </tr>
         }
 </table>

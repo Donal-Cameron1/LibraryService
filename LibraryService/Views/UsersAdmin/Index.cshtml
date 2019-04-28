@@ -32,17 +32,19 @@
 
                 @if (User.IsInRole("Admin"))
                 {
-                    <td>
-                        @Html.ActionLink("Reserved Items", "GetReservedItems", new { id = item.Id, Controller = "Admin" }) |
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>
+                <td>
+                    @Html.ActionLink("Reserved Items", "GetReservedLibraryItemsOfUser", new { id = item.Id, Controller = "Admin" }) |
+                    @Html.ActionLink("Loaned Items", "GetLoanedLibraryItemsOfUser", new { id = item.Id, Controller = "Admin" }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
                 }
                 else
                 {
                     <td>
-                        @Html.ActionLink("Reserved Items", "GetReservedItems", new { id = item.Id, Controller = "Admin" }) |
+                        @Html.ActionLink("Reserved Items", "GetReservedLibraryItemsOfUser", new { id = item.Id, Controller = "Admin" }) |
+                        @Html.ActionLink("Loaned Items", "GetLoanedLibraryItemsOfUser", new { id = item.Id, Controller = "Admin" }) |
                         @Html.ActionLink("Details", "Details", new { id = item.Id })
                     </td>
                 }

@@ -36,15 +36,15 @@ namespace LibraryService.Services.Service
             return libraryItems;
         }
 
-        public IList<LibraryItem> GetReservedItems(string id)
+        public IList<LibraryItem> GetReservedLibraryItemsOfUser(string id)
         {
             IList<LibraryItem> reservedLibraryItems = new List<LibraryItem>();
-            reservedLibraryItems = _libraryItemDAO.GetReservedLibraryItems(id);
+            reservedLibraryItems = _libraryItemDAO.GetReservedLibraryItemsOfUser(id);
 
             return reservedLibraryItems;
         }
 
-        public IList<LibraryItem> GetLoanedLibraryItems()
+        public IList<LibraryItem> GetLoanedLibraryItemsOfUser(string id)
         {
             IList<LibraryItem> loanedLibraryItems = new List<LibraryItem>();
             loanedLibraryItems = _libraryItemDAO.GetLoanedLibraryItems();
@@ -52,12 +52,19 @@ namespace LibraryService.Services.Service
             return loanedLibraryItems;
         }
 
+        public IList<LibraryItem> GetLoanedLibraryItems()
+        {
+            IList<LibraryItem> loanedLibraryItems = new List<LibraryItem>();
+            loanedLibraryItems = _libraryItemDAO.GetLoanedLibraryItems();
+            return loanedLibraryItems;
+        }
+
         public IList<LibraryItem> GetOverdueLibraryItems()
         {
-            IList<LibraryItem> overdueItems = new List<LibraryItem>();
-            overdueItems = _libraryItemDAO.GetOverdueLibraryItems();
+            IList<LibraryItem> overdueLibraryItems = new List<LibraryItem>();
+            overdueLibraryItems = _libraryItemDAO.GetOverdueLibraryItems();
 
-            return overdueItems;
+            return overdueLibraryItems;
         }
 
         private static List<LibraryItem> CastDVDsToLibraryItems(IList<DVD> dvdquery)

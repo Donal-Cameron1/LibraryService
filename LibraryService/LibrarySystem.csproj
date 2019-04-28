@@ -456,7 +456,7 @@
     <Content Include="Views\Home\DetailsBook.cshtml" />
     <Content Include="Views\Home\DetailsDVD.cshtml" />
     <Content Include="Views\Shared\_LoginPartialAdmin.cshtml" />
-    <Content Include="Views\Admin\GetReservedItems.cshtml" />
+    <Content Include="Views\Admin\GetReservedLibraryItemsOfUser.cshtml" />
     <Content Include="Views\LibraryItems\ShowLoanedItemsOfUser.cshtml" />
     <Content Include="Views\Admin\GetLoanedLibraryItems.cshtml" />
     <Content Include="Views\Admin\GetOverdueLibraryItems.cshtml" />
@@ -464,6 +464,7 @@
     <Content Include="Views\LibraryItems\ReserveLibraryItemDVD.cshtml" />
     <Content Include="Views\LibraryItems\DetailsLibraryItemBook.cshtml" />
     <Content Include="Views\LibraryItems\DetailsLibraryItemDVD.cshtml" />
+    <Content Include="Views\Admin\GetLoanedLibraryItemsOfUser.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

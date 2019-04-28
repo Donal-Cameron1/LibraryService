@@ -8,9 +8,6 @@
 {
     <h2>GetReservedItems</h2>
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
     <table class="table">
         <tr>
             <th>
@@ -107,11 +104,12 @@
         }
 
     </table>
+    @Html.ActionLink("Back to list", "Index", "UsersAdmin")
 }
 else
 {
-    <h2>Reserved items.</h2>
-    <p>This user has no items reserved.</p>
+    <h2>Loaned items.</h2>
+    <p>This user has no items laoned.</p>
     @Html.ActionLink("Back to list", "Index", "UsersAdmin")
 }
 

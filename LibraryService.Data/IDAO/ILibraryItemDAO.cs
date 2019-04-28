@@ -5,7 +5,7 @@ namespace LibraryService.Services.Service
 {
     public interface ILibraryItemDAO
     {
-        IList<LibraryItem> GetReservedLibraryItems(string id);
+        IList<LibraryItem> GetReservedLibraryItemsOfUser(string id);
         void LoanLibraryItem(int id);
         void ExtendLoan(int id);
         void ReturnLibraryItem(int id);
@@ -19,5 +19,6 @@ namespace LibraryService.Services.Service
         void DeleteReservation(int id, string currentUserId);
         LibraryItem GetLibaryItem(int id);
         void UpdateLibraryItem(LibraryItem item);
+        IList<LibraryItem> GetLoanedLibraryItemsOfUser(string id);
     }
 }
