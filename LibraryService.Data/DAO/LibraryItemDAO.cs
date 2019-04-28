@@ -60,7 +60,8 @@ namespace LibraryService.Services.Service
             db.Entry(libraryItem).State = EntityState.Modified;
             db.SaveChanges();
         }
-
+        //The user has the option to add another week to their loan but this function will only be available 3 days out from the return date
+        //also if the item is not reserved
         public void ExtendLoan(int id)
         {
             LibraryItem libraryItem = GetLibraryItemWithTracking(db, id);
@@ -72,7 +73,7 @@ namespace LibraryService.Services.Service
                 db.SaveChanges();
             }
         }
-
+//setting the approriate fields to return a book
         public void ReturnLibraryItem(int id)
         {
             LibraryItem libraryItem = GetLibraryItemWithTracking(db, id);
