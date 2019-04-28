@@ -88,40 +88,6 @@ namespace LibraryService.Data.DAO
             return newBooks;
         }
 
-        public void ReserveBook(int id, string currentUserId)
-        {
-            Book book = GetBookWithTracking(db, id);
-            User user = UserDAO.GetUserWithTracking(db, currentUserId);
-            user.ReservedLibraryItems.Add(book);
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-        }
-
-        public void LoanBook(List<int> bookIds, string UserId)
-        {
-            User user = UserDAO.GetUserWithTracking(db, UserId);
-
-            foreach (int id in bookIds)
-            {
-                var thisbook = this.GetBook(id);
-                thisbook.UserId = UserId;
-                thisbook.Status = Status.Loaned;
-                thisbook.ReturnDate = DateTime.Now.AddDays(14);
-
-                this.UpdateBook(thisbook);
-            }
-        }
-
-        public void DeleteReservation(int id, string currentUserId)
-        {
-            Book book = GetBookWithTracking(db, id);
-            User user = UserDAO.GetUserWithTracking(db, currentUserId);
-            book.Status = Status.Available;
-            user.ReservedLibraryItems.Remove(book);
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-        }
-
         public IList<LibraryItem> GetReservedBooks()
         {
             return db.LibraryItems.Where(b => b.Status == Status.Reserved).ToList();

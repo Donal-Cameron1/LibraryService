@@ -13,8 +13,6 @@ namespace LibraryService.Data.IDAO
 
         void DeleteBook(Book book);
 
-        void ReserveBook(int id, string UserId);
-
         IList<Book> BookTextSearch(IList<Book> query, string searchString);
 
         IList<Book> BookGenreFilter(IList<Book> query, string genre);
@@ -27,11 +25,7 @@ namespace LibraryService.Data.IDAO
 
         IList<Book> GetNewBooks();
 
-        void DeleteReservation(int id, string userId);
-
         IList<LibraryItem> GetReservedBooks();
-
-        //void LoanBook(List<int> idList, string currentUserId);
 
         //List<Book> GetBooksForUserID(string UserID);
 

@@ -80,29 +80,5 @@ namespace LibraryService.Services.Service
         {
             return _dvdDAO.GetNewDVDs();
         }
-
-        public void Reserve(int id, string currentUserId)
-        {
-            DVD dvd = _dvdDAO.GetDVD(id);
-
-            if (dvd.Status == Status.Available)
-            {
-                dvd.Status = Status.Reserved;
-                dvd.ReservedUntil = DateTime.Today.AddDays(5);
-                _dvdDAO.UpdateDVD(dvd);
-                _dvdDAO.ReserveDVD(id, currentUserId);
-            }
-            if (dvd.Status == Status.Loaned)
-            {
-                dvd.ReservedUntil = dvd.ReturnDate.Value.AddDays(5);
-                _dvdDAO.UpdateDVD(dvd);
-                _dvdDAO.ReserveDVD(id, currentUserId);
-            }
-        }
-
-        public void DeleteReservation(int id, string currentUserId)
-        {
-            _dvdDAO.DeleteReservation(id, currentUserId);
-        }
     }
 }

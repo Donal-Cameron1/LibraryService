@@ -452,22 +452,18 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\LibraryItems\ShowBookmarks.cshtml" />
     <Content Include="Views\LibraryItems\ShowItemsOfUser.cshtml" />
-    <Content Include="Views\Books\Reserve.cshtml" />
-    <Content Include="Views\DVDs\Reserve.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
-    <Content Include="Views\Home\ReserveNewDVD.cshtml" />
-    <Content Include="Views\LibraryItems\ReserveDVD.cshtml" />
-    <Content Include="Views\LibraryItems\ReserveBook.cshtml" />
-    <Content Include="Views\Home\ReserveNewBook.cshtml" />
     <Content Include="Views\Home\DetailsBook.cshtml" />
     <Content Include="Views\Home\DetailsDVD.cshtml" />
-    <Content Include="Views\LibraryItems\DetailsBook.cshtml" />
-    <Content Include="Views\LibraryItems\DetailsDVD.cshtml" />
     <Content Include="Views\Shared\_LoginPartialAdmin.cshtml" />
     <Content Include="Views\Admin\GetReservedItems.cshtml" />
     <Content Include="Views\LibraryItems\ShowLoanedItemsOfUser.cshtml" />
     <Content Include="Views\Admin\GetLoanedLibraryItems.cshtml" />
     <Content Include="Views\Admin\GetOverdueLibraryItems.cshtml" />
+    <Content Include="Views\LibraryItems\ReserveLibraryItemBook.cshtml" />
+    <Content Include="Views\LibraryItems\ReserveLibraryItemDVD.cshtml" />
+    <Content Include="Views\LibraryItems\DetailsLibraryItemBook.cshtml" />
+    <Content Include="Views\LibraryItems\DetailsLibraryItemDVD.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

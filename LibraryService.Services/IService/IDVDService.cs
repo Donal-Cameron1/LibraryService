@@ -26,9 +26,5 @@ namespace LibraryService.Services.IService
         IList<DVD> DVDTypeFilter(IList<DVD> query, string type);
 
         IList<DVD> GetDVDs();
-
-        void Reserve(int id, string currentUserId);
-
-        void DeleteReservation(int id, string UserId);
     }
 }

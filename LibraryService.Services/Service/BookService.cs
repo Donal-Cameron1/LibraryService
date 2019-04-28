@@ -61,11 +61,6 @@ namespace LibraryService.Services.Service
             _bookDAO.DeleteBook(book);
         }
 
-        public void DeleteReservation(int id, string currentUserId)
-        {
-            _bookDAO.DeleteReservation(id, currentUserId);
-        }
-
         public void UpdateBook(Book book)
         {
             _bookDAO.UpdateBook(book);
@@ -86,36 +81,6 @@ namespace LibraryService.Services.Service
             return _bookDAO.GetNewBooks();
         }
 
-        public void Reserve(int id, string currentUserId)
-        {
-            Book book = _bookDAO.GetBook(id);
-
-            if (book.Status == Status.Available)
-            {
-                book.Status = Status.Reserved;
-                book.ReservedUntil = DateTime.Today.AddDays(5);
-                _bookDAO.UpdateBook(book);
-                _bookDAO.ReserveBook(id, currentUserId);
-            }
-            //todo: Schedule service needed to change status after returndate? 
-
-            if (book.Status == Status.Loaned)
-            {
-                book.ReservedUntil = book.ReturnDate.Value.AddDays(5);
-                _bookDAO.UpdateBook(book);
-                _bookDAO.ReserveBook(id, currentUserId);
-            }
-
-        }
-
-        public void LoanBook(int id)
-        {
-            //get book that is supposed to get loaned
-            Book book = _bookDAO.GetBook(id);
-
-            //get user that is mapped to the book 
-            User user = book.ReservedBy;
-        }
 
         /*public void LoanBook(List<int> idList, string currentUserId)
         {

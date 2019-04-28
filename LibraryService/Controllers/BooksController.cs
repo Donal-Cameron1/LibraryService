@@ -42,25 +42,6 @@ namespace LibraryService.Controllers
             return _bookService.BookStatusFilter(query, status);
         }
 
-        /*public ActionResult Index2()
-        {
-            var viewModel = new List<BooksIndexVIewModel>();
-            IList<Book> books = _bookService.GetBooks();
-
-            foreach (var book in books)
-            {
-                int libraryid = book.LibraryId;
-                var thislibrary = _libraryService.GetLibrary(book.LibraryId);
-                var indexentry = new BooksIndexVIewModel()
-                {
-                    book = book,
-                    libraryname = _libraryService.GetLibrary(book.LibraryId).Name
-                };
-                viewModel.Add(indexentry);
-            }
-            return View(viewModel);
-        }*/
-
 
         // GET: Books
         public ActionResult Index(string searchString, string genre, string status, int? page)
@@ -172,43 +153,6 @@ namespace LibraryService.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Books/Reserve/5
-        public ActionResult Reserve(int id)
-        {
-            Book book = _bookService.GetBook(id);
-            if (book == null)
-            {
-                return HttpNotFound();
-            }
-            return View(book);
-        }
-
-        // POST: DVDs/Reserve/5
-        [HttpPost, ActionName("Reserve")]
-        [ValidateAntiForgeryToken]
-        public ActionResult ReserveConfirmed(int id)
-        {
-            _bookService.Reserve(id, User.Identity.GetUserId());
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult DeleteReservation(int id)
-        {
-            _bookService.DeleteReservation(id, User.Identity.GetUserId());
-            return RedirectToAction("ShowItemsOfUser", "LibraryItems");
-        }
-
-        public ActionResult DeleteReservationInList(int id)
-        {
-            _bookService.DeleteReservation(id, User.Identity.GetUserId());
-            return RedirectToAction("Index", "Books");
-        }
-
-        public ActionResult LoanItem(int id)
-        {
-            _bookService.LoanBook(id);
-            return View();
-        }
     }
 
     /*public ActionResult CheckoutBook()

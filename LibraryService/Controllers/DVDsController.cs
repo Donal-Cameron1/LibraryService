@@ -139,37 +139,6 @@ namespace LibraryService.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Books/Reserve/5
-        public ActionResult Reserve(int id)
-        {
-            DVD dvd = _dvdService.GetDVD(id);
-            if (dvd == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dvd);
-        }
-
-        // POST: DVDs/Reserve/5
-        [HttpPost, ActionName("Reserve")]
-        [ValidateAntiForgeryToken]
-        public ActionResult ReserveConfirmed(int id)
-        {
-            _dvdService.Reserve(id, User.Identity.GetUserId());
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult DeleteReservation(int id)
-        {
-            _dvdService.DeleteReservation(id, User.Identity.GetUserId());
-            return RedirectToAction("ShowItemsOfUser", "LibraryItems");
-        }
-
-        public ActionResult DeleteReservationInList(int id)
-        {
-            _dvdService.DeleteReservation(id, User.Identity.GetUserId());
-            return RedirectToAction("Index", "DVDs");
-        }
     }
 }
 

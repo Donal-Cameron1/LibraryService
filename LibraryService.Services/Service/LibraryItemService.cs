@@ -97,17 +97,10 @@ namespace LibraryService.Services.Service
                         if (item.ReservedUntil != null && (item.ReservedUntil.Value.AddDays(1).CompareTo(DateTime.Today) <= 0))
                         {
                             item.ReservedUntil = null;
-                            item.Status = Status.Available;
-                            if (item.Type == Models.Type.Book)
-                            {
-                                _bookDAO.UpdateBook((Book)item);
-                                _bookDAO.DeleteReservation(item.id, user.UserId);
-                            }
-                            else if (item.Type == Models.Type.DVD)
-                            {
-                                _dvdDAO.UpdateDVD((DVD)item);
-                                _dvdDAO.DeleteReservation(item.id, user.UserId);
-                            }
+                            item.Status = Status.Available;                        
+                            _libraryItemDAO.UpdateLibraryItem(item);
+                            _libraryItemDAO.DeleteReservation(item.id, user.UserId);
+                          
                         }
                     }
                 }
@@ -161,5 +154,19 @@ namespace LibraryService.Services.Service
             _libraryItemDAO.DeleteBookmark(id, currentUserId);
         }
 
+        public void ReserveLibraryItem(int id, string currentUserId)
+        {
+            _libraryItemDAO.ReserveLibraryItem(id, currentUserId);
+        }
+
+        public void DeleteReservation(int id, string currentUserId)
+        {
+            _libraryItemDAO.DeleteReservation(id, currentUserId);
+        }
+
+        public LibraryItem GetLibraryItem(int id)
+        {
+            return _libraryItemDAO.GetLibaryItem(id);
+        }
     }
 }

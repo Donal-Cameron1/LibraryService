@@ -1,4 +1,4 @@
-﻿@model LibraryService.Models.Book
+﻿@model LibraryService.Models.DVD
 
 @{
     ViewBag.Title = "Reserve";
@@ -6,9 +6,9 @@
 
 <h2>Reservation</h2>
 
-<h3>Are you sure you want to reserve this Book?</h3>
+<h3>Are you sure you want to reserve this DVD?</h3>
 <div>
-    <h4>Book</h4>
+    <h4>DVD</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -60,6 +60,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.AgeRestriction)
         </dt>
 
@@ -95,11 +103,11 @@
 
     @using (Html.BeginForm())
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">
-        <input type="submit" value="Reserve" class="btn btn-default" /> |
-        @Html.ActionLink("Back to List", "Searchbar")
+        @Html.ActionLink("Reserve", "ReserveLibraryItemConfirmed", new { id = ViewBag.id, method = ViewBag.method, contr = ViewBag.contr, Controller = "LibraryItems" }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Back to List", (string)ViewBag.method, (string)ViewBag.contr)
     </div>
     }
 </div>

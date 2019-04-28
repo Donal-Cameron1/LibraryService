@@ -75,14 +75,14 @@
         @if (item.Type == LibraryService.Models.Type.Book)
                 {
         <td>
-            @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
+            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |
             @Html.ActionLink("Extend loan", "", new { id = item.id })
         </td>
                 }
         @if (item.Type == LibraryService.Models.Type.DVD)
                 {
         <td>
-            @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
+            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |
             @Html.ActionLink("Extend loan", "", new { id = item.id })
         </td>
                 }

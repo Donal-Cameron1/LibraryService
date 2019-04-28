@@ -25,6 +25,16 @@ namespace LibraryService.Services.Service
                 .Where(b => b.id == id).FirstOrDefault();
         }
 
+        public LibraryItem GetLibaryItem(int id)
+        {
+            return db.LibraryItems
+                .Include(b => b.ReservedBy)
+                .Include(b => b.LoanedBy)
+                .Include(b => b.BookmarkedBy)
+                .Where(b => b.id == id)
+                .AsNoTracking().FirstOrDefault();
+        }
+
         public IList<LibraryItem> GetLibraryItems()
         {
             return db.LibraryItems
@@ -82,6 +92,31 @@ namespace LibraryService.Services.Service
             User user = UserDAO.GetUserWithTracking(db, currentUserId);
             user.BookmarkedLibraryItems.Remove(libraryItem);
             db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        public void ReserveLibraryItem(int id, string currentUserId)
+        {
+            LibraryItem libraryItem = GetLibraryItemWithTracking(db, id);
+            User user = UserDAO.GetUserWithTracking(db, currentUserId);
+            user.ReservedLibraryItems.Add(libraryItem);
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        public void DeleteReservation(int id, string currentUserId)
+        {
+            LibraryItem libraryItem = GetLibraryItemWithTracking(db, id);
+            User user = UserDAO.GetUserWithTracking(db, currentUserId);
+            libraryItem.Status = Status.Available;
+            user.ReservedLibraryItems.Remove(libraryItem);
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        public void UpdateLibraryItem(LibraryItem item)
+        {
+            db.Entry(item).State = EntityState.Modified;
             db.SaveChanges();
         }
     }

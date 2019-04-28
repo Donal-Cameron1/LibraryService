@@ -13,6 +13,8 @@ namespace LibraryService.Services.IService
         IList<LibraryItem> TextSearch(IList<LibraryItem> loanedItems, string searchString);
         void BookmarkLibraryItem(int id, string currentUserId);
         void DeleteBookmark(int id, string currentUserId);
-
+        void ReserveLibraryItem(int id, string currentUserId);
+        void DeleteReservation(int id, string currentUserId);
+        LibraryItem GetLibraryItem(int id);
     }
 }

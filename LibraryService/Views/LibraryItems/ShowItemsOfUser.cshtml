@@ -71,21 +71,10 @@
         <td>
             @Html.DisplayFor(modelItem => item.ReturnDate)
         </td>
-
-        @if (item.Type == LibraryService.Models.Type.Book)
-            {
         <td>
-            @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
-            @Html.ActionLink("Cancel Reservation", "DeleteReservation", new { id = item.id, Controller = "Books" })
+            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |
+            @Html.ActionLink("Unreserve", "DeleteReservation", new { id = item.id, method = "ShowItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |
         </td>
-            }
-        @if (item.Type == LibraryService.Models.Type.DVD)
-            {
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
-            @Html.ActionLink("Cancel Reservation", "DeleteReservation", new { id = item.id, Controller = "DVDs" })
-        </td>
-            }
 
     </tr>
         }

@@ -86,25 +86,6 @@ namespace LibraryService.Data.DAO
         }
 
 
-        public void ReserveDVD(int id, string currentUserId)
-        {
-            DVD dvd = GetDVDWithTracking(db, id);
-            User user = UserDAO.GetUserWithTracking(db, currentUserId);
-            user.ReservedLibraryItems.Add(dvd);
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-        }
-
-        public void DeleteReservation(int id, string currentUserId)
-        {
-            DVD dvd = GetDVDWithTracking(db, id);
-            User user = UserDAO.GetUserWithTracking(db, currentUserId);
-            dvd.Status = Status.Available;
-            user.ReservedLibraryItems.Remove(dvd);
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-        }
-
         public IList<DVD> GetReservedDVDs()
         {
             IQueryable<DVD> reservedDVDs;
@@ -114,14 +95,5 @@ namespace LibraryService.Data.DAO
                            select d;
             return reservedDVDs.AsNoTracking().ToList<DVD>();
         }
-
-        /*public void LoanDVD(int id, string currentUserId, DateTime duedate)
-        {
-            DVD dvd = GetDVDWithTracking(db, id);
-            User user = UserDAO.GetUserWithTracking(db, currentUserId);
-            user.LoanedDVDs.Add(dvd, duedate);
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-        }*/
     }
 }

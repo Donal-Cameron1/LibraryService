@@ -27,11 +27,6 @@ namespace LibraryService.Services.IService
 
         IList<Book> BookTypeFilter(IList<Book> query, string type);
 
-        void Reserve(int id, string currentUserId);
-
-        void DeleteReservation(int id, string UserId);
-        void LoanBook(int id);
-
         //void LoanBook(List<int> idList, string currentUserId);
 
         //List<Book> GetBooksForUserID(string UserID);

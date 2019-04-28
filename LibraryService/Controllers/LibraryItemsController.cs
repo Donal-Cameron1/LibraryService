@@ -74,14 +74,26 @@ namespace LibraryService.Controllers
 
 
         // GET: Books/Details/5
-        public ActionResult DetailsBook(int id)
+        public ActionResult DetailsLibraryItem(int id, string method, string contr)
         {
-            Book book = _bookService.GetBook(id);
-            if (book == null)
+            LibraryItem libraryItem = _libraryItemService.GetLibraryItem(id);
+            if (libraryItem == null)
             {
                 return HttpNotFound();
             }
-            return View(book);
+
+            ViewBag.method = method;
+            ViewBag.contr = contr;
+            ViewBag.id = id;
+
+            if (libraryItem.Type == Models.Type.Book)
+            {
+                return View("DetailsLibraryItemBook", (Book)libraryItem);
+            }
+            else
+            {
+                return View("DetailsLibraryItemDVD", (DVD)libraryItem);
+            }
         }
 
         // GET: DVDs/Details/5
@@ -96,43 +108,42 @@ namespace LibraryService.Controllers
         }
 
         // GET: Books/Reserve/5
-        public ActionResult ReserveDVD(int id)
+        public ActionResult ReserveLibraryItem(int id, string method, string contr)
         {
-            DVD dvd = _dvdService.GetDVD(id);
-            if (dvd == null)
+            LibraryItem libraryItem = _libraryItemService.GetLibraryItem(id);
+            if (libraryItem == null)
             {
                 return HttpNotFound();
             }
-            return View(dvd);
+
+            ViewBag.method = method;
+            ViewBag.contr = contr;
+            ViewBag.id = id;
+
+            if (libraryItem.Type == Models.Type.Book)
+            {
+                return View("ReserveLibraryItemBook", (Book)libraryItem);
+            }
+            else
+            {
+                return View("ReserveLibraryItemDVD", (DVD)libraryItem);
+            }
         }
+
 
         // POST: DVDs/Reserve/5
-        [HttpPost, ActionName("ReserveDVD")]
-        [ValidateAntiForgeryToken]
-        public ActionResult ReserveDVDConfirmed(int id)
+        //[HttpPost, ActionName("ReserveLibraryItem")]
+        //[ValidateAntiForgeryToken]
+        public ActionResult ReserveLibraryItemConfirmed(int id, string method, string contr)
         {
-            _dvdService.Reserve(id, User.Identity.GetUserId());
-            return RedirectToAction("Searchbar", "Home");
+            _libraryItemService.ReserveLibraryItem(id, User.Identity.GetUserId());
+            return RedirectToAction(method, contr);
         }
 
-        // GET: Books/Reserve/5
-        public ActionResult ReserveBook(int id)
+        public ActionResult DeleteReservation(int id, string method, string contr)
         {
-            Book book = _bookService.GetBook(id);
-            if (book == null)
-            {
-                return HttpNotFound();
-            }
-            return View(book);
-        }
-
-        // POST: Books/Reserve/5
-        [HttpPost, ActionName("ReserveBook")]
-        [ValidateAntiForgeryToken]
-        public ActionResult ReserveBookConfirmed(int id)
-        {
-            _bookService.Reserve(id, User.Identity.GetUserId());
-            return RedirectToAction("Searchbar", "Home");
+            _libraryItemService.DeleteReservation(id, User.Identity.GetUserId());
+            return RedirectToAction(method, contr);
         }
 
         public ActionResult BookmarkLibraryItem(int id, string method, string contr)

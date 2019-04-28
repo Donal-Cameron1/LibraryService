@@ -14,8 +14,6 @@ namespace LibraryService.Data.IDAO
 
         void DeleteDVD(DVD dvd);
 
-        void ReserveDVD(int id, string UserId);
-
         IList<DVD> GetNewDVDs();
 
         IList<DVD> DVDGenreFilter(IList<DVD> query, string genre);
@@ -27,10 +25,6 @@ namespace LibraryService.Data.IDAO
         IList<DVD> DVDTypeFilter(IList<DVD> query, string type);
 
         IList<DVD> GetDVDs();
-
-        //void LoanDVD(int id, string UserId, DateTime duedate);
-
-        void DeleteReservation(int id, string userId);
 
         IList<DVD> GetReservedDVDs();
     }
