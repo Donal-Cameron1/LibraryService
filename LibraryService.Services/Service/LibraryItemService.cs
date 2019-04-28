@@ -112,6 +112,16 @@ namespace LibraryService.Services.Service
             _libraryItemDAO.LoanLibraryItem(id);
         }
 
+        public void ExtendLoan(int id)
+        {
+            _libraryItemDAO.ExtendLoan(id);
+        }
+
+        public void ReturnLibraryItem(int id)
+        {
+            _libraryItemDAO.ReturnLibraryItem(id);
+        }
+
         public void SendOverdueMail()
         {
             SmtpClient client = new SmtpClient("smtp.googlemail.com");

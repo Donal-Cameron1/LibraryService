@@ -71,6 +71,45 @@ namespace LibraryService.Services.Service
             db.Entry(libraryItem).State = EntityState.Modified;
             db.SaveChanges();
         }
+        //The user has the option to add another week to their loan but this function will only be available 3 days out from the return date
+        //also if the item is not reserved
+        public void ExtendLoan(int id)
+        {
+            LibraryItem libraryItem = GetLibraryItemWithTracking(db, id);
+
+            if (libraryItem.Status != Status.Reserved && libraryItem.ReturnDate < DateTime.Today.AddDays(3))
+            {
+                libraryItem.ReturnDate = DateTime.Today.AddDays(7);
+                db.Entry(libraryItem).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+//setting the approriate fields to return a book
+        public void ReturnLibraryItem(int id)
+        {
+            LibraryItem libraryItem = GetLibraryItemWithTracking(db, id);
+
+            if (libraryItem.Status == Status.Loaned)
+            {
+                libraryItem.LoanedBy = null;
+                libraryItem.Status = Status.Available;
+                libraryItem.ReturnDate = null;
+                libraryItem.Status = Status.Available;
+                db.Entry(libraryItem).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            if (libraryItem.Status == Status.Reserved)
+            {
+                libraryItem.LoanedBy = null;
+                libraryItem.Status = Status.Reserved;
+                libraryItem.ReturnDate = null;
+                libraryItem.Status = Status.Available;
+                db.Entry(libraryItem).State = EntityState.Modified;
+                db.SaveChanges();
+
+            }
+        }
 
         public IList<LibraryItem> TextSearch(IList<LibraryItem> loanedItems, string searchString)
         {

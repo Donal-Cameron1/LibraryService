@@ -77,14 +77,14 @@
                 {
                     <td>
                         @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
-                        @Html.ActionLink("Return Item", "DeleteReservation", new { id = item.id, Controller = "Books" })
+                        @Html.ActionLink("Return Item", "ReturnLibraryItem", new { id = item.id, Controller = "Admin" })
                     </td>
                 }
                 @if (item.Type == LibraryService.Models.Type.DVD)
                 {
                     <td>
                         @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
-                        @Html.ActionLink("Return Item", "DeleteReservation", new { id = item.id, Controller = "DVDs" })
+                        @Html.ActionLink("Return Item", "ReturnLibraryItem", new { id = item.id, Controller = "Admin" })
                     </td>
                 }
 

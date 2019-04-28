@@ -158,5 +158,17 @@ namespace LibraryService.Controllers
             return RedirectToAction(method, contr);
         }
 
+        public ActionResult ExtendLoan(int id)
+        {
+            _libraryItemService.ExtendLoan(id);
+            return RedirectToAction("ShowLoanedItemsOfUser");
+        }
+
+        public ActionResult ReturnLibraryItem(int id)
+        {
+            _libraryItemService.ReturnLibraryItem(id);
+            return RedirectToAction("GetLoanedLibraryItems");
+        }
+
     }
 }
