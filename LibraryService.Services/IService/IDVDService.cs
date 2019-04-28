@@ -15,10 +15,6 @@ namespace LibraryService.Services.IService
 
         void DeleteDVD(DVD dvd);
 
-        void BookmarkDVD(int id, string UserId);
-
-        void DeleteBookmark(int id, string UserId);
-
         IList<DVD> GetNewDVDs();
 
         IList<DVD> DVDTextSearch(IList<DVD> query, string searchString);

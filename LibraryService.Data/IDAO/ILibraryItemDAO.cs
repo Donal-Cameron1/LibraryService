@@ -11,5 +11,7 @@ namespace LibraryService.Services.Service
         IList<LibraryItem> GetOverdueLibraryItems();
         IList<LibraryItem> GetLibraryItems();
         IList<LibraryItem> TextSearch(IList<LibraryItem> loanedItems, string searchString);
+        void BookmarkLibraryItem(int id, string currentUserId);
+        void DeleteBookmark(int id, string currentUserId);
     }
 }

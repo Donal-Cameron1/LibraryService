@@ -24,9 +24,7 @@ namespace LibraryService.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                _libraryService.SearchLibraries(libraries, searchString);
-                //libraries = libraries.Where(s => s.Name.Contains(searchString)
-                // || s.PostCode.Contains(searchString));
+                libraries = _libraryService.SearchLibraries(libraries, searchString);
             }
 
             return View(libraries.ToList());

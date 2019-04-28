@@ -4,9 +4,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+@if (Model.Any())
+{
+    <h2>Users</h2>
 
-@using (Html.BeginForm())
+    using (Html.BeginForm())
     {
         <div class="form-group">
             @Html.Label("Search for user:", new { @class = "col-sm-1 control-label" })
@@ -14,38 +16,46 @@
             <input class="input-group mb-3" placeholder="Search" type="submit" value="Search" />
         </div>
     }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-
-            @if (User.IsInRole("Admin"))
-            {
-                <td>
-                    @Html.ActionLink("Reserved Items", "GetReservedItems", new { id = item.Id, Controller = "Admin" }) |
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            }
-            else
-            {
-                <td>
-                    @Html.ActionLink("Reserved Items", "GetReservedItems", new { id = item.Id, Controller = "Admin" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id })
-                </td>
-            }
-
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Reserved Items", "GetReservedItems", new { id = item.Id, Controller = "Admin" }) |
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.ActionLink("Reserved Items", "GetReservedItems", new { id = item.Id, Controller = "Admin" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id })
+                    </td>
+                }
+
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <h2>Sorry</h2>
+    <p>We can't find the user you are looking for.</p>
+    @Html.ActionLink("Back to list", "Index")
+
+}

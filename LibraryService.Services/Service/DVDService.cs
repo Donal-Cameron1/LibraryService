@@ -21,11 +21,6 @@ namespace LibraryService.Services.Service
             _dbUtils = new DbUtils();
         }
 
-        public void BookmarkDVD(int id, string currentUserId)
-        {
-            _dvdDAO.BookmarkDVD(id, currentUserId);
-        }
-
         public DVD CreateDefaultDVD()
         {
             return new DVD()
@@ -39,11 +34,6 @@ namespace LibraryService.Services.Service
         public void CreateDVD(DVD dvd)
         {
             _dvdDAO.CreateDVD(dvd);
-        }
-
-        public void DeleteBookmark(int id, string currentUserId)
-        {
-            _dvdDAO.DeleteBookmark(id, currentUserId);
         }
 
         public void DeleteDVD(DVD dvd)

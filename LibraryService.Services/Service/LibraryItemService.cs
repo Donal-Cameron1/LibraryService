@@ -150,5 +150,16 @@ namespace LibraryService.Services.Service
         {
             return _libraryItemDAO.TextSearch(loanedItems, searchString);
         }
+
+        public void BookmarkLibraryItem(int id, string currentUserId)
+        {
+            _libraryItemDAO.BookmarkLibraryItem(id, currentUserId);
+        }
+
+        public void DeleteBookmark(int id, string currentUserId)
+        {
+            _libraryItemDAO.DeleteBookmark(id, currentUserId);
+        }
+
     }
 }

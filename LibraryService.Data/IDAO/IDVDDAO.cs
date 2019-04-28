@@ -14,8 +14,6 @@ namespace LibraryService.Data.IDAO
 
         void DeleteDVD(DVD dvd);
 
-        void BookmarkDVD(int id, string UserId);
-
         void ReserveDVD(int id, string UserId);
 
         IList<DVD> GetNewDVDs();
@@ -33,8 +31,6 @@ namespace LibraryService.Data.IDAO
         //void LoanDVD(int id, string UserId, DateTime duedate);
 
         void DeleteReservation(int id, string userId);
-
-        void DeleteBookmark(int id, string currentUserId);
 
         IList<DVD> GetReservedDVDs();
     }

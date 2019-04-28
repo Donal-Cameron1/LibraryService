@@ -78,30 +78,14 @@ namespace LibraryService.Data.DAO
         public IList<Book> GetNewBooks()
         {
             var baselineDate = DateTime.Now.AddDays(-7);
-            //get books that got added in the last 7 days
-            IQueryable<Book> newbooks =
-                from b in db.Books
-                where b.DateAdded > baselineDate
-                select b;
-            return newbooks.OrderByDescending(x => x.DateAdded).ToList();
-        }
-
-        public void BookmarkBook(int id, string currentUserId)
-        {
-            Book book = GetBookWithTracking(db, id);
-            User user = UserDAO.GetUserWithTracking(db, currentUserId);
-            user.BookmarkedLibraryItems.Add(book);
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-        }
-
-        public void DeleteBookmark(int id, string currentUserId)
-        {
-            Book book = GetBookWithTracking(db, id);
-            User user = UserDAO.GetUserWithTracking(db, currentUserId);
-            user.BookmarkedLibraryItems.Remove(book);
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
+            IList<Book> newBooks = db.Books
+                .Include(b => b.BookmarkedBy)
+                .Include(b => b.ReservedBy)
+                .Include(b => b.LoanedBy)
+                .AsNoTracking()
+                .Where(x => x.DateAdded > baselineDate)
+                .OrderByDescending(x => x.DateAdded).ToList();
+            return newBooks;
         }
 
         public void ReserveBook(int id, string currentUserId)

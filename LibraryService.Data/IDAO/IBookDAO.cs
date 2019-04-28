@@ -13,8 +13,6 @@ namespace LibraryService.Data.IDAO
 
         void DeleteBook(Book book);
 
-        void BookmarkBook(int id, string UserId);
-
         void ReserveBook(int id, string UserId);
 
         IList<Book> BookTextSearch(IList<Book> query, string searchString);
@@ -30,8 +28,6 @@ namespace LibraryService.Data.IDAO
         IList<Book> GetNewBooks();
 
         void DeleteReservation(int id, string userId);
-
-        void DeleteBookmark(int id, string userId);
 
         IList<LibraryItem> GetReservedBooks();
 

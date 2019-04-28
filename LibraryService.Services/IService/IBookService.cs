@@ -17,11 +17,7 @@ namespace LibraryService.Services.IService
 
         void UpdateBook(Book book);
 
-        void BookmarkBook(int id, string UserId);
-
         void DeleteBook(Book book);
-
-        void DeleteBookmark(int id, string UserId);
 
         IList<Book> BookTextSearch(IList<Book> query, string searchString);
 

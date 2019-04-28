@@ -95,51 +95,52 @@
                             </div>
                         }
                         else
-                        {if (Request.IsAuthenticated)
                         {
-                            if (item.Status == Status.Reserved)
+                            if (Request.IsAuthenticated)
                             {
-                                if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
+                                if (item.ReservedBy != null && item.ReservedBy.UserId == HttpContext.Current.User.Identity.GetUserId())
                                 {
-                                    <div>
-                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                                        @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
-                                        @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
-                                    </div>
+                                    if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
+                                    {
+                                        <div>
+                                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                            @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
+                                            @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" })
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div>
+                                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                            @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
+                                            @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" })
+                                        </div>
+                                    }
                                 }
                                 else
                                 {
-                                    <div>
-                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                                        @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
-                                        @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
-                                    </div>
+                                    if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
+                                    {
+                                        <div>
+                                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                            @Html.ActionLink("Reserve", "Reserve", new { id = item.id }) |
+                                            @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" })
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div>
+                                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                            @Html.ActionLink("Reserve", "Reserve", new { id = item.id }) |
+                                            @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Index", contr = "DVDs", Controller = "LibraryItems" })
+                                        </div>
+                                    }
                                 }
                             }
                             else
                             {
-                                if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
-                                {
-                                    <div>
-                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                                        @Html.ActionLink("Reserve", "Reserve", new { id = item.id }) |
-                                        @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div>
-                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                                        @Html.ActionLink("Reserve", "Reserve", new { id = item.id }) |
-                                        @Html.ActionLink("Bookmark", "Bookmark", new { id = item.id })
-                                    </div>
-                                }
+                                @Html.ActionLink("Details", "Details", new { id = item.id })
                             }
-                        }
-                        else
-                        {
-                            @Html.ActionLink("Details", "Details", new { id = item.id })
-                        }
                         }
                     </td>
                 </tr>
@@ -155,7 +156,8 @@
 
     {
         <h2>Sorry.</h2>
-        <p>We can't find any DVDs you are looking for</p>
+        <p>We can't find any DVDs you are looking for.</p>
+        @Html.ActionLink("Back to list", "Index")
     }
 }
 

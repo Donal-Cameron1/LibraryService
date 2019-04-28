@@ -170,24 +170,6 @@ namespace LibraryService.Controllers
             _dvdService.DeleteReservation(id, User.Identity.GetUserId());
             return RedirectToAction("Index", "DVDs");
         }
-
-        public ActionResult Bookmark(int id)
-        {
-            _dvdService.BookmarkDVD(id, User.Identity.GetUserId());
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult DeleteBookmark(int id)
-        {
-            _dvdService.DeleteBookmark(id, User.Identity.GetUserId());
-            return RedirectToAction("ShowBookmarks", "LibraryItems");
-        }
-
-        public ActionResult DeleteBookmarkInList(int id)
-        {
-            _dvdService.DeleteBookmark(id, User.Identity.GetUserId());
-            return RedirectToAction("Index", "DVDs");
-        }
     }
 }
 

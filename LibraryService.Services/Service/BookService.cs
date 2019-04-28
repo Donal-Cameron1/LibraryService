@@ -26,11 +26,6 @@ namespace LibraryService.Services.Service
             return _bookDAO.BookGenreFilter(query, genre);
         }
 
-        public void BookmarkBook(int id, string currentUserId)
-        {
-            _bookDAO.BookmarkBook(id, currentUserId);
-        }
-
         public IList<Book> BookStatusFilter(IList<Book> query, string status)
         {
             return _bookDAO.BookStatusFilter(query, status);
@@ -64,11 +59,6 @@ namespace LibraryService.Services.Service
         public void DeleteBook(Book book)
         {
             _bookDAO.DeleteBook(book);
-        }
-
-        public void DeleteBookmark(int id, string currentUserId)
-        {
-            _bookDAO.DeleteBookmark(id, currentUserId);
         }
 
         public void DeleteReservation(int id, string currentUserId)

@@ -11,7 +11,6 @@ namespace LibraryService.Controllers
 
 {
     [Authorize(Roles = CustomRoles.AdminOrStaff)]
-    //[Authorize(Roles = "Admin")]
 
     public class AdminController : Controller
     {

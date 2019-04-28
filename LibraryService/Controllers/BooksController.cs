@@ -204,24 +204,6 @@ namespace LibraryService.Controllers
             return RedirectToAction("Index", "Books");
         }
 
-        public ActionResult Bookmark(int id)
-        {
-            _bookService.BookmarkBook(id, User.Identity.GetUserId());
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult DeleteBookmark(int id)
-        {
-            _bookService.DeleteBookmark(id, User.Identity.GetUserId());
-            return RedirectToAction("ShowBookmarks", "LibraryItems");
-        }
-
-        public ActionResult DeleteBookmarkInList(int id)
-        {
-            _bookService.DeleteBookmark(id, User.Identity.GetUserId());
-            return RedirectToAction("Index", "Books");
-        }
-
         public ActionResult LoanItem(int id)
         {
             _bookService.LoanBook(id);

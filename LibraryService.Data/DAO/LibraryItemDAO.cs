@@ -1,4 +1,5 @@
 ﻿using LibraryService.DAL;
+using LibraryService.Data.DAO;
 using LibraryService.Models;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,24 @@ namespace LibraryService.Services.Service
         public IList<LibraryItem> TextSearch(IList<LibraryItem> loanedItems, string searchString)
         {
             return loanedItems.Where(b => b.Title.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList<LibraryItem>();
+        }
+
+        public void BookmarkLibraryItem(int id, string currentUserId)
+        {
+            LibraryItem libraryItem = GetLibraryItemWithTracking(db, id);
+            User user = UserDAO.GetUserWithTracking(db, currentUserId);
+            user.BookmarkedLibraryItems.Add(libraryItem);
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        public void DeleteBookmark(int id, string currentUserId)
+        {
+            LibraryItem libraryItem = GetLibraryItemWithTracking(db, id);
+            User user = UserDAO.GetUserWithTracking(db, currentUserId);
+            user.BookmarkedLibraryItems.Remove(libraryItem);
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
         }
     }
 }

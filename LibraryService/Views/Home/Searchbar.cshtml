@@ -83,14 +83,14 @@
         <td>
             @if (Request.IsAuthenticated)
             {
-                if (item.Status == Status.Reserved)
+                if (item.ReservedBy != null && item.ReservedBy.UserId == HttpContext.Current.User.Identity.GetUserId())
                 {
                     if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
                     {
                         <div>
                             @Html.ActionLink("Details", "DetailsBook", new { id = item.id, Controller = "LibraryItems" }) |
                             @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
-                            @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
+                            @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Searchbar", contr = "Home", Controller = "LibraryItems" })
                         </div>
                     }
                     else
@@ -98,7 +98,7 @@
                         <div>
                             @Html.ActionLink("Details", "DetailsBook", new { id = item.id, Controller = "LibraryItems" }) |
                             @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
-                            @Html.ActionLink("Bookmark", "BookmarkBook", new { id = item.id })
+                            @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Searchbar", contr = "Home", Controller = "LibraryItems" })
                         </div>
                     }
                 }
@@ -109,7 +109,7 @@
                         <div>
                             @Html.ActionLink("Details", "DetailsBook", new { id = item.id, Controller = "LibraryItems" }) |
                             @Html.ActionLink("Reserve", "ReserveBook", new { id = item.id, Controller = "LibraryItems" }) |
-                            @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
+                            @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Searchbar", contr = "Home", Controller = "LibraryItems" })
                         </div>
                     }
                     else
@@ -117,7 +117,7 @@
                         <div>
                             @Html.ActionLink("Details", "DetailsBook", new { id = item.id, Controller = "LibraryItems" }) |
                             @Html.ActionLink("Reserve", "ReserveBook", new { id = item.id, Controller = "LibraryItems" }) |
-                            @Html.ActionLink("Bookmark", "BookmarkBook", new { id = item.id, Controller = "LibraryItems" })
+                            @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Searchbar", contr = "Home", Controller = "LibraryItems" })
                         </div>
                     }
                 }
@@ -133,23 +133,23 @@
         <td>
             @if (Request.IsAuthenticated)
             {
-                if (item.Status == Status.Reserved)
+                if (item.ReservedBy != null && item.ReservedBy.UserId == HttpContext.Current.User.Identity.GetUserId())
                 {
                     if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
                     {
-                        <div>
-                            @Html.ActionLink("Details", "DetailsDVD", new { id = item.id, Controller = "LibraryItems" }) |
-                            @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
-                            @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
-                        </div>
+            <div>
+                @Html.ActionLink("Details", "DetailsDVD", new { id = item.id, Controller = "LibraryItems" }) |
+                @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
+                @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Searchbar", contr = "Home", Controller = "LibraryItems" })
+            </div>
                     }
                     else
                     {
-                        <div>
-                            @Html.ActionLink("Details", "DetailsDVD", new { id = item.id, Controller = "LibraryItems" }) |
-                            @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
-                            @Html.ActionLink("Bookmark", "BookmarkDVD", new { id = item.id, Controller = "LibraryItems" })
-                        </div>
+            <div>
+                @Html.ActionLink("Details", "DetailsDVD", new { id = item.id, Controller = "LibraryItems" }) |
+                @Html.ActionLink("Dereserve", "DeleteReservationInList", new { id = item.id }) |
+                @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Searchbar", contr = "Home", Controller = "LibraryItems" })
+            </div>
                     }
                 }
                 else
@@ -159,7 +159,7 @@
                         <div>
                             @Html.ActionLink("Details", "DetailsDVD", new { id = item.id, Controller = "LibraryItems" }) |
                             @Html.ActionLink("Reserve", "ReserveDVD", new { id = item.id, Controller = "LibraryItems" }) |
-                            @Html.ActionLink("UnBookmark", "DeleteBookmarkInList", new { id = item.id })
+                            @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Searchbar", contr = "Home", Controller = "LibraryItems" })
                         </div>
                     }
                     else
@@ -167,7 +167,7 @@
                         <div>
                             @Html.ActionLink("Details", "DetailsDVD", new { id = item.id, Controller = "LibraryItems" }) |
                             @Html.ActionLink("Reserve", "ReserveDVD", new { id = item.id, Controller = "LibraryItems" }) |
-                            @Html.ActionLink("Bookmark", "BookmarkDVD", new { id = item.id, Controller = "LibraryItems" })
+                            @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Searchbar", contr = "Home", Controller = "LibraryItems" })
                         </div>
                     }
                 }

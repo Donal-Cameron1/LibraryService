@@ -75,27 +75,16 @@ namespace LibraryService.Data.DAO
         public IList<DVD> GetNewDVDs()
         {
             var baselineDate = DateTime.Now.AddDays(-7);
-            IList<DVD> newDVDs = db.DVD.AsNoTracking().Where(x => x.DateAdded > baselineDate).OrderByDescending(x => x.DateAdded).ToList();
+            IList<DVD> newDVDs = db.DVD
+                .Include(b => b.BookmarkedBy)
+                .Include(b => b.ReservedBy)
+                .Include(b => b.LoanedBy)
+                .AsNoTracking()
+                .Where(x => x.DateAdded > baselineDate)
+                .OrderByDescending(x => x.DateAdded).ToList();
             return newDVDs;
         }
 
-        public void BookmarkDVD(int id, string currentUserId)
-        {
-            DVD dvd = GetDVDWithTracking(db, id);
-            User user = UserDAO.GetUserWithTracking(db, currentUserId);
-            user.BookmarkedLibraryItems.Add(dvd);
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-        }
-
-        public void DeleteBookmark(int id, string currentUserId)
-        {
-            DVD dvd = GetDVDWithTracking(db, id);
-            User user = UserDAO.GetUserWithTracking(db, currentUserId);
-            user.BookmarkedLibraryItems.Remove(dvd);
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-        }
 
         public void ReserveDVD(int id, string currentUserId)
         {

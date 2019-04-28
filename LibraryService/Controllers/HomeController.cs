@@ -162,18 +162,6 @@ namespace LibraryService.Controllers
             return View(dvd);
         }
 
-        public ActionResult BookmarkNewBook(int id)
-        {
-            _bookService.BookmarkBook(id, User.Identity.GetUserId());
-            return RedirectToAction("Index", "Home");
-        }
-
-        public ActionResult BookmarkNewDVD(int id)
-        {
-            _dvdService.BookmarkDVD(id, User.Identity.GetUserId());
-            return RedirectToAction("Index", "Home");
-        }
-
         // GET: Books/Reserve/5
         public ActionResult ReserveNewDVD(int id)
         {

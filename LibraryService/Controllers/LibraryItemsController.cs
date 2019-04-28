@@ -95,18 +95,6 @@ namespace LibraryService.Controllers
             return View(dvd);
         }
 
-        public ActionResult BookmarkBook(int id)
-        {
-            _bookService.BookmarkBook(id, User.Identity.GetUserId());
-            return RedirectToAction("Searchbar", "Home");
-        }
-
-        public ActionResult BookmarkDVD(int id)
-        {
-            _dvdService.BookmarkDVD(id, User.Identity.GetUserId());
-            return RedirectToAction("Searchbar", "Home");
-        }
-
         // GET: Books/Reserve/5
         public ActionResult ReserveDVD(int id)
         {
@@ -145,6 +133,18 @@ namespace LibraryService.Controllers
         {
             _bookService.Reserve(id, User.Identity.GetUserId());
             return RedirectToAction("Searchbar", "Home");
+        }
+
+        public ActionResult BookmarkLibraryItem(int id, string method, string contr)
+        {
+            _libraryItemService.BookmarkLibraryItem(id, User.Identity.GetUserId());
+            return RedirectToAction(method, contr);
+        }
+
+        public ActionResult DeleteBookmark(int id, string method, string contr)
+        {
+            _libraryItemService.DeleteBookmark(id, User.Identity.GetUserId());
+            return RedirectToAction(method, contr);
         }
 
     }
