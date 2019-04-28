@@ -106,9 +106,12 @@ namespace LibraryService.Data.DAO
 
         public void ReserveBook(int id, string currentUserId)
         {
+
             Book book = GetBookWithTracking(db, id);
+          
             User user = UserDAO.GetUserWithTracking(db, currentUserId);
-            user.ReservedLibraryItems.Add(book);
+           
+                user.ReservedLibraryItems.Add(book);
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }

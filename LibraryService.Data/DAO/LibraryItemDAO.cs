@@ -61,6 +61,44 @@ namespace LibraryService.Services.Service
             db.SaveChanges();
         }
 
+        public void ExtendLoan(int id)
+        {
+            LibraryItem libraryItem = GetLibraryItemWithTracking(db, id);
+
+            if (libraryItem.Status != Status.Reserved && libraryItem.ReturnDate < DateTime.Today.AddDays(3))
+            {
+                libraryItem.ReturnDate = DateTime.Today.AddDays(7);
+                db.Entry(libraryItem).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
+        public void ReturnLibraryItem(int id)
+        {
+            LibraryItem libraryItem = GetLibraryItemWithTracking(db, id);
+
+            if (libraryItem.Status == Status.Loaned)
+            {
+                libraryItem.LoanedBy = null;
+                libraryItem.Status = Status.Available;
+                libraryItem.ReturnDate = null;
+                libraryItem.Status = Status.Available;
+                db.Entry(libraryItem).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            if (libraryItem.Status == Status.Reserved)
+            {
+                libraryItem.LoanedBy = null;
+                libraryItem.Status = Status.Reserved;
+                libraryItem.ReturnDate = null;
+                libraryItem.Status = Status.Available;
+                db.Entry(libraryItem).State = EntityState.Modified;
+                db.SaveChanges();
+
+            }
+        }
+
         public IList<LibraryItem> TextSearch(IList<LibraryItem> loanedItems, string searchString)
         {
             return loanedItems.Where(b => b.Title.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList<LibraryItem>();

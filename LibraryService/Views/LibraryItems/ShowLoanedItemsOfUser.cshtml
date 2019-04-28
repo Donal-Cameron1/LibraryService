@@ -76,14 +76,14 @@
                 {
         <td>
             @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
-            @Html.ActionLink("Extend loan", "", new { id = item.id })
+            @Html.ActionLink("Extend loan", "ExtendLoan", new { id = item.id })
         </td>
                 }
         @if (item.Type == LibraryService.Models.Type.DVD)
                 {
         <td>
             @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
-            @Html.ActionLink("Extend loan", "", new { id = item.id })
+            @Html.ActionLink("Extend loan", "ExtendLoan", new { id = item.id })
         </td>
                 }
 

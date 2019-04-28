@@ -105,6 +105,7 @@ namespace LibraryService.Services.Service
             if (dvd.Status == Status.Loaned)
             {
                 dvd.ReservedUntil = dvd.ReturnDate.Value.AddDays(5);
+                dvd.Status = Status.Reserved;
                 _dvdDAO.UpdateDVD(dvd);
                 _dvdDAO.ReserveDVD(id, currentUserId);
             }

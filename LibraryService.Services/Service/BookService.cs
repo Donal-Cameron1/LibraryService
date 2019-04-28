@@ -112,6 +112,7 @@ namespace LibraryService.Services.Service
             if (book.Status == Status.Loaned)
             {
                 book.ReservedUntil = book.ReturnDate.Value.AddDays(5);
+                book.Status = Status.Reserved;
                 _bookDAO.UpdateBook(book);
                 _bookDAO.ReserveBook(id, currentUserId);
             }
