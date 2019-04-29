@@ -72,8 +72,8 @@
             @Html.DisplayFor(modelItem => item.ReturnDate)
         </td>
         <td>
-            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |
-            @Html.ActionLink("Unreserve", "DeleteReservation", new { id = item.id, method = "ShowItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |
+            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowReservedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |
+            @Html.ActionLink("Unreserve", "DeleteReservation", new { id = item.id, method = "ShowReservedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) 
         </td>
 
     </tr>
