@@ -6,7 +6,7 @@
 
 @if (Model.Any())
 {
-<h2>GetReservedItems</h2>
+<h2>Loaned Items</h2>
 
 <table class="table">
     <tr>
@@ -95,9 +95,8 @@
             @Html.DisplayFor(modelItem => item.ReservedUntil)
         </td>
         <td>
-            @Html.ActionLink("Loan", "LoanItem", new { id = item.id, userId = item.ReservedBy }) |
             @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "UsersAdmin", Controller = "LibraryItems" })
             @Html.ActionLink("Delete", "Delete", new { id = item.id })
         </td>
     </tr>
