@@ -451,7 +451,7 @@
     <Content Include="Views\Library\_MapsPartial.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\LibraryItems\ShowBookmarks.cshtml" />
-    <Content Include="Views\LibraryItems\ShowItemsOfUser.cshtml" />
+    <Content Include="Views\LibraryItems\ShowReservedItemsOfUser.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Home\DetailsBook.cshtml" />
     <Content Include="Views\Home\DetailsDVD.cshtml" />
