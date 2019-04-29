@@ -84,7 +84,7 @@ namespace LibraryService.Controllers
         public ActionResult LoanItem(int id, string ReservedBy)
         {
             _libraryItemService.LoanLibraryItem(id);
-            return RedirectToAction("GetReservedItems", "Admin", new { id = ReservedBy });
+            return RedirectToAction("Index", "UsersAdmin", new { id = ReservedBy });
         }
 
         public ActionResult ReturnLibraryItem(int id)
