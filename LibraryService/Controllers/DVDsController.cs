@@ -2,7 +2,6 @@
 using LibraryService.Models;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
-using Microsoft.AspNet.Identity;
 using PagedList;
 using System;
 using System.Collections.Generic;

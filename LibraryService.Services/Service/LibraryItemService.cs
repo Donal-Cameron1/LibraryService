@@ -104,10 +104,10 @@ namespace LibraryService.Services.Service
                         if (item.ReservedUntil != null && (item.ReservedUntil.Value.AddDays(1).CompareTo(DateTime.Today) <= 0))
                         {
                             item.ReservedUntil = null;
-                            item.Status = Status.Available;                        
+                            item.Status = Status.Available;
                             _libraryItemDAO.UpdateLibraryItem(item);
                             _libraryItemDAO.DeleteReservation(item.id, user.UserId);
-                          
+
                         }
                     }
                 }

@@ -57,10 +57,10 @@ namespace LibraryService.Controllers
             {
                 return View(loanedItems);
             }
-            else 
+            else
             {
                 items = _libraryItemService.TextSearch(loanedItems, searchString);
-                return View(items);    
+                return View(items);
             }
 
         }
@@ -92,9 +92,5 @@ namespace LibraryService.Controllers
             _libraryItemService.ReturnLibraryItem(id);
             return RedirectToAction("GetLoanedLibraryItems");
         }
-
-
     }
-
-
 }

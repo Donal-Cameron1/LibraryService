@@ -26,14 +26,5 @@ namespace LibraryService.Services.IService
         IList<Book> BookStatusFilter(IList<Book> query, string status);
 
         IList<Book> BookTypeFilter(IList<Book> query, string type);
-
-        //void LoanBook(List<int> idList, string currentUserId);
-
-        //List<Book> GetBooksForUserID(string UserID);
-
-        //void ReturnBook(int BookID);
-
-        //void RenewBook(int BookID);
-
     }
 }

@@ -49,7 +49,7 @@ namespace LibraryService.Services.Service
         }
 
         public IList<LibraryItem> GetOverdueLibraryItems()
-        {          
+        {
             var baselineDate = DateTime.Today;
             return db.LibraryItems.Where(b => b.ReturnDate < baselineDate).OrderByDescending(b => b.ReturnDate).ToList();
         }

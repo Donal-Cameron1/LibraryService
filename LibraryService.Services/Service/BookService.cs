@@ -80,27 +80,5 @@ namespace LibraryService.Services.Service
         {
             return _bookDAO.GetNewBooks();
         }
-
-
-        /*public void LoanBook(List<int> idList, string currentUserId)
-        {
-            _bookDAO.LoanBook(idList, currentUserId);
-        }
-
-
-        public List<Book> GetBooksForUserID(string UserID)
-        {
-            return _bookDAO.GetBooksForUserID(UserID);
-        }
-
-        public void ReturnBook(int BookID)
-        {
-            _bookDAO.ReturnBook(BookID);
-        }
-
-        public void RenewBook(int BookID)
-        {
-            _bookDAO.RenewBook(BookID);
-        }*/
     }
 }

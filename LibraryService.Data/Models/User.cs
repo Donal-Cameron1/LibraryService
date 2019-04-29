@@ -27,14 +27,5 @@ namespace LibraryService.Models
 
         [InverseProperty("LoanedBy")]
         public ICollection<LibraryItem> LoanedLibraryItems { get; set; }
-
-        /*
-        [InverseProperty("LoanedBy")]
-        public Dictionary<Book, DateTime> LoanedBooks { get; set; }
-
-        [InverseProperty("LoanedBy")]
-        public Dictionary<DVD, DateTime> LoanedDVDs { get; set; }*/
-
-
     }
 }

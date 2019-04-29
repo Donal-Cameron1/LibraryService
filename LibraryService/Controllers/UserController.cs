@@ -116,40 +116,6 @@ namespace LibraryService.Controllers
             _userService.DeleteUser(user);
             return RedirectToAction("Index");
         }
-
-        public ActionResult StartCheckout(string id)
-
-        {
-            Session["UserId"] = id;
-
-            ViewBag.Customer = id;
-
-            return RedirectToAction("CheckoutBook", "Books");
-
-        }
-
-        public ActionResult ReturnBook(string id)
-
-        {
-            Session["UserId"] = id;
-
-            ViewBag.Customer = id;
-
-            return RedirectToAction("ReturnBooks", "Books");
-
-        }
-
-        public ActionResult RenewBook(string id)
-
-        {
-            Session["UserId"] = id;
-
-            ViewBag.Customer = id;
-
-            return RedirectToAction("RenewBooks", "Books");
-
-        }
-
     }
 
 }

@@ -73,17 +73,17 @@
         </td>
         @if (item.ReservedBy == null && item.ReservedUntil == null)
         {
-            <td>
-                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |
-                @Html.ActionLink("Extend loan", "ExtendLoan", new { id = item.id })
-            </td>
+        <td>
+            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |
+            @Html.ActionLink("Extend loan", "ExtendLoan", new { id = item.id })
+        </td>
 
         }
         else
         {
-            <td>
-                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) 
-            </td>
+        <td>
+            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" })
+        </td>
         }
     </tr>
         }

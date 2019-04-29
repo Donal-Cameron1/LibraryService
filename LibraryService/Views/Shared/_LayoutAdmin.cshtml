@@ -33,7 +33,7 @@
                     <li>@Html.ActionLink("Users", "Index", "UsersAdmin")</li>
                     <li>@Html.ActionLink("Return Items", "GetLoanedLibraryItems", "Admin")</li>
                     <li>@Html.ActionLink("Overdue Items", "GetOverdueLibraryItems", "Admin")</li>
-                    @if (User.IsInRole("Admin")) { 
+                    @if (User.IsInRole("Admin")) {
                     <li>@Html.ActionLink("Roles", "Index", "RolesAdmin")</li>
                     <li>@Html.ActionLink("Create Admin", "Index", "InitAdmin")</li>
                     }

@@ -39,57 +39,57 @@
 
 @using (Html.BeginForm())
 {
-    <p>
-        Search Libraries: @Html.TextBox("searchString")
-        <input type="submit" value="Search" />
-    </p>
+<p>
+    Search Libraries: @Html.TextBox("searchString")
+    <input type="submit" value="Search" />
+</p>
 }
 
 @if (Model.Any())
 {
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <table class="table">
-                    @foreach (var item in Model)
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <table class="table">
+                @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                <button class="collapsible">@item.Name</button>
-                                <div class="content">
-                                    <p>@item.Address </p>
-                                    <p>@item.PostCode </p>
-                                    <p>@item.TelephoneNumber</p>
-                                    <p>@item.OpeningHours</p>
-                                </div>
-                            </td>
-                        </tr>
+                <tr>
+                    <td>
+                        <button class="collapsible">@item.Name</button>
+                        <div class="content">
+                            <p>@item.Address </p>
+                            <p>@item.PostCode </p>
+                            <p>@item.TelephoneNumber</p>
+                            <p>@item.OpeningHours</p>
+                        </div>
+                    </td>
+                </tr>
                     }
 
-                </table>
-            </div>
-            <div class="col-sm-8">
-                @Html.Partial("_MapsPartial");
-            </div>
+            </table>
+        </div>
+        <div class="col-sm-8">
+            @Html.Partial("_MapsPartial");
         </div>
     </div>
+</div>
 }
 else
 {
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <p>We can't find any Libraries you are looking for.</p>
-            </div>
-            <div class="col-sm-8">
-                @Html.Partial("_MapsPartial");
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <p>We can't find any Libraries you are looking for.</p>
+        </div>
+        <div class="col-sm-8">
+            @Html.Partial("_MapsPartial");
         </div>
     </div>
+</div>
 }
 
-    <script>
+<script>
         var coll = document.getElementsByClassName("collapsible");
         var i;
 
@@ -104,4 +104,4 @@ else
                 }
             });
         }
-    </script>
+</script>

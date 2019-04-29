@@ -103,7 +103,7 @@
 
     @using (Html.BeginForm())
     {
-        @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">
         @Html.ActionLink("Reserve", "ReserveLibraryItemConfirmed", new { id = ViewBag.id, method = ViewBag.method, contr = ViewBag.contr, Controller = "LibraryItems" }, new { @class = "btn btn-default" })

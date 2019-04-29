@@ -26,11 +26,5 @@ namespace LibraryService.Data.IDAO
         IList<Book> GetNewBooks();
 
         IList<LibraryItem> GetReservedBooks();
-
-        //List<Book> GetBooksForUserID(string UserID);
-
-        //void ReturnBook(int BookID);
-
-        //void RenewBook(int BookID);
     }
 }

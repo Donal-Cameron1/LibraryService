@@ -93,35 +93,5 @@ namespace LibraryService.Data.DAO
             return db.LibraryItems.Where(b => b.Status == Status.Reserved).ToList();
 
         }
-
-        /*public List<Book> GetBooksForUserID(string UserID)
-        {
-                IQueryable<Book> books =
-                from b in db.Books
-                where b.UserId == UserID
-                select b;
-            return books.ToList();
-
-        }
-
-        public void ReturnBook(int BookID)
-        {
-            var ThisBook = this.GetBook(BookID);
-            ThisBook.Status = Status.Available;
-            ThisBook.UserId = null;
-            ThisBook.ReturnDate = null;
-            this.UpdateBook(ThisBook);
-
-        }
-
-        public void RenewBook(int BookID)
-        {
-            var ThisBook = this.GetBook(BookID);
-            ThisBook.ReturnDate = DateTime.Today.AddDays(7);
-            this.UpdateBook(ThisBook);
-
-        }*/
-
-
     }
 }
