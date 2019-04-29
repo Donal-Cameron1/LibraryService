@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace LibraryService
 {
+    //Allowing staff and admin to access these functinos but not a normal user.
     [Authorize(Roles = CustomRoles.AdminOrStaff)]
 
     public class UsersAdminController : Controller
@@ -91,7 +92,7 @@ namespace LibraryService
             return View();
         }
 
-        //
+        //Create a user within the database.
         // POST: /Users/Create
         [HttpPost]
         public async Task<ActionResult> Create(RegisterViewModel userViewModel, params string[] selectedRoles)
@@ -128,7 +129,7 @@ namespace LibraryService
             return View();
         }
 
-        //
+        //Edit the information abpout a user including the role
         // GET: /Users/Edit/1
         public async Task<ActionResult> Edit(string id)
         {
@@ -157,7 +158,7 @@ namespace LibraryService
             });
         }
 
-        //
+        //Returns the fields after they have been changed
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -198,7 +199,7 @@ namespace LibraryService
             return View();
         }
 
-        //
+        //Delete a user form the database.
         // GET: /Users/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
@@ -214,7 +215,7 @@ namespace LibraryService
             return View(user);
         }
 
-        //
+        //A page to confirm the deletion of the user
         // POST: /Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

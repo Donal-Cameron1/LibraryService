@@ -45,7 +45,7 @@ namespace LibraryService.Services.Service
         {
             _bookDAO.CreateBook(book);
         }
-
+// Pre set information for when a book is added.
         public Book CreateDefaultBook()
         {
             return new Book()

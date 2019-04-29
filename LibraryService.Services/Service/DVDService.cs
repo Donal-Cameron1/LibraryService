@@ -20,7 +20,7 @@ namespace LibraryService.Services.Service
             _userDAO = new UserDAO();
             _dbUtils = new DbUtils();
         }
-
+//Pre set information for when a DVD is added
         public DVD CreateDefaultDVD()
         {
             return new DVD()

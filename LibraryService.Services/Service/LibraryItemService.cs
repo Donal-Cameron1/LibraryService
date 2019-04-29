@@ -27,7 +27,8 @@ namespace LibraryService.Services.Service
             _dvdDAO = new DVDDAO();
             _libraryItemDAO = new LibraryItemDAO();
         }
-
+        
+        //Returns a list of library items.
         public IList<LibraryItem> GetLibraryItems()
         {
             IList<LibraryItem> libraryItems = new List<LibraryItem>();
@@ -35,7 +36,8 @@ namespace LibraryService.Services.Service
 
             return libraryItems;
         }
-
+       
+        //Returns a list of reserved library items for the logged in user
         public IList<LibraryItem> GetReservedLibraryItemsOfUser(string id)
         {
             IList<LibraryItem> reservedLibraryItems = new List<LibraryItem>();
@@ -43,7 +45,8 @@ namespace LibraryService.Services.Service
 
             return reservedLibraryItems;
         }
-
+        
+        //Returns a list of loaned library items for the logged in user.
         public IList<LibraryItem> GetLoanedLibraryItemsOfUser(string id)
         {
             IList<LibraryItem> loanedLibraryItems = new List<LibraryItem>();
@@ -51,14 +54,16 @@ namespace LibraryService.Services.Service
 
             return loanedLibraryItems;
         }
-
+       
+        //Returns list of all loaned library items
         public IList<LibraryItem> GetLoanedLibraryItems()
         {
             IList<LibraryItem> loanedLibraryItems = new List<LibraryItem>();
             loanedLibraryItems = _libraryItemDAO.GetLoanedLibraryItems();
             return loanedLibraryItems;
         }
-
+        
+        //Returns list of over due items
         public IList<LibraryItem> GetOverdueLibraryItems()
         {
             IList<LibraryItem> overdueLibraryItems = new List<LibraryItem>();
@@ -66,7 +71,7 @@ namespace LibraryService.Services.Service
 
             return overdueLibraryItems;
         }
-
+        //Casts the DVDs to a library item
         private static List<LibraryItem> CastDVDsToLibraryItems(IList<DVD> dvdquery)
         {
             List<LibraryItem> items = new List<LibraryItem>();
@@ -78,7 +83,8 @@ namespace LibraryService.Services.Service
             }
             return items;
         }
-
+        
+        //Casts the books to a library item
         private static List<LibraryItem> CastBooksToLibraryItems(IList<Book> bookquery)
         {
             List<LibraryItem> items = new List<LibraryItem>();
@@ -92,7 +98,7 @@ namespace LibraryService.Services.Service
         }
 
 
-
+        //Updates the books status to available if it has not been reserved
         public void UpdateStatus()
         {
             foreach (User user in _userDAO.GetUsers())
@@ -129,6 +135,7 @@ namespace LibraryService.Services.Service
             _libraryItemDAO.ReturnLibraryItem(id);
         }
 
+        //Sends a email to a newly created account
         public void SendOverdueMail()
         {
             SmtpClient client = new SmtpClient("smtp.googlemail.com");

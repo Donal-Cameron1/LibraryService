@@ -10,6 +10,7 @@ using System.Web.Mvc;
 namespace LibraryService.Controllers
 
 {
+    //Will only allow admins to access these actions.
     [Authorize(Roles = CustomRoles.AdminOrStaff)]
 
     public class AdminController : Controller
@@ -35,19 +36,22 @@ namespace LibraryService.Controllers
         {
             return View();
         }
-
+        
+        //will get a list of the items that have been reserved by a specifc user.
         public ActionResult GetReservedLibraryItemsOfUser(string id)
         {
             IList<LibraryItem> reservedItems = _libraryItemService.GetReservedLibraryItemsOfUser(id);
             return View(reservedItems);
         }
 
+        //Returns all the loned library items by a specifc user
         public ActionResult GetLoanedLibraryItemsOfUser(string id)
         {
             IList<LibraryItem> loanedItems = _libraryItemService.GetLoanedLibraryItemsOfUser(id);
             return View(loanedItems);
         }
 
+        //Gets all the items loaned by any user.
         public ActionResult GetLoanedLibraryItems(string searchString)
         {
             IList<LibraryItem> loanedItems = _libraryItemService.GetLoanedLibraryItems();
@@ -65,6 +69,7 @@ namespace LibraryService.Controllers
 
         }
 
+        //Gets all the items where the returndate has expired
         public ActionResult GetOverdueLibraryItems(string searchString)
         {
             IList<LibraryItem> overdueItems = _libraryItemService.GetOverdueLibraryItems();
@@ -81,6 +86,7 @@ namespace LibraryService.Controllers
             }
         }
 
+        //Loans an item for the user that has reserved it.
         public ActionResult LoanItem(int id, string ReservedBy)
         {
             _libraryItemService.LoanLibraryItem(id);

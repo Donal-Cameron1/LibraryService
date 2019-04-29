@@ -19,6 +19,7 @@ namespace LibraryService.Controllers
             _dvdService = new DVDService();
         }
 
+        //This provides a search bar allowing the user the option to filter items by specific fields
         public IList<DVD> DVDTextSearch(IList<DVD> query, string searchString)
         {
             return _dvdService.DVDTextSearch(query, searchString);
@@ -59,6 +60,7 @@ namespace LibraryService.Controllers
             return View();
         }
 
+        //Displays all the details about the selected DVD
         // GET: DVDs/Details/5
         public ActionResult Details(int id)
         {
@@ -70,6 +72,7 @@ namespace LibraryService.Controllers
             return View(dvd);
         }
 
+        //Allows the staff or admin to add a new DVD into the library system
         // GET: DVDs/Create
         public ActionResult Create()
         {
@@ -91,6 +94,7 @@ namespace LibraryService.Controllers
             return View(dvd);
         }
 
+        //Allow a staff or admin to edit any incorrect fields in the DVD table
         // GET: DVDs/Edit/5
         public ActionResult Edit(int id)
         {
@@ -102,6 +106,7 @@ namespace LibraryService.Controllers
             return View(dvd);
         }
 
+        //Posts the changes that have been made to the DVD
         // POST: DVDs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -117,6 +122,7 @@ namespace LibraryService.Controllers
             return View(dvd);
         }
 
+        //Ability to delete a specifc DVD from the database
         // GET: DVDs/Delete/5
         public ActionResult Delete(int id)
         {
