@@ -11,9 +11,6 @@ namespace LibraryService.Controllers
 {
     public class BooksController : Controller
     {
-
-        //private LibraryContext db = new LibraryContext();
-
         private IBookService _bookService;
         private IUserService _userService;
         private ILibraryService _libraryService;
@@ -22,7 +19,7 @@ namespace LibraryService.Controllers
         {
             _bookService = new BookService();
             _userService = new UserService();
-            _libraryService = new LibrarySiteService();
+            _libraryService = new Services.Service.LibraryService();
         }
 
         public IList<Book> BookTextSearch(IList<Book> query, string searchString)
@@ -42,6 +39,7 @@ namespace LibraryService.Controllers
 
 
         // GET: Books
+        //gets all the books and filters them by the entered searchString, Genre and Status 
         public ActionResult Index(string searchString, string genre, string status, int? page)
         {
             IList<Book> bookquery = _bookService.GetBooks();
@@ -72,6 +70,7 @@ namespace LibraryService.Controllers
         }
 
         // GET: Books/Details/5
+        //returns a view of the selected book and its details 
         public ActionResult Details(int id)
         {
             Book book = _bookService.GetBook(id);
@@ -83,12 +82,14 @@ namespace LibraryService.Controllers
         }
 
         // GET: Books/Create
+        //returns a view with a form to add a book
         public ActionResult Create()
         {
             return View(_bookService.CreateDefaultBook());
         }
 
         // POST: Books/Create
+        //saves the attributes of the new book to the database
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -105,6 +106,7 @@ namespace LibraryService.Controllers
         }
 
         // GET: Books/Edit/5
+        //returns a view of a form with the attributes of the book in it and the possibility to edit them 
         public ActionResult Edit(int id)
         {
             Book book = _bookService.GetBook(id);
@@ -116,6 +118,7 @@ namespace LibraryService.Controllers
         }
 
         // POST: Books/Edit/5
+        //saves the edited book to the database
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -131,6 +134,7 @@ namespace LibraryService.Controllers
         }
 
         // GET: Books/Delete/5
+        //returns a delete confirmation page of the seletced book with its attributes
         public ActionResult Delete(int id)
         {
             Book book = _bookService.GetBook(id);
@@ -142,6 +146,7 @@ namespace LibraryService.Controllers
         }
 
         // POST: Books/Delete/5
+        //removes the selected book from the database
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

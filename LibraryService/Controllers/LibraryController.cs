@@ -14,10 +14,11 @@ namespace LibraryService.Controllers
         private ILibraryService _libraryService;
         public LibraryController()
         {
-            _libraryService = new Services.Service.LibrarySiteService();
+            _libraryService = new Services.Service.LibraryService();
         }
 
         // GET: Library
+        //gets all the libraries and filters them by the entered searchString
         public ActionResult Index(string searchString)
         {
             IQueryable<Library> libraries = _libraryService.GetLibraries();
@@ -41,6 +42,7 @@ namespace LibraryService.Controllers
             return View(library);
         }
 
+        //returns the partial view for the map display
         public ActionResult Detailspartial()
         {
             return View();

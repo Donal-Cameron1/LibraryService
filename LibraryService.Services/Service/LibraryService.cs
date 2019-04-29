@@ -7,13 +7,13 @@ using System.Linq;
 
 namespace LibraryService.Services.Service
 {
-    public class LibrarySiteService : ILibraryService
+    public class LibraryService : ILibraryService
     {
         private ILibraryDAO _libraryDAO;
         private IUserDAO _userDAO;
         private DbUtils _dbUtils;
 
-        public LibrarySiteService()
+        public LibraryService()
         {
             _libraryDAO = new LibraryDAO();
             _userDAO = new UserDAO();
