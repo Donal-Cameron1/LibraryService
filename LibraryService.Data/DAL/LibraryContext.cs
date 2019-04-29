@@ -29,8 +29,8 @@ namespace LibraryService.DAL
                         .Map(cs =>
                          {
                              cs.MapLeftKey("UserId");
-                             cs.MapRightKey("BookId");
-                             cs.ToTable("UserBookmarkedLibraryItems");
+                             cs.MapRightKey("ItemId");
+                             cs.ToTable("BookmarkedLibraryItems");
                          });
         }
     }
