@@ -116,7 +116,12 @@
     {
     <div>
         @Html.ActionLink("Edit", "Edit", new { Controller = "Books", id = Model.id }) |
+        @Html.ActionLink("Back to List", (string)ViewBag.method, (string)ViewBag.contr)
     </div>
     }
-    @Html.ActionLink("Back to List", (string)ViewBag.method, (string)ViewBag.contr)
+    else
+    {
+        @Html.ActionLink("Back to List", (string)ViewBag.method, (string)ViewBag.contr)
+
+    }
 </p>
