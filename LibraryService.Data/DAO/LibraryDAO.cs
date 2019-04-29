@@ -30,6 +30,7 @@ namespace LibraryService.Data.DAO
             db.SaveChanges();
         }
 
+        //gets all libraries from the database
         public IQueryable<Library> GetLibraries()
         {
             IQueryable<Library> libraries = from s
@@ -38,6 +39,7 @@ namespace LibraryService.Data.DAO
             return libraries;
         }
 
+        //gets a single library from the database
         public Library GetLibrary(int id)
         {
             IQueryable<Library> libraries = from s
@@ -47,6 +49,7 @@ namespace LibraryService.Data.DAO
             return libraries.First();
         }
 
+        //filters a list of libraries by the entered searchstring
         public IQueryable<Library> SearchLibraries(IQueryable<Library> libraries, string searchString)
         {
             libraries = libraries.Where(s => s.Name.Contains(searchString)

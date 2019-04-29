@@ -68,7 +68,7 @@ namespace LibraryService.Controllers
         }
 
 
-
+        //gets all the books and dvds from the database, filters them by the entered searchString, genre, status and type 
         public ActionResult Searchbar(string searchString, string genre, string status, string type)
         {
             IList<LibraryItem> items = new List<LibraryItem>();
@@ -107,6 +107,7 @@ namespace LibraryService.Controllers
 
         }
 
+        //casts the dvd to a libraryitem
         private static List<LibraryItem> CastDVDsToLibraryItems(IList<DVD> dvdquery)
         {
             List<LibraryItem> items = new List<LibraryItem>();
@@ -119,6 +120,7 @@ namespace LibraryService.Controllers
             return items;
         }
 
+        //casts a book to libraryitem 
         private static List<LibraryItem> CastBooksToLibraryItems(IList<Book> bookquery)
         {
             List<LibraryItem> items = new List<LibraryItem>();
@@ -131,6 +133,7 @@ namespace LibraryService.Controllers
             return items;
         }
 
+        //gets all items that got added during the last 7 days
         public ActionResult Index()
         {
             IList<LibraryItem> newitems = new List<LibraryItem>();
@@ -140,7 +143,7 @@ namespace LibraryService.Controllers
             return View(newitems.Concat(books).Concat(dvds));
         }
 
-        // GET: Books/Details/5
+        /*// GET: Books/Details/5
         public ActionResult DetailsBook(int id)
         {
             Book book = _bookService.GetBook(id);
@@ -160,7 +163,7 @@ namespace LibraryService.Controllers
                 return HttpNotFound();
             }
             return View(dvd);
-        }
+        }*/
 
         public ActionResult About()
         {
