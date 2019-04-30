@@ -17,16 +17,19 @@
                 <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
                     @Html.DisplayNameFor(model => model.Title)
                 </th>
-                <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                <th onclick="sort(1)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
                     @Html.DisplayNameFor(model => model.Publisher)
                 </th>
-                <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                <th onclick="sort(2)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
                     @Html.DisplayNameFor(model => model.Genre)
                 </th>
-                <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                <th onclick="sort(3)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
                     @Html.DisplayNameFor(model => model.LibraryId)
                 </th>
-                <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                <th onclick="sort(4)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th onclick="sort(5)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
                     @Html.DisplayNameFor(model => model.Status)
                 </th>
                 <th></th>
@@ -35,27 +38,30 @@
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Publisher)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Genre)
-                    </td>
-                    <td>
-                        @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowBookmarks", contr = "LibraryItems", Controller = "LibraryItems" }) |
-                        @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "ShowBookmarks", contr = "LibraryItems", Controller = "LibraryItems" })
-                    </td>
-                </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowBookmarks", contr = "LibraryItems", Controller = "LibraryItems" }) |
+                @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "ShowBookmarks", contr = "LibraryItems", Controller = "LibraryItems" })
+            </td>
+        </tr>
             }
     </table>
 

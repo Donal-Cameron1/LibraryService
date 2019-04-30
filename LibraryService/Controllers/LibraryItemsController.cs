@@ -3,6 +3,7 @@ using LibraryService.Models;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -113,7 +114,7 @@ namespace LibraryService.Controllers
             ViewBag.contr = contr;
             ViewBag.id = id;
 
-            if (libraryItem.Type == Type.Book)
+            if (libraryItem.Type == Models.Type.Book)
             {
                 return View("ReserveLibraryItemBook", (Book)libraryItem);
             }

@@ -9,7 +9,7 @@
 @if (Model.Any())
 {
     <h2>Your laoned items</h2>
-    <p>Items loan can only be extended if there is less than 3 days on their loan.</p>
+    <p>A loan can only be extended if there is less than 3 days on their loan.</p>
 
     <table class="table" id="myTable">
         <thead class="bg-info">
@@ -27,9 +27,12 @@
                     @Html.DisplayNameFor(model => model.LibraryId)
                 </th>
                 <th onclick="sort(4)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.Status)
+                    @Html.DisplayNameFor(model => model.Type)
                 </th>
                 <th onclick="sort(5)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th onclick="sort(6)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
                     @Html.DisplayNameFor(model => model.ReturnDate)
                 </th>
                 <th></th>
@@ -38,40 +41,43 @@
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Publisher)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Genre)
-                    </td>
-                    <td>
-                        @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReturnDate)
-                    </td>
-                    @if (item.ReservedBy == null && item.ReservedUntil == null)
-                    {
-                        <td>
-                            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |
-                            @Html.ActionLink("Extend loan", "ExtendLoan", new { id = item.id })
-                        </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
+            @if (item.ReservedBy == null && item.ReservedUntil == null && item.ReturnDate < DateTime.Today.AddDays(3) && item.ReturnDate > DateTime.Today)
+            {
+                <td>
+                    @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" }) |
+                    @Html.ActionLink("Extend loan", "ExtendLoan", new { id = item.id })
+                </td>
 
-                    }
-                    else
-                    {
-                        <td>
-                            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" })
-                        </td>
-                    }
-                </tr>
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowLoanedItemsOfUser", contr = "LibraryItems", Controller = "LibraryItems" })
+                </td>
+            }
+        </tr>
             }
     </table>
 

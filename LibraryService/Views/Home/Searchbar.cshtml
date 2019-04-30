@@ -41,6 +41,15 @@
                             "Select Type",
                             new { @class = "form-control"})
             </div>
+            <div>
+                @Html.DropDownList("Library",
+                                 new SelectList(new LibraryService.DAL.LibraryContext().Libraries.Select(x =>
+                                 new SelectListItem{
+                                     Value = x.LibraryId.ToString(),
+                                     Text = x.Name
+                                 }), "Value", "Text"), "Select Library", htmlAttributes : new { @class = "form-control"})
+
+            </div>
         </div>
     </p>
 }
@@ -58,11 +67,17 @@
                 <th onclick="sort(1)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
                     Publisher
                 </th>
+                <th onclick="sort(3)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    Genre
+                </th>
                 <th onclick="sort(2)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
                     Type
                 </th>
-                <th onclick="sort(3)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    Genre
+                <th onclick="sort(4)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    Library
+                </th>
+                <th onclick="sort(5)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    Status
                 </th>
                 <th></th>
             </tr>
@@ -79,10 +94,16 @@
                     @Html.DisplayFor(modelItem => item.Publisher)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Type)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
+                    @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
                     @if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))

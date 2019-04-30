@@ -73,7 +73,7 @@ namespace LibraryService.Services.Service
         }
 
         //Casts the DVDs to a library item list, so that genre gets displayed correctly
-        private static List<LibraryItem> CastDVDsToLibraryItems(IList<DVD> dvdquery)
+        public static List<LibraryItem> CastDVDsToLibraryItems(IList<DVD> dvdquery)
         {
             List<LibraryItem> items = new List<LibraryItem>();
             foreach (DVD dvd in dvdquery.ToList())
@@ -86,7 +86,7 @@ namespace LibraryService.Services.Service
         }
         
         //Casts the books to a library item list, so that genre gets displayed correctly
-        private static List<LibraryItem> CastBooksToLibraryItems(IList<Book> bookquery)
+        public static List<LibraryItem> CastBooksToLibraryItems(IList<Book> bookquery)
         {
             List<LibraryItem> items = new List<LibraryItem>();
             foreach (Book book in bookquery.ToList())
@@ -155,7 +155,8 @@ namespace LibraryService.Services.Service
                         mailMessage.From = new MailAddress("LibraryServiceSheffield@gmail.com");
                         mailMessage.To.Add(user.UserName);
                         mailMessage.Subject = "Overdue Item";
-                        mailMessage.Body = "Dear Customer. The item" + libraryItem.Title + "is overdue. Please bring it back to the Library as soon as possible. Regards, Library Service Sheffield";
+                        mailMessage.IsBodyHtml = true;
+                        mailMessage.Body = "Dear Customer.  <br /> <br /> The " + libraryItem.Type + " " + libraryItem.Title + " is overdue.  <br /> Please bring it back to the Library as soon as possible. <br /> <br />  Regards, <br /> Library Service Sheffield";
 
                         client.Send(mailMessage);
                     }
@@ -192,6 +193,13 @@ namespace LibraryService.Services.Service
         public LibraryItem GetLibraryItem(int id)
         {
             return _libraryItemDAO.GetLibaryItem(id);
+        }
+
+        public static List<LibraryItem> AssignCorrectGenre(IList<LibraryItem> libraryItems)
+        {
+            List<Book> books = libraryItems.Where(i => i.Type == Models.Type.Book).Cast<Book>().ToList();
+            List<DVD> dvds = libraryItems.Where(i => i.Type == Models.Type.DVD).Cast<DVD>().ToList();
+            return new List<LibraryItem>().Concat(CastBooksToLibraryItems(books)).Concat(CastDVDsToLibraryItems(dvds)).ToList();
         }
     }
 }

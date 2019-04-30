@@ -52,6 +52,11 @@ namespace LibraryService.Data.DAO
             return query.Where(d => d.Type.ToString().Equals(type)).ToList<DVD>();
         }
 
+        public IList<DVD> DVDLibraryFilter(IList<DVD> query, string library)
+        {
+            return query.Where(d => d.LibraryId.ToString().Equals(library)).ToList<DVD>();
+        }
+
         //saves any changes to the database
         public void UpdateDVD(DVD dvd)
         {

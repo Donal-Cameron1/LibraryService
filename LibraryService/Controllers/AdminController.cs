@@ -31,30 +31,24 @@ namespace LibraryService.Controllers
             _userService = new UserService();
         }
 
-        // GET: Admin
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         //Returns a list of loaned library items for the selected user in Staff/Admin View
         public ActionResult GetReservedLibraryItemsOfUser(string id)
         {
-            IList<LibraryItem> reservedItems = _libraryItemService.GetReservedLibraryItemsOfUser(id);
+            IList<LibraryItem> reservedItems = LibraryItemService.AssignCorrectGenre(_libraryItemService.GetReservedLibraryItemsOfUser(id));
             return View(reservedItems);
         }
 
         //Returns a list of loaned library items for the selected user in Staff/Admin View
         public ActionResult GetLoanedLibraryItemsOfUser(string id)
         {
-            IList<LibraryItem> loanedItems = _libraryItemService.GetLoanedLibraryItemsOfUser(id);
+            IList<LibraryItem> loanedItems = LibraryItemService.AssignCorrectGenre(_libraryItemService.GetLoanedLibraryItemsOfUser(id));
             return View(loanedItems);
         }
 
         //Gets all loaned items and filters them by the entered searchstring
         public ActionResult GetLoanedLibraryItems(string searchString)
         {
-            IList<LibraryItem> loanedItems = _libraryItemService.GetLoanedLibraryItems();
+            IList<LibraryItem> loanedItems = LibraryItemService.AssignCorrectGenre(_libraryItemService.GetLoanedLibraryItems());
             IList<LibraryItem> items = new List<LibraryItem>();
 
             if (String.IsNullOrEmpty(searchString))
@@ -72,7 +66,7 @@ namespace LibraryService.Controllers
         //gets all overdue items and filters them by the entered searchString
         public ActionResult GetOverdueLibraryItems(string searchString)
         {
-            IList<LibraryItem> overdueItems = _libraryItemService.GetOverdueLibraryItems();
+            IList<LibraryItem> overdueItems = LibraryItemService.AssignCorrectGenre(_libraryItemService.GetOverdueLibraryItems());
             IList<LibraryItem> items = new List<LibraryItem>();
 
             if (String.IsNullOrEmpty(searchString))
@@ -90,7 +84,7 @@ namespace LibraryService.Controllers
         public ActionResult LoanItem(int id, string ReservedBy)
         {
             _libraryItemService.LoanLibraryItem(id);
-            return RedirectToAction("Index", "UsersAdmin", new { id = ReservedBy });
+            return RedirectToAction("GetReservedLibraryItemsOfUser", "Admin", new { id = ReservedBy });
         }
 
         public ActionResult ReturnLibraryItem(int id)

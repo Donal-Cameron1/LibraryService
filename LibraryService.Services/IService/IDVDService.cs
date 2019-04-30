@@ -26,5 +26,6 @@ namespace LibraryService.Services.IService
         IList<DVD> DVDTypeFilter(IList<DVD> query, string type);
 
         IList<DVD> GetDVDs();
+        IList<DVD> DVDLibraryFilter(IList<DVD> query, string library);
     }
 }

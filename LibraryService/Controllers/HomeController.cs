@@ -67,17 +67,27 @@ namespace LibraryService.Controllers
             return _dvdService.DVDTypeFilter(query, type);
         }
 
+        public IList<Book> BookLibraryFilter(IList<Book> query, string library)
+        {
+            return _bookService.BookLibraryFilter(query, library);
+        }
+
+        public IList<DVD> DVDLibraryFilter(IList<DVD> query, string library)
+        {
+            return _dvdService.DVDLibraryFilter(query, library);
+        }
 
         //gets all the books and dvds from the database, filters them by the entered searchString, genre, status and type 
-        public ActionResult Searchbar(string searchString, string genre, string status, string type)
+        public ActionResult Searchbar(string searchString, string genre, string status, string type, string library)
         {
             IList<LibraryItem> items = new List<LibraryItem>();
             IList<Book> bookquery = _bookService.GetBooks();
             IList<DVD> dvdquery = _dvdService.GetDVDs();
 
 
-            if (String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(genre) && String.IsNullOrEmpty(status) && String.IsNullOrEmpty(type))
+            if (String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(genre) && String.IsNullOrEmpty(status) && String.IsNullOrEmpty(type) && String.IsNullOrEmpty(library))
             {
+                items = _libraryItemService.GetLibraryItems();
                 return View(items);
             }
             if (!String.IsNullOrEmpty(searchString))
@@ -100,70 +110,27 @@ namespace LibraryService.Controllers
                 bookquery = BookTypeFilter(bookquery, type);
                 dvdquery = DVDTypeFilter(dvdquery, type);
             }
+            if (!String.IsNullOrEmpty(library))
+            {
+                bookquery = BookLibraryFilter(bookquery, library);
+                dvdquery = DVDLibraryFilter(dvdquery, library);
+            }
 
             //concatenate bookquery and dvdquery to one list of LibraryItems
-            items = items.Concat(CastBooksToLibraryItems(bookquery)).Concat(CastDVDsToLibraryItems(dvdquery)).ToList();
+            items = items.Concat(LibraryItemService.CastBooksToLibraryItems(bookquery)).Concat(LibraryItemService.CastDVDsToLibraryItems(dvdquery)).ToList();
             return View(items);
 
-        }
-
-        //casts the dvd to a libraryitem
-        private static List<LibraryItem> CastDVDsToLibraryItems(IList<DVD> dvdquery)
-        {
-            List<LibraryItem> items = new List<LibraryItem>();
-            foreach (DVD dvd in dvdquery.ToList())
-            {
-                LibraryItem item = dvd;
-                item.Genre = (Genre)Enum.Parse(typeof(Genre), dvd.DVDGenre.ToString());
-                items.Add(item);
-            }
-            return items;
-        }
-
-        //casts a book to libraryitem 
-        private static List<LibraryItem> CastBooksToLibraryItems(IList<Book> bookquery)
-        {
-            List<LibraryItem> items = new List<LibraryItem>();
-            foreach (Book book in bookquery.ToList())
-            {
-                LibraryItem item = book;
-                item.Genre = (Genre)Enum.Parse(typeof(Genre), book.BookGenre.ToString());
-                items.Add(item);
-            }
-            return items;
         }
 
         //gets all items that got added during the last 7 days
         public ActionResult Index()
         {
             IList<LibraryItem> newitems = new List<LibraryItem>();
-            IEnumerable<LibraryItem> dvds = CastDVDsToLibraryItems(_dvdService.GetNewDVDs());
-            IEnumerable<LibraryItem> books = CastBooksToLibraryItems(_bookService.GetNewBooks());
+            IEnumerable<LibraryItem> dvds = LibraryItemService.CastDVDsToLibraryItems(_dvdService.GetNewDVDs());
+            IEnumerable<LibraryItem> books = LibraryItemService.CastBooksToLibraryItems(_bookService.GetNewBooks());
 
             return View(newitems.Concat(books).Concat(dvds));
         }
-
-        /*// GET: Books/Details/5
-        public ActionResult DetailsBook(int id)
-        {
-            Book book = _bookService.GetBook(id);
-            if (book == null)
-            {
-                return HttpNotFound();
-            }
-            return View(book);
-        }
-
-        // GET: DVDs/Details/5
-        public ActionResult DetailsDVD(int id)
-        {
-            DVD dvd = _dvdService.GetDVD(id);
-            if (dvd == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dvd);
-        }*/
 
         public ActionResult About()
         {

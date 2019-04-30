@@ -27,7 +27,6 @@ namespace LibraryService.Services.Service
         }
 
         //gets a single library item without tracking and loads ReservedBy, LoanedBy, BookmarkedBy with it
-
         public LibraryItem GetLibaryItem(int id)
         {
             return db.LibraryItems

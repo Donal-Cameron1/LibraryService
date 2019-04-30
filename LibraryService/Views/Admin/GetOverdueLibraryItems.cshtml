@@ -68,20 +68,10 @@
                 @Html.DisplayFor(modelItem => item.ReturnDate)
             </td>
 
-            @if (item.Type == LibraryService.Models.Type.Book)
-            {
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
-                    @Html.ActionLink("Return Item", "DeleteReservation", new { id = item.id, Controller = "Books" })
-                </td>
-            }
-            @if (item.Type == LibraryService.Models.Type.DVD)
-            {
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
-                    @Html.ActionLink("Return Item", "DeleteReservation", new { id = item.id, Controller = "DVDs" })
-                </td>
-            }
+            <td>
+                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "GetOverdueLibraryItems", contr = "Admin", Controller = "LibraryItems" }) |
+                @Html.ActionLink("Return Item", "ReturnLibraryItem", new { id = item.id, Controller = "Admin" })
+            </td>
 
         </tr>
             }

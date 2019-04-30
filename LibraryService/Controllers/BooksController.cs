@@ -37,10 +37,15 @@ namespace LibraryService.Controllers
             return _bookService.BookStatusFilter(query, status);
         }
 
+        public IList<Book> BookLibraryFilter(IList<Book> query, string library)
+        {
+            return _bookService.BookLibraryFilter(query, library);
+        }
+
 
         // GET: Books
         //gets all the books and filters them by the entered searchString, Genre and Status 
-        public ActionResult Index(string searchString, string genre, string status, int? page)
+        public ActionResult Index(string searchString, string genre, string status, string library, int? page)
         {
             IList<Book> bookquery = _bookService.GetBooks();
             var pageNumber = page ?? 1;
@@ -57,10 +62,11 @@ namespace LibraryService.Controllers
             {
                 bookquery = BookStatusFilter(bookquery, status);
             }
-            if (!bookquery.Any())
+            if (!String.IsNullOrEmpty(library))
             {
-                ViewBag.message = "Sorry, we can't find any books";
+                bookquery = BookLibraryFilter(bookquery, library);
             }
+           
 
             //show 10 Books on one page
             var onePageOfBooks = bookquery.ToPagedList(pageNumber, 10);

@@ -26,5 +26,8 @@ namespace LibraryService.Services.IService
         IList<Book> BookStatusFilter(IList<Book> query, string status);
 
         IList<Book> BookTypeFilter(IList<Book> query, string type);
+
+        IList<Book> BookLibraryFilter(IList<Book> query, string library);
+
     }
 }

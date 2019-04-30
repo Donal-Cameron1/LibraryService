@@ -41,11 +41,17 @@ namespace LibraryService.Services.Service
             return _bookDAO.BookTypeFilter(query, type);
         }
 
+        public IList<Book> BookLibraryFilter(IList<Book> query, string library)
+        {
+            return _bookDAO.BookLibraryFilter(query, library);
+        }
+
         public void CreateBook(Book book)
         {
             _bookDAO.CreateBook(book);
         }
-// Pre set information for when a book is added.
+
+        // Pre set information for when a book is added.
         public Book CreateDefaultBook()
         {
             return new Book()
@@ -80,5 +86,7 @@ namespace LibraryService.Services.Service
         {
             return _bookDAO.GetNewBooks();
         }
+
+       
     }
 }

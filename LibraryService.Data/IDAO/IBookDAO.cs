@@ -26,5 +26,6 @@ namespace LibraryService.Data.IDAO
         IList<Book> GetNewBooks();
 
         IList<LibraryItem> GetReservedBooks();
+        IList<Book> BookLibraryFilter(IList<Book> query, string library);
     }
 }

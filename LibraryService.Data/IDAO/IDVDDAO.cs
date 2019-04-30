@@ -27,5 +27,6 @@ namespace LibraryService.Data.IDAO
         IList<DVD> GetDVDs();
 
         IList<DVD> GetReservedDVDs();
+        IList<DVD> DVDLibraryFilter(IList<DVD> query, string library);
     }
 }

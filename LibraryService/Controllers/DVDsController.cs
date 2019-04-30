@@ -5,6 +5,7 @@ using LibraryService.Services.Service;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace LibraryService.Controllers
@@ -35,9 +36,14 @@ namespace LibraryService.Controllers
             return _dvdService.DVDStatusFilter(query, status);
         }
 
+        public IList<DVD> DVDLibraryFilter(IList<DVD> query, string library)
+        {
+            return _dvdService.DVDLibraryFilter(query, library);
+        }
+
         // GET: DVDs
         //gets all the books and filters them by the entered searchString, Genre and Status 
-        public ActionResult Index(string searchString, string genre, string status, int? page)
+        public ActionResult Index(string searchString, string genre, string status, string library, int? page)
         {
             IList<DVD> dvdquery = _dvdService.GetDVDs();
             var pageNumber = page ?? 1;
@@ -54,6 +60,11 @@ namespace LibraryService.Controllers
             {
                 dvdquery = DVDStatusFilter(dvdquery, status);
             }
+            if (!String.IsNullOrEmpty(library))
+            {
+                dvdquery = DVDLibraryFilter(dvdquery, library);
+            }
+
 
             //show 10 DVDs on one page
             var onePageOfDVDs = dvdquery.ToPagedList(pageNumber, 10);

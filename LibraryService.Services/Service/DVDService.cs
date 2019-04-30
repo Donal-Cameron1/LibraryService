@@ -20,7 +20,8 @@ namespace LibraryService.Services.Service
             _userDAO = new UserDAO();
             _dbUtils = new DbUtils();
         }
-//Pre set information for when a DVD is added
+
+        //Pre set information for when a DVD is added
         public DVD CreateDefaultDVD()
         {
             return new DVD()
@@ -61,6 +62,11 @@ namespace LibraryService.Services.Service
             return _dvdDAO.DVDTypeFilter(query, type);
         }
 
+        public IList<DVD> DVDLibraryFilter(IList<DVD> query, string library)
+        {
+            return _dvdDAO.DVDLibraryFilter(query, library);
+        }
+
         public void UpdateDVD(DVD dvd)
         {
             _dvdDAO.UpdateDVD(dvd);
@@ -79,6 +85,6 @@ namespace LibraryService.Services.Service
         public IList<DVD> GetNewDVDs()
         {
             return _dvdDAO.GetNewDVDs();
-        }
+        }      
     }
 }

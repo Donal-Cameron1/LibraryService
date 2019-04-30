@@ -431,7 +431,6 @@
     <Content Include="Views\InitAdmin\Error.cshtml" />
     <Content Include="Views\Books\Create.cshtml" />
     <Content Include="Views\Books\Delete.cshtml" />
-    <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Books\Edit.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -445,7 +444,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\DVDs\Create.cshtml" />
     <Content Include="Views\DVDs\Delete.cshtml" />
-    <Content Include="Views\DVDs\Details.cshtml" />
     <Content Include="Views\DVDs\Edit.cshtml" />
     <Content Include="Views\DVDs\Index.cshtml" />
     <Content Include="Views\Library\_MapsPartial.cshtml" />
@@ -453,8 +451,6 @@
     <Content Include="Views\LibraryItems\ShowBookmarks.cshtml" />
     <Content Include="Views\LibraryItems\ShowReservedItemsOfUser.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
-    <Content Include="Views\Home\DetailsBook.cshtml" />
-    <Content Include="Views\Home\DetailsDVD.cshtml" />
     <Content Include="Views\Shared\_LoginPartialAdmin.cshtml" />
     <Content Include="Views\Admin\GetReservedLibraryItemsOfUser.cshtml" />
     <Content Include="Views\LibraryItems\ShowLoanedItemsOfUser.cshtml" />

@@ -37,6 +37,12 @@ namespace LibraryService.Data.DAO
             return query.Where(b => b.Type.ToString().Equals(type)).ToList<Book>();
         }
 
+        //filters a list of book by librray
+        public IList<Book> BookLibraryFilter(IList<Book> query, string library)
+        {
+            return query.Where(b => b.LibraryId.ToString().Equals(library)).ToList<Book>();
+        }
+
         //adds a new created book to the database
         public void CreateBook(Book book)
         {
@@ -59,14 +65,15 @@ namespace LibraryService.Data.DAO
             db.SaveChanges();
         }
 
-        //gets a single book from the database
+        //gets a single book without tracking from the database
         public Book GetBook(int id)
         {
-            var book =
+            return db.Books.AsNoTracking().Where(b => b.id == id).FirstOrDefault();
+            /*var book =
                 from b in db.Books
                 where b.id == id
                 select b;
-            return book.First();
+            return book.First();*/
         }
 
         //gets all books from the database and loads BookmarkedBy, reservedBy, loanedBy with it
