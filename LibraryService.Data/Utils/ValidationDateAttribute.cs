@@ -12,16 +12,4 @@ namespace LibraryService.utils
         { }
     }
 
-    public class ValidationYearInPast : RangeAttribute
-    {
-        public ValidationYearInPast() : base(1500, DateTime.Today.Year) { }
-    }
-
-    public static class CustomRoles
-    {
-        public const string Admin = "Admin";
-        public const string Staff = "Staff";
-        public const string User = "User";
-        public const string AdminOrStaff = Admin + "," + Staff;
-    }
 }

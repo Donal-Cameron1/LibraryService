@@ -57,9 +57,9 @@
     <Content Include="Content\PagedList.css" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibraryService.Data\LibraryService.Data.csproj">
+    <ProjectReference Include="..\LibraryService.Data\LibrarySystem.Data.csproj">
       <Project>{78665550-6ffc-4948-a929-959f39a22073}</Project>
-      <Name>LibraryService.Data</Name>
+      <Name>LibrarySystem.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

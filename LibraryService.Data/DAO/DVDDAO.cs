@@ -87,10 +87,10 @@ namespace LibraryService.Data.DAO
                 .AsNoTracking().ToList();
         }
 
-        //gets all dvds that got added during the last 7 days
+        //gets all dvds that got added during the last 14 days
         public IList<DVD> GetNewDVDs()
         {
-            var baselineDate = DateTime.Now.AddDays(-7);
+            var baselineDate = DateTime.Now.AddDays(-14);
             IList<DVD> newDVDs = db.DVD
                 .Include(b => b.BookmarkedBy)
                 .Include(b => b.ReservedBy)

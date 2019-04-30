@@ -12,8 +12,6 @@ namespace LibraryService.Controllers
 {
     public class HomeController : Controller
     {
-        private LibraryContext db = new LibraryContext();
-
         private ILibraryItemService _libraryItemService;
         private IBookService _bookService;
         private IDVDService _dvdService;
@@ -122,7 +120,7 @@ namespace LibraryService.Controllers
 
         }
 
-        //gets all items that got added during the last 7 days
+        //gets all items that got added during the last 14 days
         public ActionResult Index()
         {
             IList<LibraryItem> newitems = new List<LibraryItem>();

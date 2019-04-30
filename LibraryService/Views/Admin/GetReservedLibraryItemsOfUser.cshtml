@@ -70,7 +70,7 @@
                 @Html.DisplayFor(modelItem => item.ReturnDate)
             </td>
             <td>
-                @Html.ActionLink("Loan", "LoanItem", new { id = item.id, userId = item.ReservedBy }) |
+                @Html.ActionLink("Loan", "LoanItem", new { id = item.id, userId = item.ReservedBy.UserId }) |
                 @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "GetReservedLibraryItemsOfUser", contr = "Admin", Controller = "LibraryItems" })
             </td>
         </tr>

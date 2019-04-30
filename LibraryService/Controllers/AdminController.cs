@@ -1,4 +1,5 @@
 ﻿using LibraryService.DAL;
+using LibraryService.Data.Utils;
 using LibraryService.Models;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
@@ -81,10 +82,10 @@ namespace LibraryService.Controllers
         }
 
         //Loans an item for the user that has reserved it
-        public ActionResult LoanItem(int id, string ReservedBy)
+        public ActionResult LoanItem(int id, string userId)
         {
             _libraryItemService.LoanLibraryItem(id);
-            return RedirectToAction("GetReservedLibraryItemsOfUser", "Admin", new { id = ReservedBy });
+            return RedirectToAction("GetReservedLibraryItemsOfUser", "Admin", new { id = userId });
         }
 
         public ActionResult ReturnLibraryItem(int id)

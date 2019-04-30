@@ -483,13 +483,13 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibraryService.Data\LibraryService.Data.csproj">
+    <ProjectReference Include="..\LibraryService.Data\LibrarySystem.Data.csproj">
       <Project>{78665550-6ffc-4948-a929-959f39a22073}</Project>
-      <Name>LibraryService.Data</Name>
+      <Name>LibrarySystem.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibraryService.Services\LibraryService.Services.csproj">
+    <ProjectReference Include="..\LibraryService.Services\LibrarySystem.Services.csproj">
       <Project>{740adb2e-0136-4137-b12c-f94e60ecc5a1}</Project>
-      <Name>LibraryService.Services</Name>
+      <Name>LibrarySystem.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

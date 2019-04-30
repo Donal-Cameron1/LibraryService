@@ -1,4 +1,5 @@
-﻿using LibraryService.utils;
+﻿using LibraryService.Data.Utils;
+using LibraryService.utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -75,7 +76,7 @@ namespace LibraryService.Models
         [Display(Name = "Library")]
         public int LibraryId { get; set; }
 
-        public string UserId { get; set; }
+        //public string UserId { get; set; }
 
         [Display(Name = "Return Date")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
@@ -86,6 +87,9 @@ namespace LibraryService.Models
         public ICollection<User> BookmarkedBy { get; set; } = new List<User>();
         public User ReservedBy { get; set; }
         public User LoanedBy { get; set; }
+
+        //public virtual Library Library { get; set; }
+        //public virtual User User { get; set; }
     }
 }
 

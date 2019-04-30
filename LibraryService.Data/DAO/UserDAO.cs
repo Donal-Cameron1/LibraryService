@@ -37,7 +37,7 @@ namespace LibraryService.Data.DAO
                 .Include(u => u.BookmarkedLibraryItems)
                 .Include(u => u.ReservedLibraryItems)
                 .Include(u => u.LoanedLibraryItems)
-               .ToList();
+                .ToList();
         }
 
         public User GetUser(string id)

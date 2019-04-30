@@ -102,6 +102,7 @@ namespace LibraryService.Controllers
         {
             if (ModelState.IsValid)
             {
+                dvd.DateAdded = DateTime.Today;
                 _dvdService.CreateDVD(dvd);
                 return RedirectToAction("Index");
             }

@@ -56,19 +56,31 @@ namespace LibraryService.Services.Service
         public IList<LibraryItem> GetOverdueLibraryItems()
         {
             var baselineDate = DateTime.Today;
-            return db.LibraryItems.Where(b => b.ReturnDate < baselineDate).OrderByDescending(b => b.ReturnDate).ToList();
+            return db.LibraryItems
+                .Include(b => b.ReservedBy)
+                .Include(b => b.LoanedBy)
+                .Include(b => b.BookmarkedBy)
+                .Where(b => b.ReturnDate < baselineDate).OrderByDescending(b => b.ReturnDate).ToList();
         }
 
         //gets all reserved items of a specific user
         public IList<LibraryItem> GetReservedLibraryItemsOfUser(string id)
         {
-            return db.LibraryItems.Where(b => b.Status == Status.Reserved && b.ReservedBy.UserId == id).ToList();
+            return db.LibraryItems
+                .Include(b => b.ReservedBy)
+                .Include(b => b.LoanedBy)
+                .Include(b => b.BookmarkedBy)
+                .Where(b => b.Status == Status.Reserved && b.ReservedBy.UserId == id).ToList();
         }
     
         //gets all loaned items of a specific user
         public IList<LibraryItem> GetLoanedLibraryItemsOfUser(string id)
         {
-            return db.LibraryItems.Where(b => b.Status == Status.Loaned && b.LoanedBy.UserId == id).ToList();
+            return db.LibraryItems
+                .Include(b => b.ReservedBy)
+                .Include(b => b.LoanedBy)
+                .Include(b => b.BookmarkedBy)
+                .Where(b => b.Status == Status.Loaned && b.LoanedBy.UserId == id).ToList();
         }
 
         //changes the status of an item to loaned, maps it to the user, deletes the reservation and adds a returndate

@@ -104,6 +104,7 @@ namespace LibraryService.Controllers
         {
             if (ModelState.IsValid)
             {
+                book.DateAdded = DateTime.Today;
                 _bookService.CreateBook(book);
                 return RedirectToAction("Index");
             }

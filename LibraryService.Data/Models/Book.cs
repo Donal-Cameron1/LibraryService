@@ -20,8 +20,8 @@ namespace LibraryService.Models
         [Range(5, 5000)]
         public int Pages { get; set; }
 
-        public virtual Library Library { get; set; }
-        public virtual User User { get; set; }
+        //public virtual Library Library { get; set; }
+        //public virtual User User { get; set; }
 
     }
 }

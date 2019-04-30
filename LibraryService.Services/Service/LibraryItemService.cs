@@ -114,7 +114,6 @@ namespace LibraryService.Services.Service
                             item.Status = Status.Available;
                             _libraryItemDAO.UpdateLibraryItem(item);
                             _libraryItemDAO.DeleteReservation(item.id, user.UserId);
-
                         }
                     }
                 }

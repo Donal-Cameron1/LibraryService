@@ -69,11 +69,6 @@ namespace LibraryService.Data.DAO
         public Book GetBook(int id)
         {
             return db.Books.AsNoTracking().Where(b => b.id == id).FirstOrDefault();
-            /*var book =
-                from b in db.Books
-                where b.id == id
-                select b;
-            return book.First();*/
         }
 
         //gets all books from the database and loads BookmarkedBy, reservedBy, loanedBy with it
@@ -92,10 +87,10 @@ namespace LibraryService.Data.DAO
             return context.Books.Where(b => b.id == id).FirstOrDefault();
         }
 
-        //gets all books that fot added during the last 7 days
+        //gets all books that fot added during the last 14 days
         public IList<Book> GetNewBooks()
         {
-            var baselineDate = DateTime.Now.AddDays(-7);
+            var baselineDate = DateTime.Now.AddDays(-14);
             IList<Book> newBooks = db.Books
                 .Include(b => b.BookmarkedBy)
                 .Include(b => b.ReservedBy)

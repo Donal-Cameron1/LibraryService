@@ -69,7 +69,7 @@
                         @Html.DisplayFor(modelItem => item.ReservedUntil)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "UsersAdmin", Controller = "LibraryItems" })
+                        @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "GetLoanedLibraryItemsOfUser", contr = "Admin", Controller = "LibraryItems" })
                     </td>
                 </tr>
             }
