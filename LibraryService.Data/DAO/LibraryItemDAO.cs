@@ -156,6 +156,7 @@ namespace LibraryService.Services.Service
             LibraryItem libraryItem = GetLibraryItemWithTracking(db, id);
             User user = UserDAO.GetUserWithTracking(db, currentUserId);
             user.ReservedLibraryItems.Add(libraryItem);
+            libraryItem.ReservedUntil = DateTime.Today.AddDays(5);
             if (libraryItem.Status == Status.Available)
             {
                 libraryItem.Status = Status.Reserved;

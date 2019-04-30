@@ -6,6 +6,7 @@
 @using Microsoft.AspNet.Identity
 @using LibraryService.Models;
 
+@Scripts.Render("~/Scripts/Sorting.js")
 
 <div class="jumbotron">
     <h2>See what's new</h2>
@@ -18,50 +19,54 @@
 @if (Model.Any())
 {
 
-<table class="table">
-    <tr>
-        <th>
-            Title
-        </th>
-        <th>
-            Publisher
-        </th>
-        <th>
-            Genre
-        </th>
-        <th>
-            Type
-        </th>
-        <th>
-            Status
-        </th>
-        <th></th>
-    </tr>
+    <table class="table" id="myTable">
+        <thead class="bg-info">
 
-    @foreach (var item in Model)
+            <tr>
+                <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    Title
+                </th>
+                <th onclick="sort(1)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    Publisher
+                </th>
+                <th onclick="sort(2)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    Genre
+                </th>
+                <th onclick="sort(3)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    Type
+                </th>
+                <th onclick="sort(4)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    Status
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+
+        @foreach (var item in Model)
         {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Publisher)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
                     {
-            <div>
-                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
-            </div>
+                        <div>
+                            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
+                        </div>
                     }
                     else
                     {
@@ -71,19 +76,19 @@
                             {
                                 if (((List<User>)item.BookmarkedBy).Select(u => u.UserId).Contains(HttpContext.Current.User.Identity.GetUserId()))
                                 {
-            <div>
-                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
-                @Html.ActionLink("Unreserve", "DeleteReservation", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
-                @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
-            </div>
+                                    <div>
+                                        @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
+                                        @Html.ActionLink("Unreserve", "DeleteReservation", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
+                                        @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
+                                    </div>
                                 }
                                 else
                                 {
-            <div>
-                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
-                @Html.ActionLink("Unreserve", "DeleteReservation", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
-                @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
-            </div>
+                                    <div>
+                                        @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
+                                        @Html.ActionLink("Unreserve", "DeleteReservation", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
+                                        @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
+                                    </div>
                                 }
                             }
                             else
@@ -92,18 +97,18 @@
                                 {
                                     if (item.Status == Status.Reserved)
                                     {
-            <div>
-                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
-                @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
-            </div>
+                                        <div>
+                                            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
+                                            @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
+                                        </div>
                                     }
                                     else
                                     {
-            <div>
-                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
-                @Html.ActionLink("Reserve", "ReserveLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
-                @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
-            </div>
+                                        <div>
+                                            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
+                                            @Html.ActionLink("Reserve", "ReserveLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
+                                            @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
+                                        </div>
                                     }
 
                                 }
@@ -111,18 +116,18 @@
                                 {
                                     if (item.Status == Status.Reserved)
                                     {
-            <div>
-                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
-                @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
-            </div>
+                                        <div>
+                                            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
+                                            @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
+                                        </div>
                                     }
                                     else
                                     {
-            <div>
-                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
-                @Html.ActionLink("Reserve", "ReserveLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
-                @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
-            </div>
+                                        <div>
+                                            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
+                                            @Html.ActionLink("Reserve", "ReserveLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" }) |
+                                            @Html.ActionLink("Bookmark", "BookmarkLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
+                                        </div>
                                     }
 
 
@@ -131,16 +136,18 @@
                         }
                         else
                         {
-            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
+                            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Home", Controller = "LibraryItems" })
                         }
                     }
-        </td>
-    </tr>
+                </td>
+            </tr>
         }
 
-</table>
+    </table>
 }
 else
 {
-<p>There were no books or DVDs added in the last seven days</p>
+    <p>There were no books or DVDs added in the last seven days</p>
 }
+
+    

@@ -36,22 +36,22 @@ namespace LibraryService.Controllers
         {
             return View();
         }
-        
-        //will get a list of the items that have been reserved by a specifc user.
+
+        //Returns a list of loaned library items for the selected user in Staff/Admin View
         public ActionResult GetReservedLibraryItemsOfUser(string id)
         {
             IList<LibraryItem> reservedItems = _libraryItemService.GetReservedLibraryItemsOfUser(id);
             return View(reservedItems);
         }
 
-        //Returns all the loned library items by a specifc user
+        //Returns a list of loaned library items for the selected user in Staff/Admin View
         public ActionResult GetLoanedLibraryItemsOfUser(string id)
         {
             IList<LibraryItem> loanedItems = _libraryItemService.GetLoanedLibraryItemsOfUser(id);
             return View(loanedItems);
         }
 
-        //Gets all the items loaned by any user.
+        //Gets all loaned items and filters them by the entered searchstring
         public ActionResult GetLoanedLibraryItems(string searchString)
         {
             IList<LibraryItem> loanedItems = _libraryItemService.GetLoanedLibraryItems();
@@ -69,7 +69,7 @@ namespace LibraryService.Controllers
 
         }
 
-        //Gets all the items where the returndate has expired
+        //gets all overdue items and filters them by the entered searchString
         public ActionResult GetOverdueLibraryItems(string searchString)
         {
             IList<LibraryItem> overdueItems = _libraryItemService.GetOverdueLibraryItems();
@@ -86,7 +86,7 @@ namespace LibraryService.Controllers
             }
         }
 
-        //Loans an item for the user that has reserved it.
+        //Loans an item for the user that has reserved it
         public ActionResult LoanItem(int id, string ReservedBy)
         {
             _libraryItemService.LoanLibraryItem(id);

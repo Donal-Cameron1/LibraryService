@@ -36,6 +36,7 @@ namespace LibraryService.Controllers
         }
 
         // GET: DVDs
+        //gets all the books and filters them by the entered searchString, Genre and Status 
         public ActionResult Index(string searchString, string genre, string status, int? page)
         {
             IList<DVD> dvdquery = _dvdService.GetDVDs();
@@ -60,8 +61,8 @@ namespace LibraryService.Controllers
             return View();
         }
 
+        // GET: DVDs/Details/
         //Displays all the details about the selected DVD
-        // GET: DVDs/Details/5
         public ActionResult Details(int id)
         {
             DVD dvd = _dvdService.GetDVD(id);
@@ -72,14 +73,16 @@ namespace LibraryService.Controllers
             return View(dvd);
         }
 
-        //Allows the staff or admin to add a new DVD into the library system
+
         // GET: DVDs/Create
+        //returns a view with a form to add a book
         public ActionResult Create()
         {
             return View(_dvdService.CreateDefaultDVD());
         }
 
         // POST: DVDs/Create
+        //saves the attributes of the new book to the database
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -94,8 +97,8 @@ namespace LibraryService.Controllers
             return View(dvd);
         }
 
-        //Allow a staff or admin to edit any incorrect fields in the DVD table
         // GET: DVDs/Edit/5
+        //returns a view of a form with the attributes of the book in it and the possibility to edit them 
         public ActionResult Edit(int id)
         {
             DVD dvd = _dvdService.GetDVD(id);
@@ -106,8 +109,8 @@ namespace LibraryService.Controllers
             return View(dvd);
         }
 
-        //Posts the changes that have been made to the DVD
         // POST: DVDs/Edit/5
+        //saves the edited book to the database
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -122,8 +125,8 @@ namespace LibraryService.Controllers
             return View(dvd);
         }
 
-        //Ability to delete a specifc DVD from the database
         // GET: DVDs/Delete/5
+        //returns a delete confirmation page of the seletced book with its attributes
         public ActionResult Delete(int id)
         {
             DVD dvd = _dvdService.GetDVD(id);
@@ -135,6 +138,7 @@ namespace LibraryService.Controllers
         }
 
         // POST: DVDs/Delete/5
+        //removes the selected book from the database
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

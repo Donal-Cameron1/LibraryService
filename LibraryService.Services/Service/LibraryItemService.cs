@@ -28,7 +28,7 @@ namespace LibraryService.Services.Service
             _libraryItemDAO = new LibraryItemDAO();
         }
         
-        //Returns a list of library items.
+        //Returns a list of all library items
         public IList<LibraryItem> GetLibraryItems()
         {
             IList<LibraryItem> libraryItems = new List<LibraryItem>();
@@ -36,8 +36,8 @@ namespace LibraryService.Services.Service
 
             return libraryItems;
         }
-       
-        //Returns a list of reserved library items for the logged in user
+
+        //Returns a list of reserved library items for the selected user in Staff/Admin View
         public IList<LibraryItem> GetReservedLibraryItemsOfUser(string id)
         {
             IList<LibraryItem> reservedLibraryItems = new List<LibraryItem>();
@@ -46,7 +46,7 @@ namespace LibraryService.Services.Service
             return reservedLibraryItems;
         }
         
-        //Returns a list of loaned library items for the logged in user.
+        //Returns a list of loaned library items for the selected user in Staff/Admin View
         public IList<LibraryItem> GetLoanedLibraryItemsOfUser(string id)
         {
             IList<LibraryItem> loanedLibraryItems = new List<LibraryItem>();
@@ -55,7 +55,7 @@ namespace LibraryService.Services.Service
             return loanedLibraryItems;
         }
        
-        //Returns list of all loaned library items
+        //Returns list of all loaned library items for the Staff/Admin View
         public IList<LibraryItem> GetLoanedLibraryItems()
         {
             IList<LibraryItem> loanedLibraryItems = new List<LibraryItem>();
@@ -63,7 +63,7 @@ namespace LibraryService.Services.Service
             return loanedLibraryItems;
         }
         
-        //Returns list of over due items
+        //Returns list of overdue items for the Staff/Admin View
         public IList<LibraryItem> GetOverdueLibraryItems()
         {
             IList<LibraryItem> overdueLibraryItems = new List<LibraryItem>();
@@ -71,7 +71,8 @@ namespace LibraryService.Services.Service
 
             return overdueLibraryItems;
         }
-        //Casts the DVDs to a library item
+
+        //Casts the DVDs to a library item list, so that genre gets displayed correctly
         private static List<LibraryItem> CastDVDsToLibraryItems(IList<DVD> dvdquery)
         {
             List<LibraryItem> items = new List<LibraryItem>();
@@ -84,7 +85,7 @@ namespace LibraryService.Services.Service
             return items;
         }
         
-        //Casts the books to a library item
+        //Casts the books to a library item list, so that genre gets displayed correctly
         private static List<LibraryItem> CastBooksToLibraryItems(IList<Book> bookquery)
         {
             List<LibraryItem> items = new List<LibraryItem>();
@@ -98,7 +99,7 @@ namespace LibraryService.Services.Service
         }
 
 
-        //Updates the books status to available if it has not been reserved
+        //this gets executed daily, checks if any reservedUntil date is in the past and then deletes the reservation
         public void UpdateStatus()
         {
             foreach (User user in _userDAO.GetUsers())
@@ -135,7 +136,7 @@ namespace LibraryService.Services.Service
             _libraryItemDAO.ReturnLibraryItem(id);
         }
 
-        //Sends a email to a newly created account
+        //this gets executed daily, checks if there are any overdue books and sends an email to the associated user
         public void SendOverdueMail()
         {
             SmtpClient client = new SmtpClient("smtp.googlemail.com");
@@ -153,8 +154,8 @@ namespace LibraryService.Services.Service
                         MailMessage mailMessage = new MailMessage();
                         mailMessage.From = new MailAddress("LibraryServiceSheffield@gmail.com");
                         mailMessage.To.Add(user.UserName);
-                        mailMessage.Subject = "Hello There";
-                        mailMessage.Body = "Hello my friend!";
+                        mailMessage.Subject = "Overdue Item";
+                        mailMessage.Body = "Dear Customer. The item" + libraryItem.Title + "is overdue. Please bring it back to the Library as soon as possible. Regards, Library Service Sheffield";
 
                         client.Send(mailMessage);
                     }

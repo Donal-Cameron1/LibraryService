@@ -3,86 +3,65 @@
 @{
     ViewBag.Title = "ShowBookmarks";
 }
+@Scripts.Render("~/Scripts/Sorting.js")
+
 
 @if (Model.Any())
 {
-<h2>Your favourites.</h2>
+    <h2>Your favourites.</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Publisher)
-        </th>
+    <table class="table" id="myTable">
+        <thead class="bg-info">
 
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Genre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LibraryId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AgeRestriction)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReturnDate)
-        </th>
-        <th></th>
-    </tr>
+            <tr>
+                <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.Publisher)
+                </th>
+                <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.Genre)
+                </th>
+                <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.LibraryId)
+                </th>
+                <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
 
-    @foreach (var item in Model)
-        {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Publisher)
-        </td>
-
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LibraryId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AgeRestriction)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReturnDate)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowBookmarks", contr = "LibraryItems", Controller = "LibraryItems" }) |
-            @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "ShowBookmarks", contr = "LibraryItems", Controller = "LibraryItems" })
-        </td>
-    </tr>
-        }
-</table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Publisher)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genre)
+                    </td>
+                    <td>
+                        @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "ShowBookmarks", contr = "LibraryItems", Controller = "LibraryItems" }) |
+                        @Html.ActionLink("UnBookmark", "DeleteBookmark", new { id = item.id, method = "ShowBookmarks", contr = "LibraryItems", Controller = "LibraryItems" })
+                    </td>
+                </tr>
+            }
+    </table>
 
 }
 else
 {
-<h2>Your favourites.</h2>
-<p>Apparently you have nothing saved to favourites at the moment.</p>
+    <h2>Your favourites.</h2>
+    <p>Apparently you have nothing saved to favourites at the moment.</p>
 }

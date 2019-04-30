@@ -3,99 +3,95 @@
 @{
     ViewBag.Title = "GetLoanedLibraryItems";
 }
+@Scripts.Render("~/Scripts/Sorting.js")
 
 
 <h2>Loaned Items</h2>
 @using (Html.BeginForm())
-    {
-<div class="form-group">
-    @Html.Label("Search for title:", new { @class = "col-sm-1 control-label" })
-    @Html.TextBox("searchString", "", new { @class = "col-md-2 control-label" })
-    <input class="input-group mb-3" placeholder="Search" type="submit" value="Search" />
-</div>
-    }
+{
+    <div class="form-group">
+        @Html.Label("Search for title:", new { @class = "col-sm-1 control-label" })
+        @Html.TextBox("searchString", "", new { @class = "col-md-2 control-label" })
+        <input class="input-group mb-3" placeholder="Search" type="submit" value="Search" />
+    </div>
+}
 
 @if (Model.Any())
-    {
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Publisher)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Genre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LibraryId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AgeRestriction)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReturnDate)
-        </th>
-        <th></th>
-    </tr>
+{
+    <table class="table" id="myTable">
+        <thead class="bg-info">
+            <tr>
+                <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th onclick="sort(1)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.Publisher)
+                </th>
+                <th onclick="sort(2)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.Genre)
+                </th>
+                <th onclick="sort(3)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.LibraryId)
+                </th>
+                <th onclick="sort(4)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th onclick="sort(5)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th onclick="sort(6)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.ReturnDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
 
-    @foreach (var item in Model)
+            @foreach (var item in Model)
             {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Publisher)
-        </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LibraryId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AgeRestriction)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReturnDate)
-        </td>
-
-        @if (item.Type == LibraryService.Models.Type.Book)
-                    {
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
-            @Html.ActionLink("Return Item", "ReturnLibraryItem", new { id = item.id, Controller = "Admin" })
-        </td>
-                    }
-        @if (item.Type == LibraryService.Models.Type.DVD)
-                    {
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
-            @Html.ActionLink("Return Item", "ReturnLibraryItem", new { id = item.id, Controller = "Admin" })
-        </td>
-                    }
-
-    </tr>
+            @if (item.Type == LibraryService.Models.Type.Book)
+            {
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "Books" }) |
+                    @Html.ActionLink("Return Item", "ReturnLibraryItem", new { id = item.id, Controller = "Admin" })
+                </td>
             }
-</table>
+            @if (item.Type == LibraryService.Models.Type.DVD)
+            {
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.id, Controller = "DVDs" }) |
+                    @Html.ActionLink("Return Item", "ReturnLibraryItem", new { id = item.id, Controller = "Admin" })
+                </td>
+            }
 
-    }
-    else
-    {
-<p>No loaned items found.</p>
-    }
+        </tr>
+            }
+    </table>
+
+}
+else
+{
+    <p>No loaned items found.</p>
+}
