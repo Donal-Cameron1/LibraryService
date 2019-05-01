@@ -27,7 +27,12 @@ namespace LibraryService.Services.Service
             _dvdDAO = new DVDDAO();
             _libraryItemDAO = new LibraryItemDAO();
         }
-        
+
+        public LibraryItem GetLibraryItem(int id)
+        {
+            return _libraryItemDAO.GetLibaryItem(id);
+        }
+
         //Returns a list of all library items
         public IList<LibraryItem> GetLibraryItems()
         {
@@ -72,6 +77,22 @@ namespace LibraryService.Services.Service
             return overdueLibraryItems;
         }
 
+        public void LoanLibraryItem(int id)
+        {
+            _libraryItemDAO.LoanLibraryItem(id);
+        }
+
+        public void ExtendLoan(int id)
+        {
+            _libraryItemDAO.ExtendLoan(id);
+        }
+
+        public void ReturnLibraryItem(int id)
+        {
+            _libraryItemDAO.ReturnLibraryItem(id);
+        }
+
+
         //Casts the DVDs to a library item list, so that genre gets displayed correctly
         public static List<LibraryItem> CastDVDsToLibraryItems(IList<DVD> dvdquery)
         {
@@ -98,6 +119,13 @@ namespace LibraryService.Services.Service
             return items;
         }
 
+        public static List<LibraryItem> AssignCorrectGenre(IList<LibraryItem> libraryItems)
+        {
+            List<Book> books = libraryItems.Where(i => i.Type == Models.Type.Book).Cast<Book>().ToList();
+            List<DVD> dvds = libraryItems.Where(i => i.Type == Models.Type.DVD).Cast<DVD>().ToList();
+            return new List<LibraryItem>().Concat(CastBooksToLibraryItems(books)).Concat(CastDVDsToLibraryItems(dvds)).ToList();
+        }
+
 
         //this gets executed daily, checks if any reservedUntil date is in the past and then deletes the reservation
         public void UpdateStatus()
@@ -120,21 +148,7 @@ namespace LibraryService.Services.Service
             }
         }
 
-        public void LoanLibraryItem(int id)
-        {
-            _libraryItemDAO.LoanLibraryItem(id);
-        }
-
-        public void ExtendLoan(int id)
-        {
-            _libraryItemDAO.ExtendLoan(id);
-        }
-
-        public void ReturnLibraryItem(int id)
-        {
-            _libraryItemDAO.ReturnLibraryItem(id);
-        }
-
+        
         //this gets executed daily, checks if there are any overdue books and sends an email to the associated user
         public void SendOverdueMail()
         {
@@ -188,17 +202,6 @@ namespace LibraryService.Services.Service
         {
             _libraryItemDAO.DeleteReservation(id, currentUserId);
         }
-
-        public LibraryItem GetLibraryItem(int id)
-        {
-            return _libraryItemDAO.GetLibaryItem(id);
-        }
-
-        public static List<LibraryItem> AssignCorrectGenre(IList<LibraryItem> libraryItems)
-        {
-            List<Book> books = libraryItems.Where(i => i.Type == Models.Type.Book).Cast<Book>().ToList();
-            List<DVD> dvds = libraryItems.Where(i => i.Type == Models.Type.DVD).Cast<DVD>().ToList();
-            return new List<LibraryItem>().Concat(CastBooksToLibraryItems(books)).Concat(CastDVDsToLibraryItems(dvds)).ToList();
-        }
+        
     }
 }

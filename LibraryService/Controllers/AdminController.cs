@@ -88,10 +88,14 @@ namespace LibraryService.Controllers
             return RedirectToAction("GetReservedLibraryItemsOfUser", "Admin", new { id = userId });
         }
 
-        public ActionResult ReturnLibraryItem(int id)
+        public ActionResult ReturnLibraryItem(int id, string method, string contr)
         {
+            ViewBag.method = method;
+            ViewBag.contr = contr;
+            ViewBag.id = id;
+
             _libraryItemService.ReturnLibraryItem(id);
-            return RedirectToAction("GetLoanedLibraryItems");
+            return RedirectToAction(method, contr);
         }
     }
 }

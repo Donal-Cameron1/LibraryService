@@ -7,6 +7,12 @@ namespace LibraryService.Data.IDAO
     {
         Book GetBook(int id);
 
+        IList<Book> GetBooks();
+
+        IList<Book> GetNewBooks();
+
+        IList<LibraryItem> GetReservedBooks();
+
         void CreateBook(Book book);
 
         void UpdateBook(Book book);
@@ -21,11 +27,6 @@ namespace LibraryService.Data.IDAO
 
         IList<Book> BookTypeFilter(IList<Book> query, string type);
 
-        IList<Book> GetBooks();
-
-        IList<Book> GetNewBooks();
-
-        IList<LibraryItem> GetReservedBooks();
         IList<Book> BookLibraryFilter(IList<Book> query, string library);
     }
 }

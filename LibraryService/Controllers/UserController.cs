@@ -10,7 +10,6 @@ namespace LibraryService.Controllers
     public class UserController : Controller
     {
 
-        private LibraryContext db = new LibraryContext();
         private IUserService _userService;
 
         public UserController()
@@ -22,7 +21,6 @@ namespace LibraryService.Controllers
         public ActionResult Index()
         {
             return View(_userService.GetUsers());
-            //return View(db.Users.ToList());
         }
 
         // GET: User/Details/5

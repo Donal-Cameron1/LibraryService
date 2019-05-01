@@ -23,13 +23,6 @@ namespace LibraryService.Data.DAO
                .SingleOrDefault(x => x.UserId == currentUserId);
         }
 
-        //Edit information about the user
-        public void EditUser(User user)
-        {
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-        }
-
         //Get the items the signed in user has reserved, bookmarked and loaned.
         public IList<User> GetUsers()
         {
@@ -40,6 +33,7 @@ namespace LibraryService.Data.DAO
                 .ToList();
         }
 
+        //gets a single user without tracking
         public User GetUser(string id)
         {
             return db.Users
@@ -47,14 +41,6 @@ namespace LibraryService.Data.DAO
                 .Include(u => u.ReservedLibraryItems)
                 .Include(u => u.LoanedLibraryItems)
                 .AsNoTracking().Where(u => u.UserId == id).FirstOrDefault();
-        }
-
-
-        //Gets the username of the signed in user
-        public User GetUserByUsername(string username)
-        {
-            var user = from u in db.Users where u.UserName == username select u;
-            return user.First();
         }
 
         //Gets a user through tracking
@@ -66,6 +52,14 @@ namespace LibraryService.Data.DAO
                 .Include(u => u.LoanedLibraryItems)
                 .Where(u => u.UserId == id).FirstOrDefault();
         }
+
+        //Edit information about the user
+        public void EditUser(User user)
+        {
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+   
 
         //Allows the staff or admin to add a new user to the database.
         public void CreateUser(User user)

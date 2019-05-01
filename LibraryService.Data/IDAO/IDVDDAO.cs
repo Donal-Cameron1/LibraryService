@@ -8,13 +8,17 @@ namespace LibraryService.Data.IDAO
     {
         DVD GetDVD(int id);
 
+        IList<DVD> GetDVDs();
+
+        IList<DVD> GetReservedDVDs();
+
+        IList<DVD> GetNewDVDs();
+
         void CreateDVD(DVD dvd);
 
         void UpdateDVD(DVD dvd);
 
         void DeleteDVD(DVD dvd);
-
-        IList<DVD> GetNewDVDs();
 
         IList<DVD> DVDGenreFilter(IList<DVD> query, string genre);
 
@@ -24,9 +28,6 @@ namespace LibraryService.Data.IDAO
 
         IList<DVD> DVDTypeFilter(IList<DVD> query, string type);
 
-        IList<DVD> GetDVDs();
-
-        IList<DVD> GetReservedDVDs();
         IList<DVD> DVDLibraryFilter(IList<DVD> query, string library);
     }
 }

@@ -116,7 +116,5 @@ namespace LibraryService.Controllers
             _libraryService.DeleteLibrary(library);
             return RedirectToAction("Index");
         }
-
-
     }
 }

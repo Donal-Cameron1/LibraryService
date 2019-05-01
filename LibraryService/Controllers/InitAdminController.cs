@@ -32,7 +32,7 @@ namespace LibraryService
             bool init = Init(db, adminUserEmail, adminPassword);
             if (init)
             {
-                return RedirectToAction("Success");
+                return RedirectToAction("Login", "Account");
             }
             else
             {

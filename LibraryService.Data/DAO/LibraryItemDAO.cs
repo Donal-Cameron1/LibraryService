@@ -83,6 +83,13 @@ namespace LibraryService.Services.Service
                 .Where(b => b.Status == Status.Loaned && b.LoanedBy.UserId == id).ToList();
         }
 
+        //saves any changes to the database
+        public void UpdateLibraryItem(LibraryItem item)
+        {
+            db.Entry(item).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
         //changes the status of an item to loaned, maps it to the user, deletes the reservation and adds a returndate
         public void LoanLibraryItem(int id)
         {
@@ -186,12 +193,6 @@ namespace LibraryService.Services.Service
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }
-
-        //saves any changes to the database
-        public void UpdateLibraryItem(LibraryItem item)
-        {
-            db.Entry(item).State = EntityState.Modified;
-            db.SaveChanges();
-        }
+       
     }
 }

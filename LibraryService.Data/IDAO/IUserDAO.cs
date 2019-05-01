@@ -5,17 +5,15 @@ namespace LibraryService.Data.IDAO
 {
     public interface IUserDAO
     {
-        User GetCurrentUser(string currentUserId);
+        User GetUser(string id);
 
-        void EditUser(User user);
+        User GetCurrentUser(string currentUserId);
 
         IList<User> GetUsers();
 
-        User GetUser(string id);
-
-        User GetUserByUsername(string username);
-
         void CreateUser(User user);
+
+        void EditUser(User user);
 
         void DeleteUser(User user);
     }

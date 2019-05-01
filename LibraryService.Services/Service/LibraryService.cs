@@ -20,6 +20,16 @@ namespace LibraryService.Services.Service
             _dbUtils = new DbUtils();
         }
 
+        public IQueryable<Library> GetLibraries()
+        {
+            return _libraryDAO.GetLibrariesQueryable();
+        }
+
+        public Library GetLibrary(int id)
+        {
+            return _libraryDAO.GetLibrary(id);
+        }
+
         public Library CreateDefaultLibrary()
         {
             return new Library();
@@ -38,16 +48,6 @@ namespace LibraryService.Services.Service
         public void EditLibrary(Library library)
         {
             _libraryDAO.EditLibrary(library);
-        }
-
-        public IQueryable<Library> GetLibraries()
-        {
-            return _libraryDAO.GetLibraries();
-        }
-
-        public Library GetLibrary(int id)
-        {
-            return _libraryDAO.GetLibrary(id);
         }
 
         public IQueryable<Library> SearchLibraries(IQueryable<Library> libraries, string searchString)

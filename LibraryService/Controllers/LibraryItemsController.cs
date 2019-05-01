@@ -12,7 +12,6 @@ namespace LibraryService.Controllers
 {
     public class LibraryItemsController : Controller
     {
-        private LibraryContext db = new LibraryContext();
 
         private ILibraryItemService _libraryItemService;
         private IUserService _userService;

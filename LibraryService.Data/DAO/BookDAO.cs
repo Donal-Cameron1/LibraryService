@@ -12,37 +12,6 @@ namespace LibraryService.Data.DAO
     {
         private LibraryContext db = new LibraryContext();
 
-        //filters a list of books by genre
-        public IList<Book> BookGenreFilter(IList<Book> query, string genre)
-        {
-            return query.Where(b => b.BookGenre.ToString().Equals(genre)).ToList<Book>();
-        }
-
-        //filters a list of books by status
-        public IList<Book> BookStatusFilter(IList<Book> query, string status)
-        {
-            return query.Where(b => b.Status.ToString().Equals(status)).ToList<Book>();
-        }
-
-        //filters a list of books by the entered searchString
-        public IList<Book> BookTextSearch(IList<Book> query, string searchString)
-        {
-            return query.Where(b => b.Title.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0
-                                 || b.Author.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList<Book>();
-        }
-
-        //filters a list of books by type
-        public IList<Book> BookTypeFilter(IList<Book> query, string type)
-        {
-            return query.Where(b => b.Type.ToString().Equals(type)).ToList<Book>();
-        }
-
-        //filters a list of book by librray
-        public IList<Book> BookLibraryFilter(IList<Book> query, string library)
-        {
-            return query.Where(b => b.LibraryId.ToString().Equals(library)).ToList<Book>();
-        }
-
         //adds a new created book to the database
         public void CreateBook(Book book)
         {
@@ -106,6 +75,37 @@ namespace LibraryService.Data.DAO
         {
             return db.LibraryItems.Where(b => b.Status == Status.Reserved).ToList();
 
+        }
+
+        //filters a list of books by genre
+        public IList<Book> BookGenreFilter(IList<Book> query, string genre)
+        {
+            return query.Where(b => b.BookGenre.ToString().Equals(genre)).ToList<Book>();
+        }
+
+        //filters a list of books by status
+        public IList<Book> BookStatusFilter(IList<Book> query, string status)
+        {
+            return query.Where(b => b.Status.ToString().Equals(status)).ToList<Book>();
+        }
+
+        //filters a list of books by the entered searchString
+        public IList<Book> BookTextSearch(IList<Book> query, string searchString)
+        {
+            return query.Where(b => b.Title.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0
+                                 || b.Author.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList<Book>();
+        }
+
+        //filters a list of books by type
+        public IList<Book> BookTypeFilter(IList<Book> query, string type)
+        {
+            return query.Where(b => b.Type.ToString().Equals(type)).ToList<Book>();
+        }
+
+        //filters a list of book by librray
+        public IList<Book> BookLibraryFilter(IList<Book> query, string library)
+        {
+            return query.Where(b => b.LibraryId.ToString().Equals(library)).ToList<Book>();
         }
     }
 }

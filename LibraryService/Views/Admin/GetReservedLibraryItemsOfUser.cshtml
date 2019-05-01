@@ -71,7 +71,7 @@
             </td>
             <td>
                 @Html.ActionLink("Loan", "LoanItem", new { id = item.id, userId = item.ReservedBy.UserId }) |
-                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "GetReservedLibraryItemsOfUser", contr = "Admin", Controller = "LibraryItems" })
+                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "UsersAdmin", Controller = "LibraryItems" })
             </td>
         </tr>
             }

@@ -19,31 +19,21 @@ namespace LibraryService.Services.Service
             _bookDAO = new BookDAO();
             _userDAO = new UserDAO();
             _dbUtils = new DbUtils();
+        }    
+
+        public Book GetBook(int id)
+        {
+            return _bookDAO.GetBook(id);
         }
 
-        public IList<Book> BookGenreFilter(IList<Book> query, string genre)
+        public IList<Book> GetBooks()
         {
-            return _bookDAO.BookGenreFilter(query, genre);
+            return _bookDAO.GetBooks();
         }
 
-        public IList<Book> BookStatusFilter(IList<Book> query, string status)
+        public IList<Book> GetNewBooks()
         {
-            return _bookDAO.BookStatusFilter(query, status);
-        }
-
-        public IList<Book> BookTextSearch(IList<Book> query, string searchString)
-        {
-            return _bookDAO.BookTextSearch(query, searchString);
-        }
-
-        public IList<Book> BookTypeFilter(IList<Book> query, string type)
-        {
-            return _bookDAO.BookTypeFilter(query, type);
-        }
-
-        public IList<Book> BookLibraryFilter(IList<Book> query, string library)
-        {
-            return _bookDAO.BookLibraryFilter(query, library);
+            return _bookDAO.GetNewBooks();
         }
 
         public void CreateBook(Book book)
@@ -72,21 +62,29 @@ namespace LibraryService.Services.Service
             _bookDAO.UpdateBook(book);
         }
 
-        public Book GetBook(int id)
+        public IList<Book> BookGenreFilter(IList<Book> query, string genre)
         {
-            return _bookDAO.GetBook(id);
+            return _bookDAO.BookGenreFilter(query, genre);
         }
 
-        public IList<Book> GetBooks()
+        public IList<Book> BookStatusFilter(IList<Book> query, string status)
         {
-            return _bookDAO.GetBooks();
+            return _bookDAO.BookStatusFilter(query, status);
         }
 
-        public IList<Book> GetNewBooks()
+        public IList<Book> BookTextSearch(IList<Book> query, string searchString)
         {
-            return _bookDAO.GetNewBooks();
+            return _bookDAO.BookTextSearch(query, searchString);
         }
 
-       
+        public IList<Book> BookTypeFilter(IList<Book> query, string type)
+        {
+            return _bookDAO.BookTypeFilter(query, type);
+        }
+
+        public IList<Book> BookLibraryFilter(IList<Book> query, string library)
+        {
+            return _bookDAO.BookLibraryFilter(query, library);
+        }
     }
 }

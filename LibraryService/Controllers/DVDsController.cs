@@ -12,9 +12,8 @@ namespace LibraryService.Controllers
 {
     public class DVDsController : Controller
     {
-        private LibraryContext db = new LibraryContext();
-
         private IDVDService _dvdService;
+
         public DVDsController()
         {
             _dvdService = new DVDService();

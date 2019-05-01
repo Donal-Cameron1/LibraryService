@@ -18,6 +18,16 @@ namespace LibraryService.Services.Service
             _dbUtils = new DbUtils();
         }
 
+        public User GetUser(string id)
+        {
+            return _userDAO.GetUser(id);
+        }
+
+        public IList<User> GetUsers()
+        {
+            return _userDAO.GetUsers();
+        }
+
         public User CreateDefaultUser()
         {
             return new User();
@@ -36,16 +46,6 @@ namespace LibraryService.Services.Service
         public void EditUser(User user)
         {
             _userDAO.EditUser(user);
-        }
-
-        public User GetUser(string id)
-        {
-            return _userDAO.GetUser(id);
-        }
-
-        public IList<User> GetUsers()
-        {
-            return _userDAO.GetUsers();
         }
     }
 }

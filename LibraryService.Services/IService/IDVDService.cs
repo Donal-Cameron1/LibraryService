@@ -7,6 +7,10 @@ namespace LibraryService.Services.IService
     {
         DVD GetDVD(int id);
 
+        IList<DVD> GetDVDs();
+
+        IList<DVD> GetNewDVDs();
+
         DVD CreateDefaultDVD();
 
         void CreateDVD(DVD dvd);
@@ -14,8 +18,6 @@ namespace LibraryService.Services.IService
         void UpdateDVD(DVD dvd);
 
         void DeleteDVD(DVD dvd);
-
-        IList<DVD> GetNewDVDs();
 
         IList<DVD> DVDTextSearch(IList<DVD> query, string searchString);
 
@@ -25,7 +27,6 @@ namespace LibraryService.Services.IService
 
         IList<DVD> DVDTypeFilter(IList<DVD> query, string type);
 
-        IList<DVD> GetDVDs();
         IList<DVD> DVDLibraryFilter(IList<DVD> query, string library);
     }
 }

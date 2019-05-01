@@ -7,6 +7,8 @@ namespace LibraryService.Services.IService
     {
         Library GetLibrary(int id);
 
+        IQueryable<Library> GetLibraries();
+
         Library CreateDefaultLibrary();
 
         void CreateLibrary(Library library);
@@ -14,8 +16,6 @@ namespace LibraryService.Services.IService
         void DeleteLibrary(Library library);
 
         void EditLibrary(Library library);
-
-        IQueryable<Library> GetLibraries();
 
         IQueryable<Library> SearchLibraries(IQueryable<Library> libraries, string searchString);
     }

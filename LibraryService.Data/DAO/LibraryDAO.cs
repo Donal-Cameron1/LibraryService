@@ -11,6 +11,18 @@ namespace LibraryService.Data.DAO
     {
         private LibraryContext db = DbUtils.db;
 
+        //gets all libraries queryable from the database
+        public IQueryable<Library> GetLibrariesQueryable()
+        {
+            return db.Libraries.AsQueryable();
+        }
+
+        //gets a single library from the database
+        public Library GetLibrary(int id)
+        {
+            return db.Libraries.Where(l => l.LibraryId == id).FirstOrDefault();
+        }
+
         public void CreateLibrary(Library library)
         {
             db.Libraries.Add(library);
@@ -28,25 +40,6 @@ namespace LibraryService.Data.DAO
             db.Libraries.Attach(library);
             db.Entry(library).State = EntityState.Modified;
             db.SaveChanges();
-        }
-
-        //gets all libraries from the database
-        public IQueryable<Library> GetLibraries()
-        {
-            IQueryable<Library> libraries = from s
-                                            in db.Libraries
-                                            select s;
-            return libraries;
-        }
-
-        //gets a single library from the database
-        public Library GetLibrary(int id)
-        {
-            IQueryable<Library> libraries = from s
-                                            in db.Libraries
-                                            where s.LibraryId == id
-                                            select s;
-            return libraries.First();
         }
 
         //filters a list of libraries by the entered searchstring

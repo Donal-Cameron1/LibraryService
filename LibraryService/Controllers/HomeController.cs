@@ -25,6 +25,16 @@ namespace LibraryService.Controllers
             _libraryItemService = new LibraryItemService();
         }
 
+        //gets all items that got added during the last 14 days
+        public ActionResult Index()
+        {
+            IList<LibraryItem> newitems = new List<LibraryItem>();
+            IEnumerable<LibraryItem> dvds = LibraryItemService.CastDVDsToLibraryItems(_dvdService.GetNewDVDs());
+            IEnumerable<LibraryItem> books = LibraryItemService.CastBooksToLibraryItems(_bookService.GetNewBooks());
+
+            return View(newitems.Concat(books).Concat(dvds));
+        }
+
         public IList<Book> BookTextSearch(IList<Book> query, string searchString)
         {
             return _bookService.BookTextSearch(query, searchString);
@@ -118,16 +128,6 @@ namespace LibraryService.Controllers
             items = items.Concat(LibraryItemService.CastBooksToLibraryItems(bookquery)).Concat(LibraryItemService.CastDVDsToLibraryItems(dvdquery)).ToList();
             return View(items);
 
-        }
-
-        //gets all items that got added during the last 14 days
-        public ActionResult Index()
-        {
-            IList<LibraryItem> newitems = new List<LibraryItem>();
-            IEnumerable<LibraryItem> dvds = LibraryItemService.CastDVDsToLibraryItems(_dvdService.GetNewDVDs());
-            IEnumerable<LibraryItem> books = LibraryItemService.CastBooksToLibraryItems(_bookService.GetNewBooks());
-
-            return View(newitems.Concat(books).Concat(dvds));
         }
 
         public ActionResult About()

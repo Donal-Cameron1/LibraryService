@@ -73,7 +73,7 @@
             
             <td>
                 @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "GetLoanedLibraryItems", contr = "Admin", Controller = "LibraryItems" }) |
-                @Html.ActionLink("Return Item", "ReturnLibraryItem", new { id = item.id, Controller = "Admin" })
+                @Html.ActionLink("Return Item", "ReturnLibraryItem", new { id = item.id, method = "GetLoanedLibraryItems", contr="Admin", Controller = "Admin" })
             </td>
 
         </tr>
