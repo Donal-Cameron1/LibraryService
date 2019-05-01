@@ -76,7 +76,7 @@ namespace LibraryService.Models
         [Display(Name = "Library")]
         public int LibraryId { get; set; }
 
-        //public string UserId { get; set; }
+        public string UserId { get; set; }
 
         [Display(Name = "Return Date")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]

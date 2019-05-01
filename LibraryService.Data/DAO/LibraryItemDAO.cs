@@ -112,7 +112,7 @@ namespace LibraryService.Services.Service
 
             if (libraryItem.ReservedBy == null && libraryItem.ReservedUntil == null && libraryItem.ReturnDate < DateTime.Today.AddDays(3))
             {
-                libraryItem.ReturnDate = DateTime.Today.AddDays(7);
+                libraryItem.ReturnDate = libraryItem.ReturnDate.Value.AddDays(7);
                 db.Entry(libraryItem).State = EntityState.Modified;
                 db.SaveChanges();
             }
