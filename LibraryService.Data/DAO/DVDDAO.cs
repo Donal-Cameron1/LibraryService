@@ -109,6 +109,7 @@ namespace LibraryService.Data.DAO
             return query.Where(d => d.Type.ToString().Equals(type)).ToList<DVD>();
         }
 
+        //filters a list of dvds by library
         public IList<DVD> DVDLibraryFilter(IList<DVD> query, string library)
         {
             return query.Where(d => d.LibraryId.ToString().Equals(library)).ToList<DVD>();

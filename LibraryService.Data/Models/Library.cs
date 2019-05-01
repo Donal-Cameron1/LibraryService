@@ -44,7 +44,5 @@ namespace LibraryService.Models
         [Required]
         [Range(100, 5000000)]
         public int Capacity { get; set; }
-
-        //public virtual ICollection<Book> Books { get; set; }
     }
 }

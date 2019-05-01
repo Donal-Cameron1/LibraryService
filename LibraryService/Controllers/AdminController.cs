@@ -16,9 +16,6 @@ namespace LibraryService.Controllers
 
     public class AdminController : Controller
     {
-
-        private LibraryContext db = new LibraryContext();
-
         private ILibraryItemService _libraryItemService;
         private IBookService _bookService;
         private IDVDService _dvdService;

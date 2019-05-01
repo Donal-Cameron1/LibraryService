@@ -88,8 +88,6 @@ namespace LibraryService.Models
         public User ReservedBy { get; set; }
         public User LoanedBy { get; set; }
 
-        //public virtual Library Library { get; set; }
-        //public virtual User User { get; set; }
     }
 }
 

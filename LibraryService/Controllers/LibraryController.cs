@@ -9,8 +9,6 @@ namespace LibraryService.Controllers
 {
     public class LibraryController : Controller
     {
-        private LibraryContext db = new LibraryContext();
-
         private ILibraryService _libraryService;
         public LibraryController()
         {
