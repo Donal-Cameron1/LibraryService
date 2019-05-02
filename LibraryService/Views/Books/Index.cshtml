@@ -13,6 +13,9 @@
 
 @Scripts.Render("~/Scripts/Sorting.js")
 
+@section Styles {
+    <link href="@Url.Content("~/Styles/SearchbarStyle.css")" rel="stylesheet" type="text/css" />
+}
 
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
@@ -29,28 +32,34 @@
     using (Html.BeginForm())
     {
         <p>
-            Search books: @Html.TextBox("SearchString")
-            <input type="submit" value="Search" />
-            <div>
-                @Html.DropDownList("Genre",
-                                 new SelectList(Enum.GetValues(typeof(LibraryService.Models.Genre))),
-                                 "Select Genre",
-                                 new { @class = "form-control" })
-            </div>
-            <div>
-                @Html.DropDownList("Status",
-                                 new SelectList(Enum.GetValues(typeof(LibraryService.Models.Status))),
-                                 "Select Status",
-                                 new { @class = "form-control" })
-            </div>
-            <div>
-                @Html.DropDownList("Library",
-                                 new SelectList(new LibraryService.DAL.LibraryContext().Libraries.Select(x =>
-                                 new SelectListItem{
-                                     Value = x.LibraryId.ToString(),
-                                     Text = x.Name
-                                 }), "Value", "Text"), "Select Library", htmlAttributes : new { @class = "form-control"})
-                                 
+            <div class="form-group" style="height:45px!important">
+                <div class="filters" style="padding-right:5px !important">
+                    @Html.TextBox("SearchString", "", new { placeholder = " Search", @class = "textbox" })
+                </div>
+                <div class="filters">
+                    @Html.DropDownList("Genre",
+                                     new SelectList(Enum.GetValues(typeof(LibraryService.Models.Genre))),
+                                     "Select Genre",
+                                     new { @class = "form-control" })
+                </div>
+                <div class="filters">
+                    @Html.DropDownList("Status",
+                                     new SelectList(Enum.GetValues(typeof(LibraryService.Models.Status))),
+                                     "Select Status",
+                                     new { @class = "form-control" })
+                </div>
+                <div class="filters">
+                    @Html.DropDownList("Library",
+                                     new SelectList(new LibraryService.DAL.LibraryContext().Libraries.Select(x =>
+                                     new SelectListItem{
+                                         Value = x.LibraryId.ToString(),
+                                         Text = x.Name
+                                     }), "Value", "Text"), "Select Library", htmlAttributes : new { @class = "form-control"})
+
+                </div>
+                <div class="filters">
+                    <input class="button" type="submit" value="Search" />
+                </div>
             </div>
         </p>
     }
@@ -100,11 +109,11 @@
                     <td>
                         @if (this.User.IsInRole("Admin") || this.User.IsInRole("Staff"))
                         {
-                        <div>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
-                            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Books", Controller = "LibraryItems" }) 
-                        </div>
+                            <div>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
+                                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "Books", Controller = "LibraryItems" })
+                            </div>
                         }
                         else
                         {

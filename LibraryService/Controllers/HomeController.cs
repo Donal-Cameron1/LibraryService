@@ -1,5 +1,4 @@
-﻿using LibraryService.DAL;
-using LibraryService.Models;
+﻿using LibraryService.Models;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
 using Microsoft.AspNet.Identity;

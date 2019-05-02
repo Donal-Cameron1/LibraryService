@@ -59,7 +59,7 @@ namespace LibraryService.Data.DAO
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }
-   
+
 
         //Allows the staff or admin to add a new user to the database.
         public void CreateUser(User user)

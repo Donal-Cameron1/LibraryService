@@ -1,5 +1,4 @@
 ﻿using LibraryService.Data.Utils;
-using LibraryService.utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -82,6 +81,8 @@ namespace LibraryService.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<DateTime> ReturnDate { get; set; }
 
+        [Display(Name = "Reserved Until")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<DateTime> ReservedUntil { get; set; }
 
         public ICollection<User> BookmarkedBy { get; set; } = new List<User>();

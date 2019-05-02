@@ -9,6 +9,8 @@
 @if (Model.Any())
 {
     <h2>Your reserved items</h2>
+    <p>If a book you reserved is loaned at the moment, the ReturnDate will tell you when it will be available for you.</p>
+
 
     <table class="table" id="myTable">
         <thead class="bg-info">
@@ -32,6 +34,9 @@
                     @Html.DisplayNameFor(model => model.Status)
                 </th>
                 <th onclick="sort(6)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                    @Html.DisplayNameFor(model => model.ReservedUntil)
+                </th>
+                <th onclick="sort(7)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
                     @Html.DisplayNameFor(model => model.ReturnDate)
                 </th>
                 <th></th>
@@ -59,6 +64,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservedUntil)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ReturnDate)

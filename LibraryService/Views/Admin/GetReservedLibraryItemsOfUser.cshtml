@@ -9,80 +9,80 @@
 
 @if (Model.Any())
 {
-    <h2>Reserved Items</h2>
+<h2>Reserved Items</h2>
 
-    <table class="table" id="myTable">
-        <thead class="bg-info">
-            <tr>
-                <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th onclick="sort(1)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.Publisher)
-                </th>
-                <th onclick="sort(2)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.Genre)
-                </th>
-                <th onclick="sort(3)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.LibraryId)
-                </th>
-                <th onclick="sort(4)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.Type)
-                </th>
-                <th onclick="sort(5)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.Status)
-                </th>
-                <th onclick="sort(6)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.ReservedUntil)
-                </th>
-                <th onclick="sort(7)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
-                    @Html.DisplayNameFor(model => model.ReturnDate)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-
-            @foreach (var item in Model)
-            {
+<table class="table" id="myTable">
+    <thead class="bg-info">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Publisher)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReservedUntil)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReturnDate)
-            </td>
-            <td>
-                @Html.ActionLink("Loan", "LoanItem", new { id = item.id, userId = item.ReservedBy.UserId }) |
-                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "UsersAdmin", Controller = "LibraryItems" })
-            </td>
+            <th onclick="sort(0)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th onclick="sort(1)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                @Html.DisplayNameFor(model => model.Publisher)
+            </th>
+            <th onclick="sort(2)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th onclick="sort(3)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                @Html.DisplayNameFor(model => model.LibraryId)
+            </th>
+            <th onclick="sort(4)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th onclick="sort(5)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th onclick="sort(6)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                @Html.DisplayNameFor(model => model.ReservedUntil)
+            </th>
+            <th onclick="sort(7)" onmouseover="this.style.textDecoration = 'underline'" onmouseout="this.style.textDecoration = 'none'">
+                @Html.DisplayNameFor(model => model.ReturnDate)
+            </th>
+            <th></th>
         </tr>
+    </thead>
+
+    @foreach (var item in Model)
+            {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Publisher)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Genre)
+        </td>
+        <td>
+            @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReservedUntil)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReturnDate)
+        </td>
+        <td>
+            @Html.ActionLink("Loan", "LoanItem", new { id = item.id, userId = item.ReservedBy.UserId }) |
+            @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "Index", contr = "UsersAdmin", Controller = "LibraryItems" })
+        </td>
+    </tr>
             }
 
-    </table>
-    @Html.ActionLink("Back to list", "Index", "UsersAdmin")
+</table>
+@Html.ActionLink("Back to list", "Index", "UsersAdmin")
 }
 else
 {
-    <h2>Reserved items.</h2>
-    <p>This user has no items reserved.</p>
-    @Html.ActionLink("Back to list", "Index", "UsersAdmin")
+<h2>Reserved items.</h2>
+<p>This user has no items reserved.</p>
+@Html.ActionLink("Back to list", "Index", "UsersAdmin")
 }
 

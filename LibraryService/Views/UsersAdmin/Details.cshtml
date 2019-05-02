@@ -21,33 +21,33 @@
 <h4>List of roles for this user</h4>
 @if (ViewBag.RoleNames.Count == 0)
 {
-    <hr />
-    <p>No roles found for this user.</p>
+<hr />
+<p>No roles found for this user.</p>
 }
 
 <table class="table">
 
     @foreach (var item in ViewBag.RoleNames)
     {
-        <tr>
-            <td>
-                @item
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @item
+        </td>
+    </tr>
     }
 </table>
 @if (User.IsInRole("Admin"))
 {
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
 }
 else
 {
-    <p>
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
 }
 
 

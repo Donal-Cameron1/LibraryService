@@ -22,7 +22,7 @@ namespace LibraryService.Services.IService
         void ExtendLoan(int id);
 
         void ReturnLibraryItem(int id);
-        
+
         void BookmarkLibraryItem(int id, string currentUserId);
 
         void DeleteBookmark(int id, string currentUserId);

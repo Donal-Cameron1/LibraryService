@@ -50,7 +50,7 @@ namespace LibraryService.Services.Service
 
             return reservedLibraryItems;
         }
-        
+
         //Returns a list of loaned library items for the selected user in Staff/Admin View
         public IList<LibraryItem> GetLoanedLibraryItemsOfUser(string id)
         {
@@ -59,7 +59,7 @@ namespace LibraryService.Services.Service
 
             return loanedLibraryItems;
         }
-       
+
         //Returns list of all loaned library items for the Staff/Admin View
         public IList<LibraryItem> GetLoanedLibraryItems()
         {
@@ -67,7 +67,7 @@ namespace LibraryService.Services.Service
             loanedLibraryItems = _libraryItemDAO.GetLoanedLibraryItems();
             return loanedLibraryItems;
         }
-        
+
         //Returns list of overdue items for the Staff/Admin View
         public IList<LibraryItem> GetOverdueLibraryItems()
         {
@@ -105,7 +105,7 @@ namespace LibraryService.Services.Service
             }
             return items;
         }
-        
+
         //Casts the books to a library item list, so that genre gets displayed correctly
         public static List<LibraryItem> CastBooksToLibraryItems(IList<Book> bookquery)
         {
@@ -148,7 +148,7 @@ namespace LibraryService.Services.Service
             }
         }
 
-        
+
         //this gets executed daily, checks if there are any overdue books and sends an email to the associated user
         public void SendOverdueMail()
         {
@@ -202,6 +202,6 @@ namespace LibraryService.Services.Service
         {
             _libraryItemDAO.DeleteReservation(id, currentUserId);
         }
-        
+
     }
 }

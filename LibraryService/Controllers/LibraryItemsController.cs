@@ -1,9 +1,7 @@
-﻿using LibraryService.DAL;
-using LibraryService.Models;
+﻿using LibraryService.Models;
 using LibraryService.Services.IService;
 using LibraryService.Services.Service;
 using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;

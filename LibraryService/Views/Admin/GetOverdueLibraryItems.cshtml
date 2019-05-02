@@ -3,14 +3,20 @@
 @{
     ViewBag.Title = "GetOverdueLibraryItems";
 }
+@section Styles {
+    <link href="@Url.Content("~/Styles/SearchbarStyle.css")" rel="stylesheet" type="text/css" />
+}
 
 <h2>Overdue Items</h2>
 @using (Html.BeginForm())
 {
-    <div class="form-group">
-        @Html.Label("Search for title:", new { @class = "col-sm-1 control-label" })
-        @Html.TextBox("searchString", "", new { @class = "col-md-2 control-label" })
-        <input class="input-group mb-3" placeholder="Search" type="submit" value="Search" />
+    <div class="form-group" style="height:45px!important">
+        <div class="filters" style="padding-right:5px !important; width:200px!important">
+            @Html.TextBox("searchString", "", new { placeholder = " Search for title", @class = "textbox" })
+        </div>
+        <div class="filters">
+            <input class="button" placeholder="Search" type="submit" value="Search" />
+        </div>
     </div>
 }
 @if (Model.Any())
@@ -43,38 +49,38 @@
             </tr>
         </thead>
 
-            @foreach (var item in Model)
-            {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Publisher)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReturnDate)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @(new LibraryService.DAL.LibraryContext().Libraries.Find(item.LibraryId).Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReturnDate)
+                </td>
 
-            <td>
-                @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "GetOverdueLibraryItems", contr = "Admin", Controller = "LibraryItems" }) |
-                @Html.ActionLink("Return Item", "ReturnLibraryItem", new { id = item.id, method = "GetOverDueLibraryItems", contr = "Admin", Controller = "Admin" })
-            </td>
+                <td>
+                    @Html.ActionLink("Details", "DetailsLibraryItem", new { id = item.id, method = "GetOverdueLibraryItems", contr = "Admin", Controller = "LibraryItems" }) |
+                    @Html.ActionLink("Return Item", "ReturnLibraryItem", new { id = item.id, method = "GetOverDueLibraryItems", contr = "Admin", Controller = "Admin" })
+                </td>
 
-        </tr>
-            }
+            </tr>
+        }
     </table>
 
 }

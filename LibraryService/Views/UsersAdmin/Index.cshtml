@@ -4,60 +4,69 @@
     ViewBag.Title = "Index";
 }
 
+@section Styles {
+    <link href="@Url.Content("~/Styles/SearchbarStyle.css")" rel="stylesheet" type="text/css" />
+}
+
+
 @if (Model.Any())
 {
-<h2>Users</h2>
+    <h2>Users</h2>
 
     using (Html.BeginForm())
     {
-<div class="form-group">
-    @Html.Label("Search for user:", new { @class = "col-sm-1 control-label" })
-    @Html.TextBox("searchString", "", new { @class = "col-md-2 control-label" })
-    <input class="input-group mb-3" placeholder="Search" type="submit" value="Search" />
-</div>
+        <div class="form-group" style="height:45px!important">
+            <div class="filters" style="padding-right:5px !important; width:200px!important">
+                @Html.TextBox("searchString", "", new { placeholder = " Search", @class = "textbox" })
+            </div>
+            <div class="filters">
+                <input class="button" placeholder="Search" type="submit" value="Search" />
+            </div>
+        </div>
     }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-    </tr>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th></th>
+        </tr>
 
-    @foreach (var item in Model)
+        @foreach (var item in Model)
         {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
 
-        @if (User.IsInRole("Admin"))
+                @if (User.IsInRole("Admin"))
                 {
-        <td>
-            @Html.ActionLink("Reserved Items", "GetReservedLibraryItemsOfUser", new { id = item.Id, Controller = "Admin" }) |
-            @Html.ActionLink("Loaned Items", "GetLoanedLibraryItemsOfUser", new { id = item.Id, Controller = "Admin" }) |
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
+                    <td>
+                        @Html.ActionLink("Reserved Items", "GetReservedLibraryItemsOfUser", new { id = item.Id, Controller = "Admin" }) |
+                        @Html.ActionLink("Loaned Items", "GetLoanedLibraryItemsOfUser", new { id = item.Id, Controller = "Admin" }) |
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
                 }
                 else
                 {
-        <td>
-            @Html.ActionLink("Reserved Items", "GetReservedLibraryItemsOfUser", new { id = item.Id, Controller = "Admin" }) |
-            @Html.ActionLink("Loaned Items", "GetLoanedLibraryItemsOfUser", new { id = item.Id, Controller = "Admin" }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id })
-        </td>
+                    <td>
+                        @Html.ActionLink("Reserved Items", "GetReservedLibraryItemsOfUser", new { id = item.Id, Controller = "Admin" }) |
+                        @Html.ActionLink("Loaned Items", "GetLoanedLibraryItemsOfUser", new { id = item.Id, Controller = "Admin" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id })
+                    </td>
                 }
 
-    </tr>
+            </tr>
         }
 
-</table>
+    </table>
 }
 else
 {
-<h2>Sorry</h2>
-<p>We can't find the user you are looking for.</p>
-@Html.ActionLink("Back to list", "Index")
+    <h2>Sorry</h2>
+    <p>We can't find the user you are looking for.</p>
+    @Html.ActionLink("Back to list", "Index")
 
 }

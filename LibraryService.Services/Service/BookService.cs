@@ -19,7 +19,7 @@ namespace LibraryService.Services.Service
             _bookDAO = new BookDAO();
             _userDAO = new UserDAO();
             _dbUtils = new DbUtils();
-        }    
+        }
 
         public Book GetBook(int id)
         {

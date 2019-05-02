@@ -1,0 +1,37 @@
+﻿.filters {
+    float: left !important;
+    padding: 5px;
+    width: 150px !important;
+    position: center;
+    margin-bottom: 1%;
+}
+
+.searchbar {
+    width: 5%;
+}
+
+.textbox {
+    width: 100%;
+    float: left !important;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: lightgrey;
+    height: 33px;
+}
+
+.button {
+    float: left !important;
+    padding: 5px;
+    width: 60%;
+    position: center;
+    border-radius: 5px;
+    height: 33px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: lightgrey;
+}
+
+    .button:hover {
+        background-color: darkgray;
+    }

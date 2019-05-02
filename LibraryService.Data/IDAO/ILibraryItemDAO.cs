@@ -24,7 +24,7 @@ namespace LibraryService.Services.Service
         void ExtendLoan(int id);
 
         void ReturnLibraryItem(int id);
-        
+
         IList<LibraryItem> TextSearch(IList<LibraryItem> loanedItems, string searchString);
 
         void BookmarkLibraryItem(int id, string currentUserId);

@@ -72,7 +72,7 @@ namespace LibraryService.Services.Service
                 .Include(b => b.BookmarkedBy)
                 .Where(b => b.Status == Status.Reserved && b.ReservedBy.UserId == id).ToList();
         }
-    
+
         //gets all loaned items of a specific user
         public IList<LibraryItem> GetLoanedLibraryItemsOfUser(string id)
         {
@@ -193,6 +193,6 @@ namespace LibraryService.Services.Service
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }
-       
+
     }
 }

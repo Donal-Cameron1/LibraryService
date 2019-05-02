@@ -4,7 +4,6 @@ using LibraryService.Services.Service;
 using PagedList;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace LibraryService.Controllers
@@ -66,7 +65,7 @@ namespace LibraryService.Controllers
             {
                 bookquery = BookLibraryFilter(bookquery, library);
             }
-           
+
 
             //show 10 Books on one page
             var onePageOfBooks = bookquery.ToPagedList(pageNumber, 10);

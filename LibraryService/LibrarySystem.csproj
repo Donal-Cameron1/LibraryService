@@ -369,7 +369,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Styles\index_style.css" />
+    <Content Include="Styles\SearchbarStyle.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

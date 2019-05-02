@@ -85,6 +85,6 @@ namespace LibraryService.Services.Service
         public IList<DVD> DVDLibraryFilter(IList<DVD> query, string library)
         {
             return _dvdDAO.DVDLibraryFilter(query, library);
-        }        
+        }
     }
 }
